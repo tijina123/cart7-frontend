@@ -1,0 +1,7 @@
+/* @import url('./variable.css') */
+@import url("./variable.css");
+
+.nav-bar {
+    background-color: var(--primary-bg-color);
+    color: white;
+}
