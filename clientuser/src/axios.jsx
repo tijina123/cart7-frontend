@@ -1,6 +1,11 @@
 import axios from "axios";
+// const apiUrl = process.env.VITE_BACKEND_URL;
 
-export const BASE_URL = "http://localhost:3000/";
+
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
+
+
+export const BASE_URL = apiUrl;
 export const MEDIA_URL = "";
 
 export default axios.create({
