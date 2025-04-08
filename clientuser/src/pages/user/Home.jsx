@@ -4,6 +4,7 @@ import "owl.carousel/dist/assets/owl.carousel.css";  // Owl Carousel CSS
 import "owl.carousel";  // Owl Carousel JS
 import ProductCarousel from './ProductCarousel';
 import UserService from "../../services/user-api-services/UserService";
+import { Link } from 'react-router-dom';
 
 
 const Home = () => {
@@ -69,59 +70,59 @@ const Home = () => {
                       }
                   }
               }">
-            <div className="intro-slide" style={{ backgroundImage: 'url(assets/images/demos/demo-13/slider/slide-1.png)' }}>
+            <div className="intro-slide" style={{ backgroundImage: 'url(assets/images/demos/demo-13/slider/slider-1.jpeg)', objectFit: 'contain' }}>
               <div className="container intro-content">
                 <div className="row">
                   <div className="col-auto offset-lg-3 intro-col">
-                    <h3 className="intro-subtitle">Trade-In Offer</h3>{/* End .h3 intro-subtitle */}
+                    {/* <h3 className="intro-subtitle">Trade-In Offer</h3>
                     <h1 className="intro-title">MacBook Air <br />Latest Model
                       <span>
                         <sup className="font-weight-light">from</sup>
                         <span className="text-primary">$999<sup>,99</sup></span>
                       </span>
-                    </h1>{/* End .intro-title */}
-                    <a href="category.html" className="btn btn-outline-primary-2">
+                    </h1> */}
+                    {/* <a href="category.html" className="btn btn-outline-primary-2">
                       <span>Shop Now</span>
                       <i className="icon-long-arrow-right" />
-                    </a>
+                    </a> */}
                   </div>{/* End .col-auto offset-lg-3 */}
                 </div>{/* End .row */}
               </div>{/* End .container intro-content */}
             </div>{/* End .intro-slide */}
-            <div className="intro-slide" style={{ backgroundImage: 'url(assets/images/demos/demo-13/slider/slide-2.jpg)' }}>
+            <div className="intro-slide" style={{ backgroundImage: 'url(assets/images/demos/demo-13/slider/slider-2.jpeg)', objectFit: 'contain' }}>
               <div className="container intro-content">
                 <div className="row">
                   <div className="col-auto offset-lg-3 intro-col">
-                    <h3 className="intro-subtitle">Trevel &amp; Outdoor</h3>{/* End .h3 intro-subtitle */}
+                    {/* <h3 className="intro-subtitle">Trevel &amp; Outdoor</h3>
                     <h1 className="intro-title">Original Outdoor <br />Beanbag
                       <span>
                         <sup className="font-weight-light line-through">$89,99</sup>
                         <span className="text-primary">$29<sup>,99</sup></span>
                       </span>
-                    </h1>{/* End .intro-title */}
-                    <a href="category.html" className="btn btn-outline-primary-2">
+                    </h1> */}
+                    {/* <a href="category.html" className="btn btn-outline-primary-2">
                       <span>Shop Now</span>
                       <i className="icon-long-arrow-right" />
-                    </a>
+                    </a> */}
                   </div>{/* End .col-auto offset-lg-3 */}
                 </div>{/* End .row */}
               </div>{/* End .container intro-content */}
             </div>{/* End .intro-slide */}
-            <div className="intro-slide" style={{ backgroundImage: 'url(assets/images/demos/demo-13/slider/slide-3.jpg)' }}>
+            <div className="intro-slide" style={{ backgroundImage: 'url(assets/images/demos/demo-13/slider/slider-3.jpeg)', objectFit: 'contain' }}>
               <div className="container intro-content">
                 <div className="row">
                   <div className="col-auto offset-lg-3 intro-col">
-                    <h3 className="intro-subtitle">Fashion Promotions</h3>{/* End .h3 intro-subtitle */}
+                    {/* <h3 className="intro-subtitle">Fashion Promotions</h3>
                     <h1 className="intro-title">Tan Suede <br />Biker Jacket
                       <span>
                         <sup className="font-weight-light line-through">$240,00</sup>
                         <span className="text-primary">$180<sup>,99</sup></span>
                       </span>
-                    </h1>{/* End .intro-title */}
-                    <a href="category.html" className="btn btn-outline-primary-2">
+                    </h1> */}
+                    {/* <a href="category.html" className="btn btn-outline-primary-2">
                       <span>Shop Now</span>
                       <i className="icon-long-arrow-right" />
-                    </a>
+                    </a> */}
                   </div>{/* End .col-auto offset-lg-3 */}
                 </div>{/* End .row */}
               </div>{/* End .container intro-content */}
@@ -135,64 +136,64 @@ const Home = () => {
           <div className="cat-blocks-container">
             <div className="row">
               <div className="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" className="cat-block">
+                <Link to="/" className="cat-block">
                   <figure>
                     <span>
                       <img src="assets/images/demos/demo-13/cats/1.jpg" alt="Category image" />
                     </span>
                   </figure>
                   <h3 className="cat-block-title">Computer &amp; Laptop</h3>{/* End .cat-block-title */}
-                </a>
+               </Link>
               </div>{/* End .col-sm-4 col-lg-2 */}
               <div className="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" className="cat-block">
+                <Link t0="/"className="cat-block">
                   <figure>
                     <span>
                       <img src="assets/images/demos/demo-13/cats/2.jpg" alt="Category image" />
                     </span>
                   </figure>
                   <h3 className="cat-block-title">Lighting</h3>{/* End .cat-block-title */}
-                </a>
+                </Link>
               </div>{/* End .col-sm-4 col-lg-2 */}
               <div className="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" className="cat-block">
+                <Link to="/" className="cat-block">
                   <figure>
                     <span>
                       <img src="assets/images/demos/demo-13/cats/3.jpg" alt="Category image" />
                     </span>
                   </figure>
                   <h3 className="cat-block-title">Smart Phones</h3>{/* End .cat-block-title */}
-                </a>
+               </Link>
               </div>{/* End .col-sm-4 col-lg-2 */}
               <div className="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" className="cat-block">
+              <Link to="/"  className="cat-block">
                   <figure>
                     <span>
                       <img src="assets/images/demos/demo-13/cats/4.jpg" alt="Category image" />
                     </span>
                   </figure>
                   <h3 className="cat-block-title">Televisions</h3>{/* End .cat-block-title */}
-                </a>
+                  </Link>
               </div>{/* End .col-sm-4 col-lg-2 */}
               <div className="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" className="cat-block">
+              <Link to="/" className="cat-block">
                   <figure>
                     <span>
                       <img src="assets/images/demos/demo-13/cats/5.jpg" alt="Category image" />
                     </span>
                   </figure>
                   <h3 className="cat-block-title">Cooking</h3>{/* End .cat-block-title */}
-                </a>
+                  </Link>
               </div>{/* End .col-sm-4 col-lg-2 */}
               <div className="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" className="cat-block">
+              <Link to="/" className="cat-block">
                   <figure>
                     <span>
                       <img src="assets/images/demos/demo-13/cats/6.jpg" alt="Category image" />
                     </span>
                   </figure>
                   <h3 className="cat-block-title">Furniture</h3>{/* End .cat-block-title */}
-                </a>
+                  </Link>
               </div>{/* End .col-sm-4 col-lg-2 */}
             </div>{/* End .row */}
           </div>{/* End .cat-blocks-container */}
@@ -265,8 +266,11 @@ const Home = () => {
 
           {/* ****************** show products by category ****************** */}
 
-          {allProducts?.map((products) => (
-            <div className="container" key={products._id}>
+          {allProducts?.map((products) => {
+
+          if(products.products.length > 0){
+
+           return <div className="container" key={products._id}>
               <div className="heading heading-flex heading-border mb-3">
                 <div className="heading-left">
                   <h2 className="title">{products.name}</h2>{/* End .title */}
@@ -287,7 +291,7 @@ const Home = () => {
               </div>{/* End .tab-content */}
             </div>
 
-          ))}
+}})}
 
 
 

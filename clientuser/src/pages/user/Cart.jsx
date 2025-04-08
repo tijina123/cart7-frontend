@@ -154,7 +154,7 @@ const Cart = () => {
                                 <label className="custom-control-label" htmlFor="standart-shipping">Standart:</label>
                               </div>{/* End .custom-control */}
                             </td>
-                            <td>₹ 10.00</td>
+                            <td>₹ 0.00</td>
                           </tr>{/* End .summary-shipping-row */}
                           <tr className="summary-shipping-row">
                             <td>
@@ -163,12 +163,12 @@ const Cart = () => {
                                 <label className="custom-control-label" htmlFor="express-shipping">Express:</label>
                               </div>{/* End .custom-control */}
                             </td>
-                            <td>₹ 20.00</td>
+                            <td>₹ 0.00</td>
                           </tr>{/* End .summary-shipping-row */}
-                          <tr className="summary-shipping-estimate">
+                          {/* <tr className="summary-shipping-estimate">
                             <td>Estimate for Your Country<br /> <a href="dashboard.html">Change address</a></td>
                             <td>&nbsp;</td>
-                          </tr>{/* End .summary-shipping-estimate */}
+                          </tr>End .summary-shipping-estimate */}
                           <tr className="summary-total">
                             <td>Total:</td>
                             <td>₹ {cartTotal}</td>

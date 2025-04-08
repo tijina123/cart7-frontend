@@ -38,22 +38,21 @@ const getCart = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Retrieve the user's address (assuming a static address for now)
-    const address = await Address.findById("67c560eff125f41014f24894");
-    if (!address) return res.status(404).json({ message: "Address not found" });
+    // const address = await Address.findById("67c560eff125f41014f24894");
+    // if (!address) return res.status(404).json({ message: "Address not found" });
 
     // Respond with cart details
     res.status(200).json({
       success: true,
       cart: user.cart,
       cartTotal: user.cart_total,
-      address,
+      // address,
       message: "Cart retrieved successfully",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 // ✅ Add to Cart
 const addToCart = async (req, res) => {

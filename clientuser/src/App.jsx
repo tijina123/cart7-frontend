@@ -9,6 +9,7 @@ import NotFound from "./pages/not-found/NotFound";
 import Cart from "./pages/user/Cart";
 import Wishlist from "./pages/user/Wishlist";
 import Checkout from "./pages/user/Checkout";
+import Profile from "./pages/user/Profile";
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/checkout" element={<Checkout />} />
-                
+                <Route path="/profile" element={<Profile />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />

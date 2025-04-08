@@ -102,6 +102,12 @@ const UserService = () => {
         const response = await axiosPrivate.post("/address/add", data);
         return response.data;
     };
+    //get all addresss
+    const getAddress = async () => {
+
+        const response = await axiosPrivate.get("/address");
+        return response.data;
+    };
 
     //get all data from wishlist
     const checkPorductAvailability = async () => {
@@ -109,6 +115,14 @@ const UserService = () => {
         const response = await axiosPrivate.get("/order/check-cart/");
         return response.data;
     };
+    //quantity change in cart
+        const putSelectAddress = async (addressId) => {
+            console.log("putSelectAddress",addressId);
+            
+
+            const response = await axiosPrivate.put(`/address/update/default-address/${addressId}`)
+            return response?.data
+        }
 
     return {
         getHomeProductsByCategory,
@@ -125,7 +139,9 @@ const UserService = () => {
         postOrder,
         postAddress,
         checkPorductAvailability,
-        getHomeCategory
+        getHomeCategory,
+        getAddress,
+        putSelectAddress
     };
 };
 

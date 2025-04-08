@@ -77,37 +77,12 @@ const getAllProducts = async (req, res) => {
 // ✅ Get All Products
 const getProducts = async (req, res) => {
     try {
-        // const  userId  = req.userId;
 
-        const userId = req.userId;
+
+      // Fetch all products
+          const products = await Product.find()
+            
      
-
-        const user = await User.findById(userId);
-    
-
-        if (!user) {
-            return { success: false, message: "Unauthorized access" };
-        }
-
-        let products = null
-
-        if (user.role === "Super Admin") {
-
-            // Fetch all products
-            products = await Product.find().populate("agent", "name email").populate("category", "categoryName");;
-
-        } else if (user.role === "admin") {
-
-            // Fetch only the products added by the admin (agent)
-            products = await Product.find({ agent: user._id }).populate("agent", "name email").populate("category", "name");;
-         
-
-        } 
-        // else {
-
-        //     // Fetch all products
-        //     products = await Product.find()
-        // }
 
         // Validation: Check if products exist
         if (!products) {
@@ -117,9 +92,7 @@ const getProducts = async (req, res) => {
             });
         }
 
-        // const products = await getAllProducts(res);
-        // if (!Array.isArray(products)) return; // Prevent further execution if an error response is already sent
-
+       
         res.status(200).json({
             success: true,
             message: "Products retrieved successfully.",
