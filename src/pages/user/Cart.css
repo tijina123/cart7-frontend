@@ -1,0 +1,32 @@
+.cart-product-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Space between elements */
+  }
+  
+  .quantity-btn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    user-select: none;
+    background-color: #f8f9fa;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .quantity-btn:hover {
+    background-color: #e9ecef;
+  }
+  
+  .quantity-value {
+    min-width: 30px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
