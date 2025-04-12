@@ -20,7 +20,7 @@ const UserFooter = () => {
                   Your go-to destination for quality products and amazing deals. 
                   Shop with confidence and ease.
                 </p>
-                <p><strong>Call Us:</strong> <a href="tel:+123456789">+1 234 567 89</a></p>
+                <p><strong>Call Us:</strong> <a href="tel:+123456789">+91 7034 133 111</a></p>
               </div>
             </div>
 
