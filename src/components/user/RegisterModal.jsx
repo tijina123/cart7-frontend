@@ -2,19 +2,34 @@ import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
+import UserService from "../../services/user-api-services/UserService";
 
 const RegisterModal = ({ onClose }) => {
+
+  const { postRegister} = UserService();
+
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
-    companyName: Yup.string().required("Company name is required"),
+    // plan: Yup.string().required("Plan is required"),
+    companyname: Yup.string().required("Company name is required"),
     email: Yup.string().email("Invalid email format").required("Email is required"),
     password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
   });
 
   
-  const handleSubmit = (values) => {
-    console.log("Form submitted", values);
+  const handleSubmit = async (values) => {
+    
     // Handle form submission logic here
+    const response = await postRegister(values);
+    console.log("Response from API:", response);
+    if (response?.data?.success === true) {
+      // setLoading(true);
+      // setError("");
+      // navigate("/login");
+      window.location.reload();
+    } else {
+      setLoading(false);
+    }
   };
 
   return (
@@ -33,7 +48,7 @@ const RegisterModal = ({ onClose }) => {
           </button>
         </div>
         <Formik
-          initialValues={{ name: "", companyName: "", email: "", password: "" , role:"admin" }}
+          initialValues={{ name: "", companyname: "", plan: "basic", email: "", password: "" , role:"admin" }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
@@ -57,14 +72,14 @@ const RegisterModal = ({ onClose }) => {
                 <label className="block text-md font-medium text-gray-700">Company Name</label>
                 <input
                   type="text"
-                  name="companyName"
-                  value={values.companyName}
+                  name="companyname"
+                  value={values.companyname}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter your company name"
                 />
-                <ErrorMessage name="companyName" component="div" className="text-red-500 text-md" />
+                <ErrorMessage name="companyname" component="div" className="text-red-500 text-md" />
               </div>
 
               <div className="mb-4">
@@ -98,9 +113,10 @@ const RegisterModal = ({ onClose }) => {
               <button
                 type="submit"
                 className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition"
-                disabled={isSubmitting}
+                // disabled={isSubmitting}
               >
-                {isSubmitting ? "Registering..." : "Register"}
+                {/* {isSubmitting ? "Registering..." : "Register"} */}
+                Register
               </button>
             </Form>
           )}

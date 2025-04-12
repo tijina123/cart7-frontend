@@ -18,7 +18,7 @@ const Checkout = () => {
   const [allAddress, setAllAddress] = useState([]);
 
   const [total, setTotal] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState("UPI");
+  const [paymentMethod, setPaymentMethod] = useState("COD");
 
   const [address, setAddress] = useState({
     fullName: "",
@@ -33,7 +33,7 @@ const Checkout = () => {
   });
 
   const [orderData, setOrderData] = useState({
-    paymentMethod: "UPI",
+    paymentMethod: "COD",
     totalPrice: "",
   });
 
@@ -285,7 +285,7 @@ const Checkout = () => {
                           id="accordion-payment"
                         >
                           <div className="space-y-3">
-                            <label className="flex items-center space-x-3 text-gray-700">
+                            {/* <label className="flex items-center space-x-3 text-gray-700">
                               <input
                                 type="radio"
                                 name="payment"
@@ -295,7 +295,7 @@ const Checkout = () => {
                                 className="form-radio h-4 w-4 text-blue-500"
                               />
                               <span>Google Pay / Phone Pay</span>
-                            </label>
+                            </label> */}
 
                             <label className="flex items-center space-x-3 text-gray-700">
                               <input
