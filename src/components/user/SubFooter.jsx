@@ -168,9 +168,25 @@ const SubFooter = () => {
     $("#reset-password-modal").modal("show");
   };
 
-  const OnHandleLogout = async () => {
+  const onHandleLogout = async () => {
+    // Clear local storage
     localStorage.clear();
-  };
+
+    // Optional: redirect to login page or homepage
+    window.location.href = "/"; // Change the path based on your route
+};
+
+const handleCategoryClick = async (data) => {
+
+  const menu =document.querySelector(".mobile-menu-close");
+  if (menu) {
+    menu.click(); // Or manipulate the menu to close it however you need
+  }
+
+  document.querySelector(`.${data}`)?.scrollIntoView({ behavior: "smooth" });
+};
+
+
 
   return (
     <>
@@ -305,11 +321,11 @@ const SubFooter = () => {
                 <nav className="mobile-nav">
                   <ul className="mobile-menu">
                     <li className="active">
-                      <a href="index.html">Categories</a>
+                      <a >Categories</a>
                       <ul>
                         {category?.map((data) => (
                           <li>
-                            <a href="index-1.html">{data?.name}</a>
+                            <a onClick={() => handleCategoryClick(data?.name)} >{data?.name}</a>
                           </li>
                         ))}
                       </ul>
@@ -337,7 +353,7 @@ const SubFooter = () => {
             <div className="dropdown cart-dropdown">
               <Link
                 to="/profile"
-                onClick={OnHandleLogout}
+                onClick={onHandleLogout}
                 className="dropdown-toggle"
                 role="button"
               >

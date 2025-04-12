@@ -11,7 +11,7 @@ import { FiLogOut } from "react-icons/fi";
 const UserNavbar = () => {
   const { auth } = useAuth();
 
-  const { getHomeCategory,putFilterProducts } = UserService();
+  const { getHomeCategory, putFilterProducts } = UserService();
 
   const [category, setCategory] = useState([]);
 
@@ -32,43 +32,20 @@ const UserNavbar = () => {
   const onClose = async () => {
     setIsOpen(false);
   };
-  const OnHandleLogout = async () => {
-    localStorage.clear();
-};
+  const onHandleLogout = async () => {
+        // Clear local storage
+        localStorage.clear();
 
+        // Optional: redirect to login page or homepage
+        window.location.href = "/"; // Change the path based on your route
+  };
 
-const handleCategoryClick = async (data) => {
-  try {
-console.log("category data",data);
-
-    // const response = await fetch(`/your-api-endpoint/${data.id}`, {
-    //   method: 'GET', // or 'POST' depending on your API
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
-
-    // if (!response.ok) throw new Error('Network response was not ok');
-
-    const response = await putFilterProducts(data?._id);
-
-    console.log("response==========", response);
+  const handleCategoryClick = async (data) => {
+    document.querySelector(`.${data}`)?.scrollIntoView({ behavior: "smooth" });
     
+  };
 
 
-
-    // Assuming `result.success` indicates a successful API call
-    if (true) {
-      document
-        .querySelector(".filter-products")
-        ?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      console.error("API did not return success:", result);
-    }
-  } catch (error) {
-    console.error("API call failed:", error);
-  }
-};
 
   return (
     <>
@@ -204,7 +181,7 @@ console.log("category data",data);
                     {/* <a href="#" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"> */}
                     {/* <i className="icon-shopping-cart" /> */}
                     {/* <span className="cart-count">2</span> */}
-                    <CgProfile />
+                    <CgProfile size={24} />
                     <span className="cart-txt">Profile</span>
                     {/* </a> */}
                   </Link>
@@ -212,15 +189,19 @@ console.log("category data",data);
                 {/* End .cart-dropdown */}
 
                 {auth?.name && (
-                <Link to="/" onClick={OnHandleLogout} className="wishlist-link">
-                  {/* <a href="wishlist.html" className="wishlist-link"> */}
-                  <FiLogOut style={{ fontSize: "18px", marginRight: "5px" }} />
-                  <span className="cart-txt">Logout</span>
+                  <Link
+                    to="/"
+                    onClick={onHandleLogout}
+                    className="wishlist-link"
+                  >
+                    {/* <a href="wishlist.html" className="wishlist-link"> */}
+                    {/* <FiLogOut style={{ fontSize: "18px", marginRight: "5px" }} /> */}
+                    <FiLogOut size={24}  />
+                    <span className="cart-txt">Logout</span>
 
-                  {/* </a> */}
-                </Link>
+                    {/* </a> */}
+                  </Link>
                 )}
-
               </div>
             </div>
             {/* End .header-right */}
@@ -267,7 +248,7 @@ console.log("category data",data);
                         <li>
                           <a>
                             <button
-                              onClick={() => handleCategoryClick(data)}
+                              onClick={() => handleCategoryClick(data?.name)}
                             >
                               {data?.name}
                             </button>{" "}

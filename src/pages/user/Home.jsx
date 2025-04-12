@@ -240,7 +240,7 @@ const Home = () => {
 
           if(products.products.length > 0){
 
-           return <div className="container" key={products._id}>
+           return <div className={`container ${products.name}`} key={products._id}>
               <div className="heading heading-flex heading-border mb-3">
                 <div className="heading-left">
                   <h2 className="title">{products.name}</h2>{/* End .title */}

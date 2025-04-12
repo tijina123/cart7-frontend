@@ -113,6 +113,18 @@ const UserService = () => {
     return response?.data;
   };
 
+  //get all data from orders
+  const getOrder = async () => {
+
+    const response = await axiosPrivate.get("/order/details");
+    return response.data;
+};
+
+const updateStatus = async (orderId,data) => {
+  const response = await axiosPrivate.put(`/order/delivery-status/${orderId}`,data);
+  return response.data;
+};
+
   return {
     getHomeProductsByCategory,
     getHomeProducts,
@@ -131,7 +143,9 @@ const UserService = () => {
     getHomeCategory,
     getAddress,
     putSelectAddress,
-    putFilterProducts
+    putFilterProducts,
+    getOrder,
+    updateStatus
   };
 };
 
