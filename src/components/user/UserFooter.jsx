@@ -51,13 +51,13 @@ const UserFooter = () => {
                 <h4 className="widget-title">Customer Service</h4>
                 <ul className="widget-list">
                   <li>
-                    <a href="/shipping">Shipping Info</a>
+                    <a href="/terms-conditions">Terms of Use</a>
                   </li>
                   <li>
-                    <a href="/returns">Returns</a>
+                    <a href="/privacy-policy">Privacy Policy</a>
                   </li>
                   <li>
-                    <a href="/support">Support</a>
+                    <a href="/return-refund">Return & Refund Policy</a>
                   </li>
                 </ul>
               </div>
@@ -66,16 +66,15 @@ const UserFooter = () => {
             {/* My Account */}
             <div className="col-sm-6 col-lg-3">
               <div className="widget">
-                <h4 className="widget-title">My Account</h4>
+                <h4 className="widget-title">Contact Us</h4>
                 <ul className="widget-list">
                   <li>
-                    <a href="/login">Sign In</a>
+                    <a href="tel:+1234567890">Phone: +91 7034 133 111</a>
                   </li>
                   <li>
-                    <a href="/cart">My Cart</a>
-                  </li>
-                  <li>
-                    <a href="/orders">Order History</a>
+                    <a href="mailto:support@example.com">
+                      Email: info@cloud7brandingstudio.com
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -102,10 +101,18 @@ const UserFooter = () => {
             </li>
           </ul>
           <div className="social-icons">
-            <a href="https://www.facebook.com/Cart7online/" className="social-icon" title="Facebook">
+            <a
+              href="https://www.facebook.com/Cart7online/"
+              className="social-icon"
+              title="Facebook"
+            >
               <i className="icon-facebook-f" />
             </a>
-            <a href="https://www.instagram.com/cart7online?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="social-icon" title="Instagram">
+            <a
+              href="https://www.instagram.com/cart7online?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              className="social-icon"
+              title="Instagram"
+            >
               <i className="icon-instagram" />
             </a>
             <a href="#" className="social-icon" title="Twitter">
