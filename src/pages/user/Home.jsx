@@ -24,7 +24,8 @@ const Home = () => {
   const getProductsByCategory = async () => {
     try {
       const response = await getHomeProductsByCategory();
-      console.log(response?.productsByCategory, "============response?.productsByCategory");
+      console.log(response, "============response?.productsByCategory 1");
+      console.log(response?.productsByCategory, "============response?.productsByCategory 2");
 
       setAllProducts(response?.productsByCategory);
 
