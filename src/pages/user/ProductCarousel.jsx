@@ -19,28 +19,29 @@ const ProductCarousel = ({ products }) => {
     }
   }, [products]);
 
-  const handleAddToCart = async (userId, productId, quantity) => {
+  const handleAddToCart = async ( productId, quantity) => {
     try {
-      const data = { userId, productId, quantity };
+      const data = {  productId, quantity };
       const response = await addToCart(data);
       if (response?.success) {
         toast.success(response?.message);
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message);
+      // toast.error(error?.response?.data?.message);
+      toast.error("Please login to add product to cart");
     }
   };
 
-  const handleAddToWishlist = async (userId, productId, quantity) => {
+  const handleAddToWishlist = async (productId, quantity) => {
     try {
-      const data = { userId, productId, quantity };
+      const data = { productId, quantity };
       const response = await addToWihlist(data);
 
       if (response?.success) {
         toast.success(response?.message);
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message);
+      toast.error("Please login to add product to wishlist");
     }
   };
 
@@ -85,7 +86,7 @@ const ProductCarousel = ({ products }) => {
                   <button
                     onClick={() =>
                       handleAddToWishlist(
-                        "67bffce8e7dae9e3c14f3c15",
+                        
                         data._id,
                         1
                       )
@@ -100,7 +101,7 @@ const ProductCarousel = ({ products }) => {
                     className="btn-product btn-cart"
                     title="Add to cart"
                     onClick={() =>
-                      handleAddToCart("67bffce8e7dae9e3c14f3c15", data._id, 1)
+                      handleAddToCart( data._id, 1)
                     }
                   >
                     <span>add to cart</span>

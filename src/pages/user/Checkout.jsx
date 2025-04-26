@@ -112,7 +112,11 @@ const Checkout = () => {
           navigate("/order-success");
         }
       }
+      else{
+        toast.error(response?.message);
+      }
     } catch (error) {
+      toast.error(error?.response?.data?.message);
       console.error("Error sending order:", error);
     }
   };
