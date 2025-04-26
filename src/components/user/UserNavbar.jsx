@@ -26,23 +26,23 @@ const UserNavbar = () => {
       const response = await getHomeCategory();
       // response?.product?.reverse()
       setCategory(response?.categories);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const onClose = async () => {
     setIsOpen(false);
   };
   const onHandleLogout = async () => {
-        // Clear local storage
-        localStorage.clear();
+    // Clear local storage
+    localStorage.clear();
 
-        // Optional: redirect to login page or homepage
-        window.location.href = "/"; // Change the path based on your route
+    // Optional: redirect to login page or homepage
+    window.location.href = "/"; // Change the path based on your route
   };
 
   const handleCategoryClick = async (data) => {
     document.querySelector(`.${data}`)?.scrollIntoView({ behavior: "smooth" });
-    
+
   };
 
 
@@ -196,7 +196,7 @@ const UserNavbar = () => {
                   >
                     {/* <a href="wishlist.html" className="wishlist-link"> */}
                     {/* <FiLogOut style={{ fontSize: "18px", marginRight: "5px" }} /> */}
-                    <FiLogOut size={24}  />
+                    <FiLogOut size={24} />
                     <span className="cart-txt">Logout</span>
 
                     {/* </a> */}
