@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import UserService from "../../services/user-api-services/UserService";
@@ -7,10 +7,12 @@ import RegisterModal from "./RegisterModal";
 import { CgProfile } from "react-icons/cg";
 import useAuth from "../../hooks/useAuth";
 import { FiLogOut } from "react-icons/fi";
+import toast, { Toaster } from "react-hot-toast";
+
 
 const UserNavbar = () => {
   const { auth } = useAuth();
-
+  const navigate = useNavigate();
   const { getHomeCategory, putFilterProducts } = UserService();
 
   const [category, setCategory] = useState([]);
@@ -33,22 +35,35 @@ const UserNavbar = () => {
     setIsOpen(false);
   };
   const onHandleLogout = async () => {
-        // Clear local storage
-        localStorage.clear();
+    // Clear local storage
+    localStorage.clear();
 
-        // Optional: redirect to login page or homepage
-        window.location.href = "/"; // Change the path based on your route
+    // Optional: redirect to login page or homepage
+    window.location.href = "/"; // Change the path based on your route
   };
 
   const handleCategoryClick = async (data) => {
     document.querySelector(`.${data}`)?.scrollIntoView({ behavior: "smooth" });
-    
+  };
+  const handleWishlist = () => {
+    if (auth?.name) {
+      navigate('/wishlist');
+    } else {
+            toast.error("Please login to view wishlist");   
+    }
   };
 
-
+  const handleCart = () => {
+    if (auth?.name) {
+      navigate('/cart');
+    } else {
+            toast.error("Please login to view cart");
+    }
+  };
 
   return (
     <>
+    <Toaster position="top-center" reverseOrder={false} />
       <header className="header header-10 header-intro-clearance">
         <div className="header-top mt-1">
           <div className="container">
@@ -158,34 +173,40 @@ const UserNavbar = () => {
               {/* End .header-search */}
             </div>
             <div className="header-right">
-              <div className="header-dropdown-link">
-                <Link to="/wishlist" className="wishlist-link">
+              <div className="header-dropdown-link" onClick={handleWishlist}>
+                <button  className="wishlist-link">
                   {/* <a href="wishlist.html" className="wishlist-link"> */}
                   <i className="icon-heart-o" />
                   {/* <span className="wishlist-count">3</span> */}
                   <span className="wishlist-txt">Wishlist</span>
                   {/* </a> */}
-                </Link>
-                <div className="dropdown cart-dropdown">
-                  <Link to="/cart" className="dropdown-toggle" role="button">
+                </button>
+                <div className="dropdown cart-dropdown" onClick={handleCart}>
+                  <button  className="dropdown-toggle" role="button">
                     {/* <a href="#" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"> */}
                     <i className="icon-shopping-cart" />
                     {/* <span className="cart-count">2</span> */}
                     <span className="cart-txt">Cart</span>
                     {/* </a> */}
-                  </Link>
+                  </button>
                 </div>
                 {/* End .cart-dropdown */}
-                <div className="dropdown cart-dropdown">
-                  <Link to="/profile" className="dropdown-toggle" role="button">
-                    {/* <a href="#" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"> */}
-                    {/* <i className="icon-shopping-cart" /> */}
-                    {/* <span className="cart-count">2</span> */}
-                    <CgProfile size={24} />
-                    <span className="cart-txt">Profile</span>
-                    {/* </a> */}
-                  </Link>
-                </div>
+                {auth?.name && (
+                  <div className="dropdown cart-dropdown">
+                    <Link
+                      to="/profile"
+                      className="dropdown-toggle"
+                      role="button"
+                    >
+                      {/* <a href="#" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"> */}
+                      {/* <i className="icon-shopping-cart" /> */}
+                      {/* <span className="cart-count">2</span> */}
+                      <CgProfile size={24} />
+                      <span className="cart-txt">Profile</span>
+                      {/* </a> */}
+                    </Link>
+                  </div>
+                )}
                 {/* End .cart-dropdown */}
 
                 {auth?.name && (
@@ -196,7 +217,7 @@ const UserNavbar = () => {
                   >
                     {/* <a href="wishlist.html" className="wishlist-link"> */}
                     {/* <FiLogOut style={{ fontSize: "18px", marginRight: "5px" }} /> */}
-                    <FiLogOut size={24}  />
+                    <FiLogOut size={24} />
                     <span className="cart-txt">Logout</span>
 
                     {/* </a> */}
