@@ -54,6 +54,13 @@ const UserNavbar = () => {
             toast.error("Please login to view cart");
     }
   };
+  const handleWishlist = () => {
+    if (auth?.name) {
+      navigate('/wishlist');
+    } else {
+            toast.error("Please login to view wishlist");
+    }
+  };
 
   return (
     <>
@@ -167,16 +174,17 @@ const UserNavbar = () => {
               {/* End .header-search */}
             </div>
             <div className="header-right">
-              <div className="header-dropdown-link" onClick={handleWishlist}>
-                <button  className="wishlist-link">
+              <div className="header-dropdown-link" >
+                <button  className="wishlist-link" onClick={handleWishlist}>
                   {/* <a href="wishlist.html" className="wishlist-link"> */}
                   <i className="icon-heart-o" />
                   {/* <span className="wishlist-count">3</span> */}
                   <span className="wishlist-txt">Wishlist</span>
                   {/* </a> */}
                 </button>
-                <div className="dropdown cart-dropdown" onClick={handleCart}>
-                  <button  className="dropdown-toggle" role="button">
+
+                <div className="dropdown cart-dropdown" >
+                  <button  className="dropdown-toggle" role="button" onClick={handleCart}>
                     {/* <a href="#" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"> */}
                     <i className="icon-shopping-cart" />
                     {/* <span className="cart-count">2</span> */}
