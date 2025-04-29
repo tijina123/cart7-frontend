@@ -100,8 +100,7 @@ const Checkout = () => {
       const response = await postOrder({ paymentMethod });
 
       if (response?.success) {
-        console.log("Order placed successfully:", response);
-
+       
         if (response?.paymentMethod == "UPI") {
           console.log("Razorpay Order =========  ", response?.razorpayOrder);
 
@@ -152,22 +151,34 @@ const Checkout = () => {
 
       // Initialize Razorpay
       const options = {
-        key: "rzp_test_zVBhrL4CVfIezv", // Replace with Razorpay Key ID
+        key: "rzp_live_6RbhpjIk36lqtu", // Replace with Razorpay Key ID
         amount: data.amount,
         currency: "INR",
-        name: "Your E-commerce",
+        name: "Cart7",
         description: "Purchase Description",
         order_id: data.id,
-        handler: function (response) {
-          console.log("Payment Success:", response);
-          alert("Payment Successful!");
-          // Call backend to verify payment (optional)
+        handler: async function (response) {
+
+          const verifyRes = await axios.post('/order/payment/verify-payment', {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          });
+
+          if (verifyRes.data.success) {
+            alert("Payment Successful!");
+          } else {
+            alert("Payment Failed!");
+          }
+
         },
+        
         prefill: {
           name: "John Doe",
           email: "johndoe@example.com",
           contact: "9999999999",
         },
+        
         theme: {
           color: "#3399cc",
         },
