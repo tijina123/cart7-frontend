@@ -35,8 +35,8 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/order-success" element={<OrderSuccess />} />
             </Route>
-            
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-conditions" element={<TermsandConditions />} />
                 <Route path="/return-refund" element={<ReturnPolicy />} />
                 <Route path="/contact" element={<Contact />} />

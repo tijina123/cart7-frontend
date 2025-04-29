@@ -18,6 +18,7 @@ const SubFooter = () => {
   const [registerFormData, setRegisterFormData] = useState({
     name: "",
     email: "",
+    phone:"",
     password: "",
     role: "user",
   });
@@ -569,6 +570,21 @@ const handleCategoryClick = async (data) => {
                               value={registerFormData?.email}
                               id="register-email"
                               name="email"
+                              required
+                            />
+                          </div>
+                          {/* End .form-group */}
+                          <div className="form-group">
+                            <label htmlFor="register-email">
+                              Your phone number *
+                            </label>
+                            <input
+                              type="email"
+                              className="form-control"
+                              onChange={handleChangeRegister}
+                              value={registerFormData?.phone}
+                              id="register-email"
+                              name="phone"
                               required
                             />
                           </div>
