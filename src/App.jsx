@@ -26,23 +26,23 @@ function App() {
     return (
         <Routes>
 
+            
             <Route element={<UserProtectedRoute />}>
                 <Route path="/" element={<Home />} />
-                {/* <Route path="/" element={<RegisterModal isOpen={true} />} /> */}
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/order-success" element={<OrderSuccess />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            </Route>
+            
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-conditions" element={<TermsandConditions />} />
                 <Route path="/return-refund" element={<ReturnPolicy />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/faq" element={<FAQ />} />
-                <Route path="/about" element={<About />} />
-           
-               
-            </Route>
+                <Route path="/about" element={<About />} /> 
+
 
             <Route path="*" element={<NotFound />} />
         </Routes>
