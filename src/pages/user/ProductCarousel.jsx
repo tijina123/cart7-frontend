@@ -126,7 +126,7 @@ const ProductCarousel = ({ products }) => {
               </figure>
               <div className="product-body">
                 <div className="product-cat">
-                  <a href="#">Furniture</a>
+                  {/* <a href="#">Furniture</a> */}
                 </div>
                 <h3 className="product-title">
                   <a >{data.name}</a>
