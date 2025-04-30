@@ -45,6 +45,8 @@ const UserNavbar = () => {
   };
 
   const handleCategoryClick = async (data) => {
+    console.log(data,"===handleCategoryClick");
+    
     document.querySelector(`.${data}`)?.scrollIntoView({ behavior: "smooth" });
     
   };

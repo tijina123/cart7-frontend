@@ -95,7 +95,7 @@ const ProductCarousel = ({ products }) => {
                   src={data?.images?.[0]}
                   alt="Product image"
                   className="product-image"
-                  style={{ height: "200px", objectFit: "cover" }}
+                  style={{ height: "200px", objectFit: "contain",mixBlendMode: 'multiply', }}
                 />
 
                 <div className="product-action-vertical">
@@ -129,7 +129,7 @@ const ProductCarousel = ({ products }) => {
                   <a href="#">Furniture</a>
                 </div>
                 <h3 className="product-title">
-                  <a href="product.html">{data.name}</a>
+                  <a >{data.name}</a>
                 </h3>
                 <div className="product-price">
                   <span className="new-price">₹ {data?.sale_price}</span>
