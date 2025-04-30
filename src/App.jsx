@@ -3,6 +3,7 @@ import "./assets/styles/globals.css";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/user/Home";
 
+
 import UserProtectedRoute from "./components/protected-route/UserProtectedRoute";
 
 import NotFound from "./pages/not-found/NotFound";

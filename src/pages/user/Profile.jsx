@@ -12,7 +12,7 @@ const Dashboard = () => {
   const [userDetails, setUserDetails] = useState(auth);
   const [allOrders, setAllOrders] = useState([]);
 
-  console.log(userDetails, "====userDetails");
+
 
   const [showReturnModal, setShowReturnModal] = useState(false);
   const [returnOrderId, setReturnOrderId] = useState(null);
@@ -56,8 +56,7 @@ const Dashboard = () => {
   };
 
   const handleSelectAddress = async (addressId) => {
-    console.log("fetchAddress");
-
+ 
     try {
       const response = await putSelectAddress(addressId);
       window.location.reload();
@@ -527,7 +526,10 @@ const Dashboard = () => {
                         className="tab-pane fade show active"
                         id="tab-account"
                       >
+                        
                         <form>
+                        <div className="row">
+                        <div className="col-sm-6">
                           <label>Name *</label>
                           <input
                             type="text"
@@ -535,6 +537,8 @@ const Dashboard = () => {
                             className="form-control"
                             required
                           />
+                          </div>
+                          <div className="col-sm-6">
                           <label>Mobile number *</label>
                           <input
                             type="text"
@@ -542,6 +546,8 @@ const Dashboard = () => {
                             className="form-control"
                             required
                           />
+                          </div>
+                          <div className="col-sm-12">
                           <label>Email Address *</label>
                           <input
                             type="email"
@@ -549,7 +555,9 @@ const Dashboard = () => {
                             className="form-control"
                             required
                           />
+                          </div>
                           {/* <button type="submit" className="btn btn-outline-primary-2">Save Changes</button> */}
+                          </div>
                         </form>
                       </div>
                     </div>

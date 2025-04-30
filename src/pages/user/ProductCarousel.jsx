@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Modal } from "bootstrap";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
@@ -19,16 +20,24 @@ const ProductCarousel = ({ products }) => {
     }
   }, [products]);
 
-  const handleAddToCart = async ( productId, quantity) => {
+  const handleAddToCart = async (productId, quantity) => {
     try {
-      const data = {  productId, quantity };
+      const data = { productId, quantity };
       const response = await addToCart(data);
       if (response?.success) {
         toast.success(response?.message);
       }
     } catch (error) {
+
       // toast.error(error?.response?.data?.message);
-      toast.error("Please login to add product to cart");
+      // toast.error("Please login to add product to cart");
+
+      // Show Bootstrap modal programmatically
+      const modalEl = document.getElementById("signin-modal");
+      if (modalEl) {
+        const modal = new Modal(modalEl);
+        modal.show();
+      }
     }
   };
 
@@ -41,7 +50,14 @@ const ProductCarousel = ({ products }) => {
         toast.success(response?.message);
       }
     } catch (error) {
-      toast.error("Please login to add product to wishlist");
+      // toast.error("Please login to add product to wishlist");
+
+      // Show Bootstrap modal programmatically
+      const modalEl = document.getElementById("signin-modal");
+      if (modalEl) {
+        const modal = new Modal(modalEl);
+        modal.show();
+      }
     }
   };
 
@@ -86,7 +102,7 @@ const ProductCarousel = ({ products }) => {
                   <button
                     onClick={() =>
                       handleAddToWishlist(
-                        
+
                         data._id,
                         1
                       )
@@ -101,7 +117,7 @@ const ProductCarousel = ({ products }) => {
                     className="btn-product btn-cart"
                     title="Add to cart"
                     onClick={() =>
-                      handleAddToCart( data._id, 1)
+                      handleAddToCart(data._id, 1)
                     }
                   >
                     <span>add to cart</span>
