@@ -61,7 +61,7 @@ const Home = () => {
                       }
                   }
               }">
-            <div className="intro-slide" style={{ backgroundImage: 'url(assets/images/demos/demo-13/slider/slider-1.jpeg)'}}>
+            <div className="intro-slide" style={{ backgroundImage: 'url(assets/images/demos/demo-13/slider/slider-1.png)'}}>
               <div className="container intro-content">
                 <div className="row">
                   <div className="col-auto offset-lg-3 intro-col">
@@ -80,7 +80,7 @@ const Home = () => {
                 </div>{/* End .row */}
               </div>{/* End .container intro-content */}
             </div>{/* End .intro-slide */}
-            <div className="intro-slide" style={{ backgroundImage: 'url(assets/images/demos/demo-13/slider/slider-2.jpeg)', objectFit: 'contain' }}>
+            <div className="intro-slide" style={{ backgroundImage: 'url(assets/images/demos/demo-13/slider/slider-2.png)', objectFit: 'contain' }}>
               <div className="container intro-content">
                 <div className="row">
                   <div className="col-auto offset-lg-3 intro-col">
@@ -89,7 +89,7 @@ const Home = () => {
                 </div>{/* End .row */}
               </div>{/* End .container intro-content */}
             </div>{/* End .intro-slide */}
-            <div className="intro-slide" style={{ backgroundImage: 'url(assets/images/demos/demo-13/slider/slider-3.jpeg)', objectFit: 'contain' }}>
+            <div className="intro-slide" style={{ backgroundImage: 'url(assets/images/demos/demo-13/slider/slider-3.png)', objectFit: 'contain' }}>
               <div className="container intro-content">
                 <div className="row">
                   <div className="col-auto offset-lg-3 intro-col">
@@ -175,11 +175,11 @@ const Home = () => {
             <div className="col-sm-6 col-lg-3">
               <div className="banner banner-overlay">
                 <a >
-                  <img src="assets/images/demos/demo-13/banners/banner-1.jpg" alt="Banner" />
+                  <img src="assets/images/demos/demo-13/banners/banner-1.png" alt="Banner" />
                 </a>
                 <div className="banner-content">
-                  <h4 className="banner-subtitle text-white"><a >Weekend Sale</a></h4>{/* End .banner-subtitle */}
-                  <h3 className="banner-title text-white"><a >Lighting <br />&amp; Accessories <br /><span>25% off</span></a></h3>{/* End .banner-title */}
+                  {/* <h4 className="banner-subtitle text-white"><a >Weekend Sale</a></h4> */}
+                  {/* <h3 className="banner-title text-white"><a >Lighting <br />&amp; Accessories <br /><span>25% off</span></a></h3>End .banner-title */}
                   {/* <a  className="banner-link">Shop Now <i className="icon-long-arrow-right" /></a> */}
                 </div>{/* End .banner-content */}
               </div>{/* End .banner */}
@@ -187,11 +187,11 @@ const Home = () => {
             <div className="col-sm-6 col-lg-3 order-lg-last">
               <div className="banner banner-overlay">
                 <a >
-                  <img src="assets/images/demos/demo-13/banners/banner-3.jpg" alt="Banner" />
+                  <img src="assets/images/demos/demo-13/banners/banner-3.png" alt="Banner" />
                 </a>
                 <div className="banner-content">
-                  <h4 className="banner-subtitle text-white"><a >Smart Offer</a></h4>{/* End .banner-subtitle */}
-                  <h3 className="banner-title text-white"><a >Anniversary <br />Special <br /><span>15% off</span></a></h3>{/* End .banner-title */}
+                  {/* <h4 className="banner-subtitle text-white"><a >Smart Offer</a></h4> */}
+                  {/* <h3 className="banner-title text-white"><a >Anniversary <br />Special <br /><span>15% off</span></a></h3>End .banner-title */}
                   {/* <a  className="banner-link">Shop Now <i className="icon-long-arrow-right" /></a> */}
                 </div>{/* End .banner-content */}
               </div>{/* End .banner */}
@@ -199,11 +199,11 @@ const Home = () => {
             <div className="col-lg-6">
               <div className="banner banner-overlay">
                 <a >
-                  <img src="assets/images/demos/demo-13/banners/banner-2.jpg" alt="Banner" />
+                  <img src="assets/images/demos/demo-13/banners/banner-2.png" alt="Banner" />
                 </a>
                 <div className="banner-content">
-                  <h4 className="banner-subtitle text-white d-none d-sm-block"><a >Amazing Value</a></h4>{/* End .banner-subtitle */}
-                  <h3 className="banner-title text-white"><a >Clothes Trending <br />Spring Collection 2019 <br /><span>from ₹12,99</span></a></h3>{/* End .banner-title */}
+                  {/* <h4 className="banner-subtitle text-white d-none d-sm-block"><a >Amazing Value</a></h4> */}
+                  {/* <h3 className="banner-title text-white"><a >Clothes Trending <br />Spring Collection 2019 <br /><span>from ₹12,99</span></a></h3> */}
                   {/* <a  className="banner-link">Discover Now <i className="icon-long-arrow-right" /></a> */}
                 </div>{/* End .banner-content */}
               </div>{/* End .banner */}
@@ -276,11 +276,11 @@ const Home = () => {
             <div className="col-lg-6">
               <div className="banner banner-overlay banner-overlay-light">
                 <a >
-                  <img src="assets/images/demos/demo-13/banners/banner-4.jpg" alt="Banner" />
+                  <img src="assets/images/demos/demo-13/banners/banner-4.png" alt="Banner" />
                 </a>
                 <div className="banner-content">
-                  <h4 className="banner-subtitle d-none d-sm-block"><a >Spring Sale is Coming</a></h4>{/* End .banner-subtitle */}
-                  <h3 className="banner-title"><a >All Smart Watches <br />Discount  <br /><span className="text-primary">15% off</span></a></h3>{/* End .banner-title */}
+                  {/* <h4 className="banner-subtitle d-none d-sm-block"><a >Spring Sale is Coming</a></h4> */}
+                  {/* <h3 className="banner-title"><a >All Smart Watches <br />Discount  <br /><span className="text-primary">15% off</span></a></h3> */}
                   {/* <a  className="banner-link banner-link-dark">Discover Now <i className="icon-long-arrow-right" /></a> */}
                 </div>{/* End .banner-content */}
               </div>{/* End .banner */}
@@ -291,8 +291,8 @@ const Home = () => {
                   <img src="assets/images/demos/demo-13/banners/banner-5.png" alt="Banner" />
                 </a>
                 <div className="banner-content">
-                  <h4 className="banner-subtitle text-white  d-none d-sm-block"><a >Amazing Value</a></h4>{/* End .banner-subtitle */}
-                  <h3 className="banner-title text-white"><a >Headphones Trending <br />JBL Harman <br /><span>from ₹59,99</span></a></h3>{/* End .banner-title */}
+                  {/* <h4 className="banner-subtitle text-white  d-none d-sm-block"><a >Amazing Value</a></h4> */}
+                  {/* <h3 className="banner-title text-white"><a >Headphones Trending <br />JBL Harman <br /><span>from ₹59,99</span></a></h3> */}
                   {/* <a  className="banner-link">Discover Now <i className="icon-long-arrow-right" /></a> */}
                 </div>{/* End .banner-content */}
               </div>{/* End .banner */}
