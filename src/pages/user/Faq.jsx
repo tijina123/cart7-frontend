@@ -1,3 +1,6 @@
+import React, { useState } from "react";
+
+// Sample FAQ data
 const faqData = [
   {
     category: "General Registration Questions",
@@ -79,8 +82,7 @@ const faqData = [
           "Our payment cycle and methods will be clearly outlined in our seller agreement and payment policies. Typically, payments are processed periodically and transferred to your registered bank account after deducting any applicable fees or commissions.",
       },
       {
-        question:
-          "What are the commission fees or charges for selling on Cart7Online.com?",
+        question: "What are the commission fees or charges for selling on Cart7Online.com?",
         answer:
           "Commission rates may vary depending on the product category as well as the seller's category. Our pricing policy or seller agreement will provide a detailed breakdown of the applicable fees.",
       },
@@ -118,8 +120,6 @@ const faqData = [
   },
 ];
 
-import React, { useState } from "react";
-
 const FAQ = () => {
   const [openCategoryIndex, setOpenCategoryIndex] = useState(null);
   const [openQuestionIndex, setOpenQuestionIndex] = useState(null);
@@ -139,16 +139,19 @@ const FAQ = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 text-gray-800">
+    <div className="max-w-4xl mx-auto mt-5 p-6 text-gray-800">
       <h1 className="text-3xl font-bold mb-6">Seller Registration FAQs</h1>
 
       {faqData.map((categoryItem, categoryIndex) => (
         <div key={categoryIndex} className="mb-6">
           <button
             onClick={() => toggleCategory(categoryIndex)}
-            className="w-full text-left text-xl font-semibold mb-2 focus:outline-none"
+            className="w-full text-left text-xl font-semibold mb-2 focus:outline-none flex justify-between items-center"
           >
-            {categoryItem.category}
+            <span>{categoryItem.category}</span>
+            <span className="text-xl">
+              {openCategoryIndex === categoryIndex ? "−" : "+"}
+            </span>
           </button>
 
           {openCategoryIndex === categoryIndex &&
