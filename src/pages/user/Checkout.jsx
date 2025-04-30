@@ -166,7 +166,8 @@ const Checkout = () => {
           });
 
           if (verifyRes.data.success) {
-            alert("Payment Successful!");
+
+             navigate("/order-success");
           } else {
             alert("Payment Failed!");
           }

@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import UserService from "../../services/user-api-services/UserService";
 import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+
 
 const RegisterModal = ({ onClose }) => {
 
@@ -28,30 +30,41 @@ const RegisterModal = ({ onClose }) => {
     companyname: Yup.string().required("Company name is required"),
     email: Yup.string().email("Invalid email format").required("Email is required"),
     password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+    phone: Yup.string()
+  .matches(/^[0-9]{10}$/, "Phone must be 10 digits")
+  .required("Phone is required"),
+
   });
 
 
   const handleSubmit = async (values) => {
 
     console.log("handleSubmit");
-    console.log(values,"===values");
-    
-// return;
+    console.log(values, "===values");
+
+    // return;
     // Handle form submission logic here
     const response = await postRegister(values);
     console.log("Response from API:", response);
-    if (response?.data?.success === true) {
+    if (response?.data?.success) {
+
       // setLoading(true);
       // setError("");
       // navigate("/login");
+            toast.success(response?.data?.message);
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 1000);
       window.location.reload();
     } else {
+      toast.error(response?.data?.message);
       setLoading(false);
     }
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <Toaster position="top-center" reverseOrder={false} />
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -66,7 +79,7 @@ const RegisterModal = ({ onClose }) => {
           </button>
         </div>
         <Formik
-          initialValues={{ name: "", companyname: "", plan: "", email: "", password: "", role: "admin" }}
+          initialValues={{ name: "", companyname: "", plan: "", email: "", password: "", role: "admin" , phone: "", }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
@@ -114,45 +127,59 @@ const RegisterModal = ({ onClose }) => {
                 <ErrorMessage name="email" component="div" className="text-red-500 text-md" />
               </div>
 
-              <div className="mb-4 relative">
-  <label className="block text-md font-medium text-gray-700 mb-1">Plan</label>
-  <div className="relative">
-    <button
-      type="button"
-      onClick={() => setIsPlanOpen(!isPlanOpen)}
-      className="w-full text-left p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-    >
-      {values.plan
-        ? plan.find((p) => p.name === values.plan)?.name || "Select a Plan"
-        : "Select a Plan"}
-    </button>
-
-    {isPlanOpen && (
-      <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
-        {plan.map((option) => (
-          <div
-            key={option.name}
-            onClick={() => {
-              setFieldValue("plan", option.name);
-              setIsPlanOpen(false);
-            }}
-            className={`px-4 py-2 cursor-pointer hover:bg-blue-100 ${
-              values.plan === option.name ? "bg-blue-100 font-semibold" : ""
-            }`}
-          >
-            <div className="flex justify-between">
-              <span>{option.name}</span>
-              <span>
-                ₹{option.amount} - {option.percentage}%
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-    )}
-  </div>
-  <ErrorMessage name="plan" component="div" className="text-red-500 text-md mt-1" />
+              <div className="mb-4">
+  <label className="block text-md font-medium text-gray-700">Phone</label>
+  <input
+    type="tel"
+    name="phone"
+    value={values.phone}
+    onChange={handleChange}
+    onBlur={handleBlur}
+    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    placeholder="Enter your phone number"
+  />
+  <ErrorMessage name="phone" component="div" className="text-red-500 text-md" />
 </div>
+
+
+              <div className="mb-4 relative">
+                <label className="block text-md font-medium text-gray-700 mb-1">Plan</label>
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setIsPlanOpen(!isPlanOpen)}
+                    className="w-full text-left p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    {values.plan
+                      ? plan.find((p) => p.name === values.plan)?.name || "Select a Plan"
+                      : "Select a Plan"}
+                  </button>
+
+                  {isPlanOpen && (
+                    <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
+                      {plan.map((option) => (
+                        <div
+                          key={option.name}
+                          onClick={() => {
+                            setFieldValue("plan", option.name);
+                            setIsPlanOpen(false);
+                          }}
+                          className={`px-4 py-2 cursor-pointer hover:bg-blue-100 ${values.plan === option.name ? "bg-blue-100 font-semibold" : ""
+                            }`}
+                        >
+                          <div className="flex justify-between">
+                            <span>{option.name}</span>
+                            <span>
+                              ₹{option.amount} - {option.percentage}%
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <ErrorMessage name="plan" component="div" className="text-red-500 text-md mt-1" />
+              </div>
 
 
               <div className="mb-4">

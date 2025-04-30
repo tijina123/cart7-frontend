@@ -116,9 +116,9 @@ const SubFooter = () => {
         
         toast.success(response?.data?.message);
 
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 1000);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
 
       } else {
         toast.error("Login failed! Please check your credentials.");
