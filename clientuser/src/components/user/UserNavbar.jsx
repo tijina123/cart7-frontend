@@ -105,8 +105,8 @@ const UserNavbar = () => {
                     </select>
                   </div>{/* End .select-custom */}
                   <label htmlFor="q" className="sr-only">Search</label>
-                  <input type="search" className="form-control" name="q" id="q" placeholder="Search product ..." required />
-                  <button className="btn btn-primary" type="submit"><i className="icon-search" /></button>
+                  <input type="search" className="form-control" name="q" id="q" placeholder="Search category" required />
+                  <button className="btn btn-primary" type="button"><i className="icon-search" /></button>
                 </div>{/* End .header-search-wrapper */}
               </form>
             </div>{/* End .header-search */}

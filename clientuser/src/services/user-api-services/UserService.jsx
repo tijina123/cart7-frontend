@@ -124,6 +124,14 @@ const UserService = () => {
             return response?.data
         }
 
+        //get all data from orders
+    const getOrder = async () => {
+
+        const response = await axiosPrivate.get("/order/details");
+        return response.data;
+    };
+
+
     return {
         getHomeProductsByCategory,
         getHomeProducts,
@@ -141,7 +149,8 @@ const UserService = () => {
         checkPorductAvailability,
         getHomeCategory,
         getAddress,
-        putSelectAddress
+        putSelectAddress,
+        getOrder,
     };
 };
 
