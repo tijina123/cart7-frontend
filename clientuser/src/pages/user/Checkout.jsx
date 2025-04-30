@@ -18,9 +18,7 @@ const Checkout = () => {
   const [allAddress, setAllAddress] = useState([]);
 
   const [total, setTotal] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState("UPI");
-
-  // const [order, setOrder] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("COD");
 
   const [address, setAddress] = useState({
     fullName: "",
@@ -35,7 +33,7 @@ const Checkout = () => {
   });
 
   const [orderData, setOrderData] = useState({
-    paymentMethod: "UPI",
+    paymentMethod: "COD",
     totalPrice: "",
   });
 
@@ -60,9 +58,7 @@ const Checkout = () => {
         ...prevState, // Spread previous state
         ...response?.address,
       }));
-    } catch (err) {
-      // setError(err.response?.data?.message || "Something went wrong");
-    }
+    } catch (err) {}
   };
 
   const handleChange = (e) => {
@@ -83,7 +79,6 @@ const Checkout = () => {
   };
 
   const handleSubmitAddress = async () => {
-    // e.preventDefault();
     try {
       const response = await postAddress(address);
       console.log("Address added successfully:", response);
@@ -97,36 +92,30 @@ const Checkout = () => {
       }
     } catch (error) {
       console.error("Error adding address:", error);
-      // alert("Failed to add address.");
     }
   };
 
   const sendOrder = async () => {
     try {
-
-      // const response = await checkPorductAvailability();
-
-      const response = await postOrder({paymentMethod});
+      const response = await postOrder({ paymentMethod });
 
       if (response?.success) {
-
-        console.log("Order placed successfully:", response);  
-
-      if (response?.paymentMethod == "UPI") {
-
-        console.log("Razorpay Order =========  ", response?.razorpayOrder);
-
-        handlePayment(response?.razorpayOrder);
        
-      } else{
-        
-        console.log("COD Order =========  ", response);
-        
-        navigate('/order-success');
-      }
+        if (response?.paymentMethod == "UPI") {
+          console.log("Razorpay Order =========  ", response?.razorpayOrder);
 
+          handlePayment(response?.razorpayOrder);
+        } else {
+          console.log("COD Order =========  ", response);
+
+          navigate("/order-success");
+        }
+      }
+      else{
+        toast.error(response?.message);
       }
     } catch (error) {
+      toast.error(error?.response?.data?.message);
       console.error("Error sending order:", error);
     }
   };
@@ -162,22 +151,34 @@ const Checkout = () => {
 
       // Initialize Razorpay
       const options = {
-        key: "rzp_test_zVBhrL4CVfIezv", // Replace with Razorpay Key ID
+        key: "rzp_live_0m0wquv3dazfKx", // Replace with Razorpay Key ID
         amount: data.amount,
         currency: "INR",
-        name: "Your E-commerce",
+        name: "Cart7",
         description: "Purchase Description",
         order_id: data.id,
-        handler: function (response) {
-          console.log("Payment Success:", response);
-          alert("Payment Successful!");
-          // Call backend to verify payment (optional)
+        handler: async function (response) {
+
+          const verifyRes = await axios.post('http://localhost:3000/order/payment/verify-payment', {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          });
+
+          if (verifyRes.data.success) {
+            alert("Payment Successful!");
+          } else {
+            alert("Payment Failed!");
+          }
+
         },
-        prefill: {
-          name: "John Doe",
-          email: "johndoe@example.com",
-          contact: "9999999999",
-        },
+        
+        // prefill: {
+        //   name: "John Doe",
+        //   email: "johndoe@example.com",
+        //   contact: "9999999999",
+        // },
+        
         theme: {
           color: "#3399cc",
         },
@@ -242,7 +243,6 @@ const Checkout = () => {
                     </form>
                   </div>
                   {/* End .cart-discount */}
-                  {/* <a href="#" className="btn btn-outline-dark-2"><span>UPDATE CART</span><i className="icon-refresh" /></a> */}
                 </div>
                 {/* End .cart-bottom */}
               </div>
@@ -299,35 +299,35 @@ const Checkout = () => {
                           className="accordion-summary"
                           id="accordion-payment"
                         >
-                            <div className="space-y-3">
-                              <label className="flex items-center space-x-3 text-gray-700">
-                                <input
-                                  type="radio"
-                                  name="payment"
-                                  value="gpay"
-                                  checked={paymentMethod === "UPI"}
-                                  onChange={() => setPaymentMethod("UPI")}
-                                  className="form-radio h-4 w-4 text-blue-500"
-                                />
-                                <span>Google Pay / Phone Pay</span>
-                              </label>
+                          <div className="space-y-3">
+                            <label className="flex items-center space-x-3 text-gray-700">
+                              <input
+                                type="radio"
+                                name="payment"
+                                value="gpay"
+                                checked={paymentMethod === "UPI"}
+                                onChange={() => setPaymentMethod("UPI")}
+                                className="form-radio h-4 w-4 text-blue-500"
+                              />
+                              <span>Google Pay / Phone Pay</span>
+                            </label>
 
-                              <label className="flex items-center space-x-3 text-gray-700">
-                                <input
-                                  type="radio"
-                                  name="payment"
-                                  value="cod"
-                                  checked={paymentMethod === "COD"}
-                                  onChange={() => setPaymentMethod("COD")}
-                                  className="form-radio h-4 w-4 text-blue-500"
-                                />
-                                <span>Cash on Delivery</span>
-                              </label>
-                            </div>
+                            <label className="flex items-center space-x-3 text-gray-700">
+                              <input
+                                type="radio"
+                                name="payment"
+                                value="cod"
+                                checked={paymentMethod === "COD"}
+                                onChange={() => setPaymentMethod("COD")}
+                                className="form-radio h-4 w-4 text-blue-500"
+                              />
+                              <span>Cash on Delivery</span>
+                            </label>
+                          </div>
                           {/* End .card */}
                         </div>
                         {/* End .accordion */}
-                        {/* <button type="submit" className="btn btn-outline-primary-2 btn-order btn-block" onClick={}> */}
+
                         <button
                           type="button"
                           className="btn btn-outline-primary-2 btn-order btn-block"
@@ -481,10 +481,7 @@ const Checkout = () => {
                                 </p>
                                 {/* Select button */}
                                 {address.isDefault ? (
-                                  <button
-                                    className="btn btn-success mt-2"
-                                    // onClick={() => handleSelectAddress(address._id)}
-                                  >
+                                  <button className="btn btn-success mt-2">
                                     Selected Address
                                   </button>
                                 ) : (

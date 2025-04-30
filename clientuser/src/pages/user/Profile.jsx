@@ -3,7 +3,7 @@ import UserService from "../../services/user-api-services/UserService";
 import useAuth from "../../hooks/useAuth";
 
 const Dashboard = () => {
-  const { postAddress, getAddress, getUserData, putSelectAddress, getOrder } =
+  const { postAddress, getAddress, getUserData, putSelectAddress, getOrder,updateStatus } =
     UserService();
   const { auth } = useAuth();
 
@@ -12,7 +12,7 @@ const Dashboard = () => {
   const [userDetails, setUserDetails] = useState(auth);
   const [allOrders, setAllOrders] = useState([]);
 
-  console.log(userDetails, "====userDetails");
+
 
   const [showReturnModal, setShowReturnModal] = useState(false);
   const [returnOrderId, setReturnOrderId] = useState(null);
@@ -50,15 +50,13 @@ const Dashboard = () => {
       console.log("fetchOrder");
 
       const response = await getOrder();
-      console.log(response, "=+=+=+=response");
 
       setAllOrders(response?.orders);
     } catch (error) {}
   };
 
   const handleSelectAddress = async (addressId) => {
-    console.log("fetchAddress");
-
+ 
     try {
       const response = await putSelectAddress(addressId);
       window.location.reload();
@@ -79,43 +77,6 @@ const Dashboard = () => {
     }
   };
 
-  const orders = [
-    {
-      id: "#001",
-      productName: "Product A",
-      productImage:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJj__5FhigmsOiSOt0TpWvfO1THnUXX0X65g&s",
-      status: "Processing",
-      total: "$120.00",
-      items: 2,
-      details: [
-        { name: "Product A", qty: 1, price: "$60.00" },
-        { name: "Product B", qty: 1, price: "$60.00" },
-      ],
-    },
-    {
-      id: "#002",
-      productName: "Product C",
-      productImage: "https://via.placeholder.com/50",
-      status: "Completed",
-      total: "$75.50",
-      items: 1,
-      details: [{ name: "Product C", qty: 1, price: "$75.50" }],
-    },
-    {
-      id: "#003",
-      productName: "Product D",
-      productImage: "https://via.placeholder.com/50",
-      status: "Cancelled",
-      total: "$50.00",
-      items: 3,
-      details: [
-        { name: "Product D", qty: 2, price: "$20.00" },
-        { name: "Product E", qty: 1, price: "$30.00" },
-      ],
-    },
-  ];
-
   const handleViewDetails = (order) => {
     setSelectedOrder(order);
   };
@@ -127,11 +88,17 @@ const Dashboard = () => {
       [name]: type === "checkbox" ? checked : value,
     });
   };
+
   console.log(allAddress, "===========allAddress");
 
-  const handleCancelOrder = (orderId) => {
+  const handleCancelOrder =async (orderId) => {
     console.log(`Cancel order: ${orderId}`);
     // You can call your cancel API here
+
+          const data = {newStatus:"Cancelled"}
+          const response = await updateStatus(selectedOrder?._id,data);
+
+          window.location.reload();
   };
 
   const handleReturnOrder = (orderId) => {
@@ -139,8 +106,30 @@ const Dashboard = () => {
     setShowReturnModal(true);
   };
 
-  console.log(selectedOrder, "selectedOrder");  
-  
+  const submitReturnOrder = async (e) => {
+    e.preventDefault();
+    // const reason = e.target.reason.value;
+    // const description = e.target.description.value;
+
+    // console.log("Return submitted for Order ID:", returnOrderId);
+    // console.log("Return submitted for Order ID:", selectedOrder?._id);
+    // console.log("Reason:", reason);
+    // console.log("Description:", description);
+
+          
+
+          // const data = {newStatus:"Returned", reason}
+          const data = {newStatus:"Returned"}
+
+          const response = await updateStatus(selectedOrder?._id,data);
+          window.location.reload();
+
+    // TODO: Call your backend return order API here
+
+    // setShowReturnModal(false);
+  };
+
+  console.log(selectedOrder, "selectedOrder");
 
   return (
     <div>
@@ -268,7 +257,10 @@ const Dashboard = () => {
                       <div className="tab-pane fade" id="tab-orders">
                         {allOrders.length > 0 ? (
                           <div className="table-responsive">
-                            <table style={{ overflowX: 'auto', minWidth: "600px" }} className="table table-bordered shadow-sm rounded">
+                            <table
+                              style={{ overflowX: "auto", minWidth: "600px" }}
+                              className="table table-bordered shadow-sm rounded"
+                            >
                               <thead className="thead-light">
                                 <tr>
                                   <th className="text-center">Product Name</th>
@@ -534,7 +526,10 @@ const Dashboard = () => {
                         className="tab-pane fade show active"
                         id="tab-account"
                       >
+                        
                         <form>
+                        <div className="row">
+                        <div className="col-sm-6">
                           <label>Name *</label>
                           <input
                             type="text"
@@ -542,6 +537,8 @@ const Dashboard = () => {
                             className="form-control"
                             required
                           />
+                          </div>
+                          <div className="col-sm-6">
                           <label>Mobile number *</label>
                           <input
                             type="text"
@@ -549,6 +546,8 @@ const Dashboard = () => {
                             className="form-control"
                             required
                           />
+                          </div>
+                          <div className="col-sm-12">
                           <label>Email Address *</label>
                           <input
                             type="email"
@@ -556,7 +555,9 @@ const Dashboard = () => {
                             className="form-control"
                             required
                           />
+                          </div>
                           {/* <button type="submit" className="btn btn-outline-primary-2">Save Changes</button> */}
+                          </div>
                         </form>
                       </div>
                     </div>
@@ -619,13 +620,16 @@ const Dashboard = () => {
                                 {selectedOrder.orderItems.product.name}
                               </h6>
                               <p className="mb-1">
-                                <strong>Status:</strong> {selectedOrder.deliveryStatus}
+                                <strong>Status:</strong>{" "}
+                                {selectedOrder.deliveryStatus}
                               </p>
                               <p className="mb-3">
-                                <strong>Quantity:</strong> {selectedOrder.orderItems.quantity}
+                                <strong>Quantity:</strong>{" "}
+                                {selectedOrder.orderItems.quantity}
                               </p>
                               <p className="mb-3">
-                                <strong>Total:</strong> ₹{selectedOrder.totalPrice}
+                                <strong>Total:</strong> ₹
+                                {selectedOrder.totalPrice}
                               </p>
 
                               {/* <h6 className="fw-bold">Items Ordered:</h6>
@@ -639,19 +643,22 @@ const Dashboard = () => {
 
                               {/* Action Buttons */}
                               {/* {selectedOrder.status === "Processing" && ( */}
-                              {true && (
-                                <button
-                                  className="btn btn-danger mt-3 w-100"
-                                  onClick={() =>
-                                    handleCancelOrder(selectedOrder.id)
-                                  }
-                                >
-                                  Cancel Order
-                                </button>
-                              )}
+                              {selectedOrder?.deliveryStatus &&
+                                ["processing", "shipped"].includes(
+                                  selectedOrder.deliveryStatus.toLowerCase()
+                                ) && (
+                                  <button
+                                    className="btn btn-danger mt-3 w-100"
+                                    onClick={() =>
+                                      handleCancelOrder(selectedOrder.id)
+                                    }
+                                  >
+                                    Cancel Order
+                                  </button>
+                                )}
 
                               {/* {selectedOrder.status === "Completed" && ( */}
-                              {true && (
+                              {selectedOrder?.deliveryStatus == "Delivered" && (
                                 <button
                                   className="btn btn-warning mt-3 w-100"
                                   onClick={() =>
@@ -710,25 +717,7 @@ const Dashboard = () => {
                             </div>
 
                             <div className="modal-body px-4 pt-0 pb-4">
-                              <form
-                                onSubmit={(e) => {
-                                  e.preventDefault();
-                                  const reason = e.target.reason.value;
-                                  const description =
-                                    e.target.description.value;
-
-                                  console.log(
-                                    "Return submitted for Order ID:",
-                                    returnOrderId
-                                  );
-                                  console.log("Reason:", reason);
-                                  console.log("Description:", description);
-
-                                  // TODO: Call your backend return order API here
-
-                                  setShowReturnModal(false);
-                                }}
-                              >
+                              <form onSubmit={submitReturnOrder}>
                                 <div className="mb-4">
                                   <label
                                     htmlFor="reason"

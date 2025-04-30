@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import UserService from "../../services/user-api-services/UserService";
 import useAuth from "../../hooks/useAuth";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
+import { FiLogOut } from "react-icons/fi";
+import { Modal } from "bootstrap";
 
 
 const SubFooter = () => {
-  const { postLogin, postRegister } = UserService();
-  const { setAuth } = useAuth();
+  const { postLogin, postRegister, getHomeCategory } = UserService();
+  const { setAuth,auth } = useAuth();
 
   const [singinFormData, setSinginFormData] = useState({
     email: "",
@@ -18,44 +20,55 @@ const SubFooter = () => {
   const [registerFormData, setRegisterFormData] = useState({
     name: "",
     email: "",
+    phone:"",
     password: "",
     role: "user",
   });
 
+  const [forgotForm, setForgotForm] = useState({ mobile: "" });
+  const [otpForm, setOtpForm] = useState({ otp: "" });
+  const [resetPasswordForm, setResetPasswordForm] = useState({
+    newPassword: "",
+    confirmPassword: "",
+  });
 
-  const [forgotForm, setForgotForm] = useState({ mobile: '' });
-const [otpForm, setOtpForm] = useState({ otp: '' });
-const [resetPasswordForm, setResetPasswordForm] = useState({
-  newPassword: '',
-  confirmPassword: ''
-});
+  const [category, setCategory] = useState([]);
 
+  useEffect(() => {
+    getCategory();
+  }, []);
 
+  const getCategory = async () => {
+    try {
+      const response = await getHomeCategory();
+      // response?.product?.reverse()
+      setCategory(response?.categories);
+    } catch (error) {}
+  };
 
-const handleForgotChange = (e) =>
-  setForgotForm({ ...forgotForm, [e.target.name]: e.target.value });
+  const handleForgotChange = (e) =>
+    setForgotForm({ ...forgotForm, [e.target.name]: e.target.value });
 
-const handleOtpChange = (e) =>
-  setOtpForm({ ...otpForm, [e.target.name]: e.target.value });
+  const handleOtpChange = (e) =>
+    setOtpForm({ ...otpForm, [e.target.name]: e.target.value });
 
-const handleResetPasswordChange = (e) =>
-  setResetPasswordForm({ ...resetPasswordForm, [e.target.name]: e.target.value });
+  const handleResetPasswordChange = (e) =>
+    setResetPasswordForm({
+      ...resetPasswordForm,
+      [e.target.name]: e.target.value,
+    });
 
-const handleResetPasswordSubmit = (e) => {
-  e.preventDefault();
-  if (resetPasswordForm.newPassword !== resetPasswordForm.confirmPassword) {
-    alert('Passwords do not match!');
-    return;
-  }
+  const handleResetPasswordSubmit = (e) => {
+    e.preventDefault();
+    if (resetPasswordForm.newPassword !== resetPasswordForm.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
 
-  // update password logic...
-  console.log('New password:', resetPasswordForm.newPassword);
-  $('#reset-password-modal').modal('hide');
-};
-
-
-
-
+    // update password logic...
+    console.log("New password:", resetPasswordForm.newPassword);
+    $("#reset-password-modal").modal("hide");
+  };
 
   const handleChangeSingin = (e) => {
     setSinginFormData((prev) => ({
@@ -83,12 +96,12 @@ const handleResetPasswordSubmit = (e) => {
       console.log("Form Data Submitted singinFormData:", response);
 
       if (response?.data?.success) {
-
         const accessToken = response?.data?.accessToken;
         const role = response?.data?.userData?.role;
         const image = response?.data?.userData?.image || "";
         const name = response?.data?.userData?.name || "";
         const email = response?.data?.userData?.email || "";
+        const phone = response?.data?.userData?.phone || "";
 
         //localStorage.setItem("password", password)
 
@@ -97,35 +110,21 @@ const handleResetPasswordSubmit = (e) => {
         localStorage.setItem("profileImage", image);
         localStorage.setItem("name", name);
         localStorage.setItem("email", email);
+        localStorage.setItem("phone", phone);
 
-        setAuth({ accessToken, role, image, name, email });
+        setAuth({ accessToken, role, image, name, email, phone });
+        
         toast.success(response?.data?.message);
 
-        setTimeout(() => {
-          window.location.reload();
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 1000);
 
-        }, 3000);
-        
-        //   switch(role){
-        //       case 'Super Admin':
-        //           navigate("/super-admin")
-        //           break
-        //       case 'admin':
-        //           navigate("/admin")
-        //           break
-        //       case 'Manager':
-        //           navigate("/manager")
-        //           break
-        //       case 'user':
-        //           navigate("/")
-        //           break
-        //   }
-      }
-      else {
+      } else {
         toast.error("Login failed! Please check your credentials.");
       }
-    } catch (error) {      
-        toast.error("Login failed! Please check your credentials.");
+    } catch (error) {
+      toast.error("Login failed! Please check your credentials.");
     }
   };
 
@@ -133,41 +132,63 @@ const handleResetPasswordSubmit = (e) => {
     e.preventDefault();
     console.log("Form Data Submitted:", registerFormData);
     try {
-
       const response = await postRegister(registerFormData);
       if (response?.data?.success) {
-      toast.success(response?.data?.message);
-      setTimeout(() => {
-        window.location.reload();
-
-      }, 3000);
-
-      }
-      else {
+        toast.success(response?.data?.message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } else {
         toast.error("Registration failed! Please check your details.");
       }
     } catch (error) {
       toast.error("Registration failed! Please check your details.");
-
     }
   };
-
 
   const handleForgotPasswordSubmit = (e) => {
     e.preventDefault();
     // send OTP to mobile logic...
-    $('#forgot-password-modal').modal('hide');
-    $('#otp-modal').modal('show');
+    $("#forgot-password-modal").modal("hide");
+    $("#otp-modal").modal("show");
   };
 
-  
   const handleOtpSubmit = (e) => {
     e.preventDefault();
     // validate OTP logic...
-    $('#otp-modal').modal('hide');
-    $('#reset-password-modal').modal('show');
+    $("#otp-modal").modal("hide");
+    $("#reset-password-modal").modal("show");
   };
-  
+
+  const onHandleLogout = async () => {
+    // Clear local storage
+    localStorage.clear();
+
+    // Optional: redirect to login page or homepage
+    window.location.href = "/"; // Change the path based on your route
+};
+
+const handleCategoryClick = async (data) => {
+
+  const menu =document.querySelector(".mobile-menu-close");
+  if (menu) {
+    menu.click(); // Or manipulate the menu to close it however you need
+  }
+
+  document.querySelector(`.${data}`)?.scrollIntoView({ behavior: "smooth" });
+};
+
+const closeModal = () => {
+  const modalEl = document.getElementById("signin-modal");
+  if (modalEl) {
+    const modal = Modal.getInstance(modalEl);
+    if (modal) {
+      modal.hide();
+    }
+  }
+};
+
+
 
   return (
     <>
@@ -235,18 +256,63 @@ const handleResetPasswordSubmit = (e) => {
                 <nav className="mobile-cats-nav">
                   <ul className="mobile-cats-menu">
                     <li>
-                      <Link className="mobile-cats-lead" to="/">
+                      <Link
+                        className="mobile-cats-lead"
+                        to="/"
+                        onClick={() => {
+                          const menu =
+                            document.querySelector(".mobile-menu-close");
+                          if (menu) {
+                            menu.click(); // Or manipulate the menu to close it however you need
+                          }
+                        }}
+                      >
                         Home
                       </Link>
                     </li>
                     <li>
-                      <Link className="mobile-cats-lead" to="/cart">
+                      <Link
+                        className="mobile-cats-lead"
+                        to="/cart"
+                        onClick={() => {
+                          const menu =
+                            document.querySelector(".mobile-menu-close");
+                          if (menu) {
+                            menu.click(); // Or manipulate the menu to close it however you need
+                          }
+                        }}
+                      >
                         Cart
                       </Link>
                     </li>
                     <li>
-                      <Link className="mobile-cats-lead" to="/wishlist">
+                      <Link
+                        className="mobile-cats-lead"
+                        to="/wishlist"
+                        onClick={() => {
+                          const menu =
+                            document.querySelector(".mobile-menu-close");
+                          if (menu) {
+                            menu.click(); // Or manipulate the menu to close it however you need
+                          }
+                        }}
+                      >
                         Wishlist
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className="mobile-cats-lead "
+                        to="/profile"
+                        onClick={() => {
+                          const menu =
+                            document.querySelector(".mobile-menu-close");
+                          if (menu) {
+                            menu.click(); // Or manipulate the menu to close it however you need
+                          }
+                        }}
+                      >
+                        Profile
                       </Link>
                     </li>
                   </ul>
@@ -257,41 +323,16 @@ const handleResetPasswordSubmit = (e) => {
                 <nav className="mobile-nav">
                   <ul className="mobile-menu">
                     <li className="active">
-                      <a href="index.html">Categories</a>
+                      <a >Categories</a>
                       <ul>
-                        <li>
-                          <a href="index-1.html">01 - furniture store</a>
-                        </li>
-                        <li>
-                          <a href="index-2.html">02 - furniture store</a>
-                        </li>
-                        <li>
-                          <a href="index-3.html">03 - electronic store</a>
-                        </li>
-                        <li>
-                          <a href="index-4.html">04 - electronic store</a>
-                        </li>
-                        <li>
-                          <a href="index-5.html">05 - fashion store</a>
-                        </li>
-                        <li>
-                          <a href="index-6.html">06 - fashion store</a>
-                        </li>
+                        {category?.map((data) => (
+                          <li>
+                            <a onClick={() => handleCategoryClick(data?.name)} >{data?.name}</a>
+                          </li>
+                        ))}
                       </ul>
                     </li>
-                    <li>
-                      <a href="category.html">Shop</a>
-                      <ul>
-                        <li>
-                          <a href="cart.html">Cart</a>
-                        </li>
-                        {/* <li><a href="checkout.html">Checkout</a></li> */}
-                        <li>
-                          <a href="wishlist.html">Wishlist</a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li>
+                    {/* <li>
                       <a href="product.html" className="sf-with-ul">
                         Best sellers
                       </a>
@@ -299,34 +340,9 @@ const handleResetPasswordSubmit = (e) => {
                         <li>
                           <a href="product.html">Default</a>
                         </li>
-                        <li>
-                          <a href="product-centered.html">Centered</a>
-                        </li>
-                        <li>
-                          <a href="product-extended.html">
-                            <span>
-                              Extended Info
-                              <span className="tip tip-new">New</span>
-                            </span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="product-gallery.html">Gallery</a>
-                        </li>
-                        <li>
-                          <a href="product-sticky.html">Sticky Info</a>
-                        </li>
-                        <li>
-                          <a href="product-sidebar.html">Boxed With Sidebar</a>
-                        </li>
-                        <li>
-                          <a href="product-fullwidth.html">Full Width</a>
-                        </li>
-                        <li>
-                          <a href="product-masonry.html">Masonry Sticky Info</a>
-                        </li>
+                        
                       </ul>
-                    </li>
+                    </li> */}
                   </ul>
                 </nav>
                 {/* End .mobile-nav */}
@@ -334,7 +350,24 @@ const handleResetPasswordSubmit = (e) => {
               {/* .End .tab-pane */}
             </div>
             {/* End .tab-content */}
-            <div className="social-icons">
+            {auth?.name && (
+
+            <div className="dropdown cart-dropdown">
+              <Link
+                to="/profile"
+                onClick={onHandleLogout}
+                className="dropdown-toggle"
+                role="button"
+              >
+                <FiLogOut style={{ fontSize: "18px", marginRight: "5px" }} />
+                <p>Logout</p>
+
+                {/* </a> */}
+              </Link>
+            </div>
+            )}
+
+            <div className="social-icons mt-4">
               <a
                 href="#"
                 className="social-icon"
@@ -368,14 +401,13 @@ const handleResetPasswordSubmit = (e) => {
                 <i className="icon-youtube" />
               </a>
             </div>
+
             {/* End .social-icons */}
           </div>
           {/* End .mobile-menu-wrapper */}
         </div>
         {/* End .mobile-menu-container */}
         {/* Sign in / Register Modal */}
-
-        
 
         <div
           className="modal fade"
@@ -392,6 +424,7 @@ const handleResetPasswordSubmit = (e) => {
                   className="close"
                   data-dismiss="modal"
                   aria-label="Close"
+                  onClick={closeModal}
                 >
                   <span aria-hidden="true">
                     <i className="icon-close" />
@@ -492,18 +525,15 @@ const handleResetPasswordSubmit = (e) => {
                               Forgot Your Password?
                             </a> */}
 
-<a
-  href="#"
-  className="forgot-link"
-  data-toggle="modal"
-  data-target="#forgot-password-modal"
-  data-dismiss="modal"
->
-  Forgot Your Password?
-</a>
-
-
-
+                            <a
+                              href="#"
+                              className="forgot-link"
+                              data-toggle="modal"
+                              data-target="#forgot-password-modal"
+                              data-dismiss="modal"
+                            >
+                              Forgot Your Password?
+                            </a>
                           </div>
                           {/* End .form-footer */}
                         </form>
@@ -542,6 +572,21 @@ const handleResetPasswordSubmit = (e) => {
                               value={registerFormData?.email}
                               id="register-email"
                               name="email"
+                              required
+                            />
+                          </div>
+                          {/* End .form-group */}
+                          <div className="form-group">
+                            <label htmlFor="register-email">
+                              Your phone number *
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              onChange={handleChangeRegister}
+                              value={registerFormData?.phone}
+                              id="register-email"
+                              name="phone"
                               required
                             />
                           </div>
@@ -607,181 +652,194 @@ const handleResetPasswordSubmit = (e) => {
         {/* forgot password */}
 
         <div
-  className="modal fade"
-  id="forgot-password-modal"
-  tabIndex={-1}
-  role="dialog"
-  aria-hidden="true"
->
-  <div className="modal-dialog modal-dialog-centered" role="document">
-    <div className="modal-content">
-      <div className="modal-body">
-        <button
-          type="button"
-          className="close"
-          data-dismiss="modal"
-          aria-label="Close"
+          className="modal fade"
+          id="forgot-password-modal"
+          tabIndex={-1}
+          role="dialog"
+          aria-hidden="true"
         >
-          <span aria-hidden="true"><i className="icon-close" /></span>
-        </button>
-        <div className="form-box">
-          <h4 className="text-center mb-3">Forgot Password</h4>
-          <form onSubmit={handleForgotPasswordSubmit}>
-            <div className="form-group">
-              <label htmlFor="forgot-phone">Mobile Number *</label>
-              <input
-                type="tel"
-                className="form-control"
-                id="forgot-phone"
-                name="mobile"
-                required
-                value={forgotForm.mobile}
-                onChange={handleForgotChange}
-              />
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-body">
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">
+                    <i className="icon-close" />
+                  </span>
+                </button>
+                <div className="form-box">
+                  <h4 className="text-center mb-3">Forgot Password</h4>
+                  <form onSubmit={handleForgotPasswordSubmit}>
+                    <div className="form-group">
+                      <label htmlFor="forgot-phone">Mobile Number *</label>
+                      <input
+                        type="tel"
+                        className="form-control"
+                        id="forgot-phone"
+                        name="mobile"
+                        required
+                        value={forgotForm.mobile}
+                        onChange={handleForgotChange}
+                      />
+                    </div>
+                    <div className="form-footer">
+                      <button
+                        type="submit"
+                        className="btn btn-outline-primary-2 btn-block"
+                      >
+                        Send OTP
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-            <div className="form-footer">
-              <button type="submit" className="btn btn-outline-primary-2 btn-block">
-                Send OTP
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-
-<div
-  className="modal fade"
-  id="otp-modal"
-  tabIndex={-1}
-  role="dialog"
-  aria-hidden="true"
->
-  <div className="modal-dialog modal-dialog-centered" role="document">
-    <div className="modal-content">
-      <div className="modal-body">
-        <button
-          type="button"
-          className="close"
-          data-dismiss="modal"
-          aria-label="Close"
+        <div
+          className="modal fade"
+          id="otp-modal"
+          tabIndex={-1}
+          role="dialog"
+          aria-hidden="true"
         >
-          <span aria-hidden="true"><i className="icon-close" /></span>
-        </button>
-        <div className="form-box">
-          <h4 className="text-center mb-3">Enter OTP</h4>
-          <form onSubmit={handleOtpSubmit}>
-            <div className="form-group">
-              <label htmlFor="otp">OTP *</label>
-              <input
-                type="text"
-                className="form-control"
-                id="otp"
-                name="otp"
-                required
-                value={otpForm.otp}
-                onChange={handleOtpChange}
-              />
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-body">
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">
+                    <i className="icon-close" />
+                  </span>
+                </button>
+                <div className="form-box">
+                  <h4 className="text-center mb-3">Enter OTP</h4>
+                  <form onSubmit={handleOtpSubmit}>
+                    <div className="form-group">
+                      <label htmlFor="otp">OTP *</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="otp"
+                        name="otp"
+                        required
+                        value={otpForm.otp}
+                        onChange={handleOtpChange}
+                      />
+                    </div>
+                    <div className="form-footer">
+                      <button
+                        type="submit"
+                        className="btn btn-outline-primary-2 btn-block"
+                      >
+                        Verify OTP
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-            <div className="form-footer">
-              <button type="submit" className="btn btn-outline-primary-2 btn-block">
-                Verify OTP
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-
-
-<div
-  className="modal fade"
-  id="reset-password-modal"
-  tabIndex={-1}
-  role="dialog"
-  aria-hidden="true"
->
-  <div className="modal-dialog modal-dialog-centered" role="document">
-    <div className="modal-content">
-      <div className="modal-body">
-        <button
-          type="button"
-          className="close"
-          data-dismiss="modal"
-          aria-label="Close"
+        <div
+          className="modal fade"
+          id="reset-password-modal"
+          tabIndex={-1}
+          role="dialog"
+          aria-hidden="true"
         >
-          <span aria-hidden="true"><i className="icon-close" /></span>
-        </button>
-        <div className="form-box">
-          <h4 className="text-center mb-3">Reset Password</h4>
-          <form onSubmit={handleResetPasswordSubmit}>
-            <div className="form-group">
-              <label htmlFor="new-password">New Password *</label>
-              <input
-                type="password"
-                className="form-control"
-                id="new-password"
-                name="newPassword"
-                required
-                value={resetPasswordForm.newPassword}
-                onChange={handleResetPasswordChange}
-              />
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-body">
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">
+                    <i className="icon-close" />
+                  </span>
+                </button>
+                <div className="form-box">
+                  <h4 className="text-center mb-3">Reset Password</h4>
+                  <form onSubmit={handleResetPasswordSubmit}>
+                    <div className="form-group">
+                      <label htmlFor="new-password">New Password *</label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        id="new-password"
+                        name="newPassword"
+                        required
+                        value={resetPasswordForm.newPassword}
+                        onChange={handleResetPasswordChange}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="confirm-password">
+                        Confirm Password *
+                      </label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        id="confirm-password"
+                        name="confirmPassword"
+                        required
+                        value={resetPasswordForm.confirmPassword}
+                        onChange={handleResetPasswordChange}
+                      />
+                    </div>
+                    <div className="form-footer">
+                      <button
+                        type="submit"
+                        className="btn btn-outline-primary-2 btn-block"
+                      >
+                        Update Password
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-            <div className="form-group">
-              <label htmlFor="confirm-password">Confirm Password *</label>
-              <input
-                type="password"
-                className="form-control"
-                id="confirm-password"
-                name="confirmPassword"
-                required
-                value={resetPasswordForm.confirmPassword}
-                onChange={handleResetPasswordChange}
-              />
-            </div>
-            <div className="form-footer">
-              <button type="submit" className="btn btn-outline-primary-2 btn-block">
-                Update Password
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-
-
-
-
-<div
-  className="toast toast-container position-fixed bottom-0 end-0 p-3"
-  id="my-toast"
-  role="alert"
-  aria-live="assertive"
-  aria-atomic="true"
-  style={{ zIndex: 9999 }}
->
-  <div className="toast-header">
-    <strong className="me-auto" id="toast-title">Info</strong>
-    <small className="text-muted">just now</small>
-    <button type="button" className="ml-2 mb-1 close" data-dismiss="toast">
-      <span>&times;</span>
-    </button>
-  </div>
-  <div className="toast-body" id="toast-body">
-    This is a toast message.
-  </div>
-</div>
-
-
-
+        <div
+          className="toast toast-container position-fixed bottom-0 end-0 p-3"
+          id="my-toast"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+          style={{ zIndex: 9999 }}
+        >
+          <div className="toast-header">
+            <strong className="me-auto" id="toast-title">
+              Info
+            </strong>
+            <small className="text-muted">just now</small>
+            <button
+              type="button"
+              className="ml-2 mb-1 close"
+              data-dismiss="toast"
+            >
+              <span>&times;</span>
+            </button>
+          </div>
+          <div className="toast-body" id="toast-body">
+            This is a toast message.
+          </div>
+        </div>
 
         {/* End .modal */}
 
