@@ -5,6 +5,7 @@ import Home from "./pages/user/Home";
 
 
 import UserProtectedRoute from "./components/protected-route/UserProtectedRoute";
+import DefaultProtectedRoute from "./components/protected-route/DefaultProtectedRoute";
 
 import NotFound from "./pages/not-found/NotFound";
 import Cart from "./pages/user/Cart";
@@ -18,6 +19,8 @@ import ReturnPolicy from "./pages/user/ReturnPolicy";
 import Contact from "./pages/user/Contact";
 import FAQ from "./pages/user/Faq";
 import About from "./pages/user/About";
+import CategorySinglePage from "./pages/user/CategorySinglePage";
+
 
 
 
@@ -35,17 +38,28 @@ function App() {
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/order-success" element={<OrderSuccess />} />
+               
             </Route>
+            <Route element={<DefaultProtectedRoute />}>
 
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-conditions" element={<TermsandConditions />} />
                 <Route path="/return-refund" element={<ReturnPolicy />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/faq" element={<FAQ />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/category-page/:id" element={<CategorySinglePage />} />
+                <Route path="/category-page" element={<CategorySinglePage />} />
+     
+           
+               
+           
                 <Route path="/about" element={<About />} /> 
 
 
             <Route path="*" element={<NotFound />} />
+            </Route>
+           
         </Routes>
     );
 }
