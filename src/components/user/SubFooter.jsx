@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
 import { FiLogOut } from "react-icons/fi";
 import { Modal } from "bootstrap";
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
 
 const SubFooter = () => {
@@ -507,7 +508,7 @@ const closeModal = () => {
                               <span>LOG IN</span>
                               <i className="icon-long-arrow-right" />
                             </button>
-                            <div className="custom-control custom-checkbox">
+                            {/* <div className="custom-control custom-checkbox">
                               <input
                                 type="checkbox"
                                 className="custom-control-input"
@@ -519,7 +520,7 @@ const closeModal = () => {
                               >
                                 Remember Me
                               </label>
-                            </div>
+                            </div> */}
                             {/* End .custom-checkbox */}
                             {/* <a href="#" className="forgot-link">
                               Forgot Your Password?
@@ -535,6 +536,17 @@ const closeModal = () => {
                               Forgot Your Password?
                             </a>
                           </div>
+
+                          <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
+      <GoogleLogin
+        onSuccess={credentialResponse => {
+          // Send credentialResponse.credential (JWT) to your backend for verification
+        }}
+        onError={() => {
+          console.log('Login Failed');
+        }}
+      />
+    </GoogleOAuthProvider>
                           {/* End .form-footer */}
                         </form>
                         <div className="form-choice"></div>

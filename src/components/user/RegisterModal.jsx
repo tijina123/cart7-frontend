@@ -31,34 +31,27 @@ const RegisterModal = ({ onClose }) => {
     email: Yup.string().email("Invalid email format").required("Email is required"),
     password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
     phone: Yup.string()
-  .matches(/^[0-9]{10}$/, "Phone must be 10 digits")
-  .required("Phone is required"),
+      .matches(/^[0-9]{10}$/, "Phone must be 10 digits")
+      .required("Phone is required"),
 
   });
 
 
   const handleSubmit = async (values) => {
 
-    console.log("handleSubmit");
-    console.log(values, "===values");
-
-    // return;
     // Handle form submission logic here
     const response = await postRegister(values);
     console.log("Response from API:", response);
+    
     if (response?.data?.success) {
 
-      // setLoading(true);
-      // setError("");
-      // navigate("/login");
-            toast.success(response?.data?.message);
-                    setTimeout(() => {
-                      window.location.reload();
-                    }, 1000);
-      window.location.reload();
+      toast.success(response?.data?.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+
     } else {
       toast.error(response?.data?.message);
-      setLoading(false);
     }
   };
 
@@ -79,7 +72,7 @@ const RegisterModal = ({ onClose }) => {
           </button>
         </div>
         <Formik
-          initialValues={{ name: "", companyname: "", plan: "", email: "", password: "", role: "admin" , phone: "", }}
+          initialValues={{ name: "", companyname: "", plan: "", email: "", password: "", role: "admin", phone: "", }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
@@ -128,18 +121,18 @@ const RegisterModal = ({ onClose }) => {
               </div>
 
               <div className="mb-4">
-  <label className="block text-md font-medium text-gray-700">Phone</label>
-  <input
-    type="tel"
-    name="phone"
-    value={values.phone}
-    onChange={handleChange}
-    onBlur={handleBlur}
-    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-    placeholder="Enter your phone number"
-  />
-  <ErrorMessage name="phone" component="div" className="text-red-500 text-md" />
-</div>
+                <label className="block text-md font-medium text-gray-700">Phone</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={values.phone}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter your phone number"
+                />
+                <ErrorMessage name="phone" component="div" className="text-red-500 text-md" />
+              </div>
 
 
               <div className="mb-4 relative">
