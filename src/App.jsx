@@ -3,6 +3,7 @@ import "./assets/styles/globals.css";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/user/Home";
 
+
 import UserProtectedRoute from "./components/protected-route/UserProtectedRoute";
 
 import NotFound from "./pages/not-found/NotFound";
@@ -28,14 +29,16 @@ function App() {
     return (
         <Routes>
 
+            
             <Route element={<UserProtectedRoute />}>
                 <Route path="/" element={<Home />} />
-                {/* <Route path="/" element={<RegisterModal isOpen={true} />} /> */}
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/order-success" element={<OrderSuccess />} />
+            </Route>
+
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-conditions" element={<TermsandConditions />} />
                 <Route path="/return-refund" element={<ReturnPolicy />} />
@@ -45,7 +48,9 @@ function App() {
                 <Route path="/category-page" element={<CategorySinglePage />} />
            
                
-            </Route>
+           
+                <Route path="/about" element={<About />} /> 
+
 
             <Route path="*" element={<NotFound />} />
            

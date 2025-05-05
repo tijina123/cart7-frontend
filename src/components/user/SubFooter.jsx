@@ -4,6 +4,8 @@ import UserService from "../../services/user-api-services/UserService";
 import useAuth from "../../hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
 import { FiLogOut } from "react-icons/fi";
+import { Modal } from "bootstrap";
+
 
 const SubFooter = () => {
   const { postLogin, postRegister, getHomeCategory } = UserService();
@@ -18,6 +20,7 @@ const SubFooter = () => {
   const [registerFormData, setRegisterFormData] = useState({
     name: "",
     email: "",
+    phone:"",
     password: "",
     role: "user",
   });
@@ -98,6 +101,7 @@ const SubFooter = () => {
         const image = response?.data?.userData?.image || "";
         const name = response?.data?.userData?.name || "";
         const email = response?.data?.userData?.email || "";
+        const phone = response?.data?.userData?.phone || "";
 
         //localStorage.setItem("password", password)
 
@@ -106,28 +110,16 @@ const SubFooter = () => {
         localStorage.setItem("profileImage", image);
         localStorage.setItem("name", name);
         localStorage.setItem("email", email);
+        localStorage.setItem("phone", phone);
 
-        setAuth({ accessToken, role, image, name, email });
+        setAuth({ accessToken, role, image, name, email, phone });
+        
         toast.success(response?.data?.message);
 
         setTimeout(() => {
           window.location.reload();
         }, 1000);
 
-        //   switch(role){
-        //       case 'Super Admin':
-        //           navigate("/super-admin")
-        //           break
-        //       case 'admin':
-        //           navigate("/admin")
-        //           break
-        //       case 'Manager':
-        //           navigate("/manager")
-        //           break
-        //       case 'user':
-        //           navigate("/")
-        //           break
-        //   }
       } else {
         toast.error("Login failed! Please check your credentials.");
       }
@@ -184,6 +176,16 @@ const handleCategoryClick = async (data) => {
   }
 
   document.querySelector(`.${data}`)?.scrollIntoView({ behavior: "smooth" });
+};
+
+const closeModal = () => {
+  const modalEl = document.getElementById("signin-modal");
+  if (modalEl) {
+    const modal = Modal.getInstance(modalEl);
+    if (modal) {
+      modal.hide();
+    }
+  }
 };
 
 
@@ -422,6 +424,7 @@ const handleCategoryClick = async (data) => {
                   className="close"
                   data-dismiss="modal"
                   aria-label="Close"
+                  onClick={closeModal}
                 >
                   <span aria-hidden="true">
                     <i className="icon-close" />
@@ -569,6 +572,21 @@ const handleCategoryClick = async (data) => {
                               value={registerFormData?.email}
                               id="register-email"
                               name="email"
+                              required
+                            />
+                          </div>
+                          {/* End .form-group */}
+                          <div className="form-group">
+                            <label htmlFor="register-email">
+                              Your phone number *
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              onChange={handleChangeRegister}
+                              value={registerFormData?.phone}
+                              id="register-email"
+                              name="phone"
                               required
                             />
                           </div>

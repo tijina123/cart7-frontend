@@ -8,12 +8,14 @@ import { CgProfile } from "react-icons/cg";
 import useAuth from "../../hooks/useAuth";
 import { FiLogOut } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
+import { Modal } from "bootstrap";
 
 
 const UserNavbar = () => {
   const { auth } = useAuth();
   const navigate = useNavigate();
   const { getHomeCategory, putFilterProducts } = UserService();
+  console.log(auth,"================auth in nav============");
 
   const [category, setCategory] = useState([]);
 
@@ -28,7 +30,7 @@ const UserNavbar = () => {
       const response = await getHomeCategory();
       // response?.product?.reverse()
       setCategory(response?.categories);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const onClose = async () => {
@@ -43,21 +45,36 @@ const UserNavbar = () => {
   };
 
   const handleCategoryClick = async (data) => {
+    console.log(data,"===handleCategoryClick");
+    
     document.querySelector(`.${data}`)?.scrollIntoView({ behavior: "smooth" });
-  };
-  const handleWishlist = () => {
-    if (auth?.name) {
-      navigate('/wishlist');
-    } else {
-            toast.error("Please login to view wishlist");   
-    }
+    
   };
 
   const handleCart = () => {
     if (auth?.name) {
       navigate('/cart');
     } else {
-            toast.error("Please login to view cart");
+            // toast.error("Please login to view cart");
+                  // Show Bootstrap modal programmatically
+                  const modalEl = document.getElementById("signin-modal");
+                  if (modalEl) {
+                    const modal = new Modal(modalEl);
+                    modal.show();
+                  }
+    }
+  };
+  const handleWishlist = () => {
+    if (auth?.name) {
+      navigate('/wishlist');
+    } else {
+            // toast.error("Please login to view wishlist");
+                  // Show Bootstrap modal programmatically
+                  const modalEl = document.getElementById("signin-modal");
+                  if (modalEl) {
+                    const modal = new Modal(modalEl);
+                    modal.show();
+                  }
     }
   };
 
@@ -77,7 +94,7 @@ const UserNavbar = () => {
             <div className="header-right">
               <ul className="top-menu">
                 <li>
-                  <a href="#">Links</a>
+                  <a href="#">Sign in / Sign up</a>
                   <ul>
                     <li>
                       <div className="header-dropdown">
@@ -96,9 +113,10 @@ const UserNavbar = () => {
                       </div>
                     </li>
                     {!auth?.name && (
-                      <li className="login">
-                        <a href="#signin-modal" data-toggle="modal">
-                          Sign in / Sign up
+                      <li className="">
+                      {/* <li className="login"> */}
+                        <a href="#signin-modal" data-toggle="modal" id="openModalButton">
+                          Sign in/Sign up
                         </a>
                       </li>
                     )}
@@ -173,16 +191,17 @@ const UserNavbar = () => {
               {/* End .header-search */}
             </div>
             <div className="header-right">
-              <div className="header-dropdown-link" onClick={handleWishlist}>
-                <button  className="wishlist-link">
+              <div className="header-dropdown-link" >
+                <button  className="wishlist-link" onClick={handleWishlist}>
                   {/* <a href="wishlist.html" className="wishlist-link"> */}
                   <i className="icon-heart-o" />
                   {/* <span className="wishlist-count">3</span> */}
                   <span className="wishlist-txt">Wishlist</span>
                   {/* </a> */}
                 </button>
-                <div className="dropdown cart-dropdown" onClick={handleCart}>
-                  <button  className="dropdown-toggle" role="button">
+
+                <div className="dropdown cart-dropdown" >
+                  <button  className="dropdown-toggle" role="button" onClick={handleCart}>
                     {/* <a href="#" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"> */}
                     <i className="icon-shopping-cart" />
                     {/* <span className="cart-count">2</span> */}

@@ -151,7 +151,7 @@ const Checkout = () => {
 
       // Initialize Razorpay
       const options = {
-        key: "rzp_live_6RbhpjIk36lqtu", // Replace with Razorpay Key ID
+        key: "rzp_live_0m0wquv3dazfKx", // Replace with Razorpay Key ID
         amount: data.amount,
         currency: "INR",
         name: "Cart7",
@@ -159,25 +159,26 @@ const Checkout = () => {
         order_id: data.id,
         handler: async function (response) {
 
-          const verifyRes = await axios.post('/order/payment/verify-payment', {
+          const verifyRes = await axios.post('http://localhost:3000/order/payment/verify-payment', {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
           });
 
           if (verifyRes.data.success) {
-            alert("Payment Successful!");
+
+             navigate("/order-success");
           } else {
             alert("Payment Failed!");
           }
 
         },
         
-        prefill: {
-          name: "John Doe",
-          email: "johndoe@example.com",
-          contact: "9999999999",
-        },
+        // prefill: {
+        //   name: "John Doe",
+        //   email: "johndoe@example.com",
+        //   contact: "9999999999",
+        // },
         
         theme: {
           color: "#3399cc",
@@ -300,7 +301,7 @@ const Checkout = () => {
                           id="accordion-payment"
                         >
                           <div className="space-y-3">
-                            {/* <label className="flex items-center space-x-3 text-gray-700">
+                            <label className="flex items-center space-x-3 text-gray-700">
                               <input
                                 type="radio"
                                 name="payment"
@@ -310,7 +311,7 @@ const Checkout = () => {
                                 className="form-radio h-4 w-4 text-blue-500"
                               />
                               <span>Google Pay / Phone Pay</span>
-                            </label> */}
+                            </label>
 
                             <label className="flex items-center space-x-3 text-gray-700">
                               <input
