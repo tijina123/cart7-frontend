@@ -273,25 +273,25 @@ const UserNavbar = () => {
                     <ul className="menu-vertical sf-arrows">
                       <li>
                         <a>
-                          <button
-                            onClick={() =>
-                              document
-                                .querySelector(".filter-products")
-                                ?.scrollIntoView({ behavior: "smooth" })
-                            }
+                          <Link to={`/category-page`}
+                            // onClick={() =>
+                            //   document
+                            //     .querySelector(".filter-products")
+                            //     ?.scrollIntoView({ behavior: "smooth" })
+                            // }
                           >
                             All products
-                          </button>{" "}
+                          </Link>{" "}
                         </a>
                       </li>
                       {category?.map((data) => (
                         <li>
                           <a>
-                            <button
-                              onClick={() => handleCategoryClick(data?.name)}
+                            <Link to={`/category-page/${data?._id}`}
+                              // onClick={() => handleCategoryClick(data?.name)}
                             >
                               {data?.name}
-                            </button>{" "}
+                            </Link>{" "}
                           </a>
                         </li>
                       ))}
@@ -320,7 +320,7 @@ const UserNavbar = () => {
             {/* End .col-lg-9 */}
             <div className="header-right">
               <i className="la la-lightbulb-o" />
-              <p>Clearance Up to 30% Off</p>
+              <p>Buy and Save Big</p>
             </div>
           </div>
           {/* End .container */}

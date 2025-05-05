@@ -69,10 +69,10 @@ const UserFooter = () => {
                 <h4 className="widget-title">Contact Us</h4>
                 <ul className="widget-list">
                   <li>
-                    <a href="tel:+1234567890">Phone: +91 7034 133 111</a>
+                    <a href="tel:+917034133111">Phone: +91 7034 133 111</a>
                   </li>
                   <li>
-                    <a href="mailto:support@example.com">
+                    <a href="mailto:info@cloud7brandingstudio.com">
                       Email: info@cloud7brandingstudio.com
                     </a>
                   </li>
