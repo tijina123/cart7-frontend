@@ -125,6 +125,11 @@ const updateStatus = async (orderId,data) => {
   return response.data;
 };
 
+const getSingleProduct = async (productId) => {
+  const response = await axiosPrivate.get(`/product/${productId}`);
+  return response.data;
+};
+
   return {
     getHomeProductsByCategory,
     getHomeProducts,
@@ -145,7 +150,8 @@ const updateStatus = async (orderId,data) => {
     putSelectAddress,
     putFilterProducts,
     getOrder,
-    updateStatus
+    updateStatus,
+    getSingleProduct,
   };
 };
 

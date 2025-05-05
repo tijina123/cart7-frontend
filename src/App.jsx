@@ -18,7 +18,7 @@ import ReturnPolicy from "./pages/user/ReturnPolicy";
 import Contact from "./pages/user/Contact";
 import FAQ from "./pages/user/Faq";
 import About from "./pages/user/About";
-
+import ProductPage from "./pages/user/productPage";
 
 
 
@@ -37,12 +37,16 @@ function App() {
                 <Route path="/order-success" element={<OrderSuccess />} />
             </Route>
 
+
+
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-conditions" element={<TermsandConditions />} />
                 <Route path="/return-refund" element={<ReturnPolicy />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/about" element={<About />} /> 
+                <Route path="/product-page" element={<ProductPage/>} />
+
 
 
             <Route path="*" element={<NotFound />} />
