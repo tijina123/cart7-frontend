@@ -19,13 +19,10 @@ import ReturnPolicy from "./pages/user/ReturnPolicy";
 import Contact from "./pages/user/Contact";
 import FAQ from "./pages/user/Faq";
 import About from "./pages/user/About";
-<<<<<<< HEAD
 import CategorySinglePage from "./pages/user/CategorySinglePage";
 
 
-=======
 import ProductPage from "./pages/user/productPage";
->>>>>>> origin/ashiii
 
 
 
