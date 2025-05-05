@@ -17,6 +17,8 @@ import ReturnPolicy from "./pages/user/ReturnPolicy";
 import Contact from "./pages/user/Contact";
 import FAQ from "./pages/user/Faq";
 import About from "./pages/user/About";
+import CategorySinglePage from "./pages/user/CategorySinglePage";
+
 
 
 
@@ -40,11 +42,13 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/category-page" element={<CategorySinglePage />} />
            
                
             </Route>
 
             <Route path="*" element={<NotFound />} />
+           
         </Routes>
     );
 }
