@@ -250,7 +250,7 @@ const ProductPage = () => {
                             src={singleImage}
                             className="img-fluid"
                             style={{
-                              maxHeight: "420px",
+                              maxHeight: "430px",
                               objectFit: "contain",
                               width: "100%",
                             }}
