@@ -1,213 +1,16 @@
-// import React, {useEffect, useState} from "react";
-// import UserService from "../../services/user-api-services/UserService";
-
-// const productPage = () =>{
-// const {getSingleProduct} = UserService();
-
-//   const [singleProduct, setSingleProduct] = useState({});
-//   const [singleImage, setSingleImage] = useState("");
-  
-// console.log(singleProduct, "============singleProduct 1");
-
-
-//     useEffect(() => {
-//       getProduct();
-//     }, []);
-  
-
-//     const getProduct = async () => {
-//       console.log("============singleProduct 2");
-      
-//       try {
-//         const response = await getSingleProduct("68120921a7aaa9063a1b3052");
-//         console.log(response, "============response?.productsByCategory 1");
-//         console.log(response?.product, "============response?.productsByCategory 2");
-  
-//         setSingleProduct(response?.product);
-//         setSingleImage(response?.product?.images[0]);
-  
-//       } catch (error) {
-  
-//       }
-  
-//     }
-
-//   return (
-//     <>
- 
-//       <div className="page-wrapper">
-
-//         <main className="main">
-
-//           {/* End .breadcrumb-nav */}
-//           <div className="page-content">
-//             <div className="container">
-//               <div className="product-details-top mb-2">
-//                 <div className="row">
-//                   <div className="col-md-6">
-//                     <div className="product-gallery product-gallery-vertical">
-//                       <div className="row">
-//                         <figure className="product-main-image">
-//                           <img
-//                             id="product-zoom"
-//                             src={singleImage}
-//                             style={{ width: "50%", height: "80%" }}
-//                             data-zoom-image="assets/images/products/single/centered/1-big.jpg"
-//                             alt="product image"
-//                           />
-//                           <a
-//                             href="#"
-//                             id="btn-product-gallery"
-//                             className="btn-product-gallery"
-//                           >
-//                             <i className="icon-arrows" />
-//                           </a>
-//                         </figure>
-//                         {/* End .product-main-image */}
-//                         <div
-//                           id="product-zoom-gallery"
-//                           className="product-image-gallery"
-//                         >
-                     
-
-//                           {singleProduct?.images?.map((img, index) => (
-//      <a
-//      className="product-gallery-item active"
-//      href="#"
-//      data-image="assets/images/products/single/centered/1.jpg"
-//      data-zoom-image="assets/images/products/single/centered/1-big.jpg"
-//    >
-//      <img
-//        src={img}
-//        alt="product side"
-//        style={{ width: "50%", height: "25%" }}
-//      />
-//    </a>
-// ))}
-
-                          
-                         
-                          
-//                         </div>
-//                         {/* End .product-image-gallery */}
-//                       </div>
-//                       {/* End .row */}
-//                     </div>
-//                     {/* End .product-gallery */}
-//                   </div>
-//                   {/* End .col-md-6 */}
-//                   <div className="col-md-6">
-//                     <div className="product-details product-details-centered">
-//                       <h1 className="product-title">
-//                         {singleProduct?.name}
-//                       </h1>
-//                       {/* <div className="ratings-container">
-//                         <div className="ratings">
-//                           <div
-//                             className="ratings-val"
-//                             style={{ width: "80%" }}
-//                           />
-//                         </div>
-                      
-//                         <a
-//                           className="ratings-text"
-//                           href="#product-review-link"
-//                           id="review-link"
-//                         >
-//                           ( 2 Reviews )
-//                         </a>
-//                       </div> */}
-//                       {/* End .rating-container */}
-//                       <div className="product-price">₹{singleProduct.sale_price}</div>
-//                       {/* End .product-price */}
-//                       <div className="product-content">
-//                         <p>
-//                           {singleProduct?.description}
-//                         </p>
-//                       </div>
-                      
-//                       {/* End .details-filter-row */}
-//                       <div className="product-details-action">
-//                         <div className="details-action-col">
-                          
-//                           {/* End .product-details-quantity */}
-//                           <a href="#" className="btn-product btn-cart">
-//                             <span>add to cart</span>
-//                           </a>
-//                         </div>
-//                         {/* End .details-action-col */}
-//                         <div className="details-action-wrapper">
-//                           <a
-//                             href="#"
-//                             className="btn-product btn-wishlist"
-//                             title="Wishlist"
-//                           >
-//                             <span>Add to Wishlist</span>
-//                           </a>
-                          
-//                         </div>
-//                         {/* End .details-action-wrapper */}
-//                       </div>
-//                       {/* End .product-details-action */}
-//                       <div className="product-details-footer">
-//                         <div className="product-cat">
-//                           <span>Category:</span>
-//                           {singleProduct?.category}
-//                         </div>
-//                         {/* End .product-cat */}
-                       
-//                       </div>
-//                       {/* End .product-details-footer */}
-//                     </div>
-//                     {/* End .product-details */}
-//                   </div>
-//                   {/* End .col-md-6 */}
-//                 </div>
-//                 {/* End .row */}
-//               </div>
-//               {/* End .product-details-top */}
-            
-
-//               {/* End .owl-carousel */}
-//             </div>
-//             {/* End .container */}
-//           </div>
-//           {/* End .page-content */}
-//         </main>
-//         {/* End .main */}
-        
-//         {/* End .footer */}
-//       </div>
-//       {/* End .page-wrapper */}
-//       <button id="scroll-top" title="Back to Top">
-//         <i className="icon-arrow-up" />
-//       </button>
-//       {/* Mobile Menu */}
-//       <div className="mobile-menu-overlay" />
-//       {/* End .mobil-menu-overlay */}
-
-//       {/* End .mobile-menu-container */}
-      
-//       {/* molla/product-centered.html  22 Nov 2019 10:03:20 GMT */}
-//     </>
-//   );
-// }
-
-// export default productPage;
-
-
-
-
-
-
 
 
 import React, { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { Modal } from "bootstrap"; // Bootstrap 5
 import UserService from "../../services/user-api-services/UserService";
+import useAuth from "../../hooks/useAuth";  
+import { useParams } from "react-router-dom";
 
 const ProductPage = () => {
-  const { getSingleProduct } = UserService();
-
+  const { getSingleProduct, addToCart } = UserService();
+  const { id } = useParams();
+  const { auth } = useAuth();
   const [singleProduct, setSingleProduct] = useState(null);
   const [singleImage, setSingleImage] = useState("");
 
@@ -217,7 +20,7 @@ const ProductPage = () => {
 
   const getProduct = async () => {
     try {
-      const response = await getSingleProduct("68120921a7aaa9063a1b3052");
+      const response = await getSingleProduct(id);
       const product = response?.product;
 
       if (product) {
@@ -231,8 +34,68 @@ const ProductPage = () => {
 
   if (!singleProduct) return <div>Loading...</div>;
 
+  const handleAddToCart = async (productId, quantity) => {
+    console.log("productId", productId);
+    
+    try {
+      if (auth?.name) {
+      const data = { productId, quantity };
+      const response = await addToCart(data);
+      if (response?.success) {
+        toast.success(response?.message);
+      }else {
+        
+        console.log(response, "response from add to cart");
+        toast.error(response?.message);
+      }
+    } else {
+      console.log("Please login to add product to cart");
+      
+      // Show Bootstrap modal programmatically
+      const modalEl = document.getElementById("signin-modal");
+      if (modalEl) {
+        const modal = new Modal(modalEl);
+        modal.show();
+      }
+    }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      // toast.error("Please login to add product to cart");
+
+    }
+  };
+
+  const handleAddToWishlist = async (productId, quantity) => {
+    try {
+      if (auth?.name) {
+      const data = { productId, quantity };
+      const response = await addToWihlist(data);
+
+      if (response?.success) {
+        toast.success(response?.message);
+      }else {
+        console.log(response, "response from add to wishlist");
+        toast.error(response?.message);
+      }
+    } else {      
+      // Show Bootstrap modal programmatically
+      const modalEl = document.getElementById("signin-modal");
+      if (modalEl) {
+        const modal = new Modal(modalEl);
+        modal.show();
+      }
+    }
+  }
+  catch (error) {
+    toast.error(error?.response?.data?.message);
+      // toast.error("Please login to add product to wishlist");
+
+    }}
+
   return (
     <>
+          <Toaster position="top-center" reverseOrder={false} />
+    
       <div className="page-wrapper">
         <main className="main" style={{ marginTop: "30px" }}>
           <div className="page-content">
@@ -269,7 +132,6 @@ const ProductPage = () => {
                         <div
                           id="product-zoom-gallery"
                           className="product-image-gallery d-flex justify-content-center flex-wrap gap-2"
-                          
                         >
                           {singleProduct.images?.map((img, index) => (
                             <a
@@ -316,26 +178,34 @@ const ProductPage = () => {
 
                       <div className="product-details-action">
                         <div className="details-action-col">
-                          <a href="#" className="btn-product btn-cart">
-                            <span>Add to Cart</span>
+                          <a href="#" className="btn-product btn-wishlist"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleAddToWishlist(singleProduct._id, 1);
+                          }}
+                          >
+                            
+                            <span>Add to wishlish </span>
                           </a>
                         </div>
                         <div className="details-action-wrapper">
                           <a
                             href="#"
-                            className="btn-product btn-wishlist"
-                            title="Wishlist"
+                            className="btn-product btn-cart"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleAddToCart(singleProduct._id, 1);
+                            }}
                           >
-                            <span>Add to Wishlist</span>
+                            <span>Add to Cart</span>
                           </a>
                         </div>
                       </div>
 
                       <div className="product-details-footer">
-                      <div className="product-cat">
-  <span>Category:</span> {singleProduct?.category?.name}
-</div>
-
+                        <div className="product-cat">
+                          <span>Category:</span> {singleProduct?.category?.name}
+                        </div>
                       </div>
                     </div>
                   </div>
