@@ -5,8 +5,10 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import UserService from "../../services/user-api-services/UserService";
 import toast, { Toaster } from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
 
 const ProductCarousel = ({ products }) => {
+  const { auth } = useAuth();
   const { addToCart, addToWihlist } = UserService();
 
   const [carouselProducts, setCarouselProducts] = useState([]);
@@ -22,16 +24,17 @@ const ProductCarousel = ({ products }) => {
 
   const handleAddToCart = async (productId, quantity) => {
     try {
+      if (auth?.name) {
+        
       const data = { productId, quantity };
       const response = await addToCart(data);
       if (response?.success) {
         toast.success(response?.message);
+      }else { 
+        console.log(response, "response from add to cart");
+        toast.error(response?.message);
       }
-    } catch (error) {
-
-      // toast.error(error?.response?.data?.message);
-      // toast.error("Please login to add product to cart");
-
+    } else {    
       // Show Bootstrap modal programmatically
       const modalEl = document.getElementById("signin-modal");
       if (modalEl) {
@@ -39,25 +42,41 @@ const ProductCarousel = ({ products }) => {
         modal.show();
       }
     }
+    } catch (error) {
+
+      toast.error(error?.response?.data?.message);
+      // toast.error("Please login to add product to cart");
+
+   
+ 
+    }
   };
 
   const handleAddToWishlist = async (productId, quantity) => {
     try {
+      if (auth?.name) {
       const data = { productId, quantity };
       const response = await addToWihlist(data);
 
       if (response?.success) {
         toast.success(response?.message);
+      } else {  
+        console.log(response, "response from add to wishlist");
+        toast.error(response?.message);
       }
-    } catch (error) {
-      // toast.error("Please login to add product to wishlist");
-
+    } else {
       // Show Bootstrap modal programmatically
       const modalEl = document.getElementById("signin-modal");
       if (modalEl) {
         const modal = new Modal(modalEl);
         modal.show();
       }
+    }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      // toast.error("Please login to add product to wishlist");
+
+      
     }
   };
 

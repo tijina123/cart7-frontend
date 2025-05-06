@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
 import UserService from "../../services/user-api-services/UserService";
 import { useParams } from "react-router-dom";
+import { Modal } from "bootstrap";
+import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
+
+import toast, { Toaster } from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
 
 export const CategorySinglePage = () => {
+  const { auth } = useAuth();
   const { id } = useParams();
   console.log(id, "id");
   const [product, setProduct] = useState([]);
-  const { getProductByCategoryId, getHomeProducts } = UserService();
+  const { getProductByCategoryId, getHomeProducts, addToWihlist, addToCart } = UserService();
 
   useEffect(() => {
     getProduct();
@@ -26,6 +34,59 @@ export const CategorySinglePage = () => {
     } catch (error) {}
   };
 
+  const handleAddToCart = async (productId, quantity) => {
+    try {
+      if (auth?.name) {
+      const data = { productId, quantity };
+      const response = await addToCart(data);
+      if (response?.success) {
+        toast.success(response?.message);
+      }else {
+        console.log(response, "response from add to cart");
+        toast.error(response?.message);
+      }
+    } else {
+      // Show Bootstrap modal programmatically
+      const modalEl = document.getElementById("signin-modal");
+      if (modalEl) {
+        const modal = new Modal(modalEl);
+        modal.show();
+      }
+    }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      // toast.error("Please login to add product to cart");
+
+    }
+  };
+
+  const handleAddToWishlist = async (productId, quantity) => {
+    try {
+      if (auth?.name) {
+      const data = { productId, quantity };
+      const response = await addToWihlist(data);
+
+      if (response?.success) {
+        toast.success(response?.message);
+      }else {
+        console.log(response, "response from add to wishlist");
+        toast.error(response?.message);
+      }
+    } else {      
+      // Show Bootstrap modal programmatically
+      const modalEl = document.getElementById("signin-modal");
+      if (modalEl) {
+        const modal = new Modal(modalEl);
+        modal.show();
+      }
+    }
+  }
+  catch (error) {
+    toast.error(error?.response?.data?.message);
+      // toast.error("Please login to add product to wishlist");
+
+    }
+  };
   return (
     <>
       <div className="page-wrapper">
@@ -34,22 +95,7 @@ export const CategorySinglePage = () => {
             <div className="container">{/* End .header-right */}</div>
             {/* End .container */}
           </div>
-          {/* End .header-top */}
-          <div className="header-middle sticky-header">
-            <div className="container">
-              <div className="header-left">
-                <button className="mobile-menu-toggler">
-                  <span className="sr-only">Toggle mobile menu</span>
-                  <i className="icon-bars" />
-                </button>
 
-                {/* End .main-nav */}
-              </div>
-
-              {/* End .header-right */}
-            </div>
-            {/* End .container */}
-          </div>
           {/* End .header-middle */}
         </header>
         {/* End .header */}
@@ -94,12 +140,13 @@ export const CategorySinglePage = () => {
                             />
                           </a>
                           <div className="product-action-vertical">
-                            <a
-                              href="#"
-                              className="btn-product-icon btn-wishlist btn-expandable"
-                            >
-                              <span>add to wishlist</span>
-                            </a>
+                          <button
+  className="btn-product-icon btn-wishlist btn-expandable"
+  onClick={() => handleAddToWishlist(products._id, 1)}
+>
+  <span>add to wishlist</span>
+</button>
+
                           </div>
                           <div
                             style={{
@@ -109,8 +156,10 @@ export const CategorySinglePage = () => {
                               marginBottom: "10px",
                             }}
                           >
-                            <div style={{ width: "50%" }}>
-                              <a href="#" className="btn-product btn-cart">
+                            <div style={{ width: "50%" , cursor: "pointer" }} >
+                              <a  className="btn-product btn-cart" 
+                              onClick={() => handleAddToCart(products._id, 1)}
+                              >
                                 <span>add to cart</span>
                               </a>
                             </div>
