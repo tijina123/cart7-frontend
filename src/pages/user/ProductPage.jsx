@@ -5,9 +5,11 @@ import toast, { Toaster } from "react-hot-toast";
 import { Modal } from "bootstrap"; // Bootstrap 5
 import UserService from "../../services/user-api-services/UserService";
 import useAuth from "../../hooks/useAuth";  
+import { useParams } from "react-router-dom";
 
 const ProductPage = () => {
   const { getSingleProduct, addToCart } = UserService();
+  const { id } = useParams();
   const { auth } = useAuth();
   const [singleProduct, setSingleProduct] = useState(null);
   const [singleImage, setSingleImage] = useState("");
@@ -18,7 +20,7 @@ const ProductPage = () => {
 
   const getProduct = async () => {
     try {
-      const response = await getSingleProduct("68120921a7aaa9063a1b3052");
+      const response = await getSingleProduct(id);
       const product = response?.product;
 
       if (product) {

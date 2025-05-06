@@ -5,12 +5,11 @@ import useAuth from "../../hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
 import { FiLogOut } from "react-icons/fi";
 import { Modal } from "bootstrap";
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 const SubFooter = () => {
   const { postLogin, postRegister, getHomeCategory } = UserService();
-  const { setAuth,auth } = useAuth();
+  const { setAuth, auth } = useAuth();
 
   const [singinFormData, setSinginFormData] = useState({
     email: "",
@@ -21,7 +20,7 @@ const SubFooter = () => {
   const [registerFormData, setRegisterFormData] = useState({
     name: "",
     email: "",
-    phone:"",
+    phone: "",
     password: "",
     role: "user",
   });
@@ -114,13 +113,12 @@ const SubFooter = () => {
         localStorage.setItem("phone", phone);
 
         setAuth({ accessToken, role, image, name, email, phone });
-        
+
         toast.success(response?.data?.message);
 
         setTimeout(() => {
           window.location.reload();
         }, 1000);
-
       } else {
         toast.error("Login failed! Please check your credentials.");
       }
@@ -167,29 +165,26 @@ const SubFooter = () => {
 
     // Optional: redirect to login page or homepage
     window.location.href = "/"; // Change the path based on your route
-};
+  };
 
-const handleCategoryClick = async (data) => {
-
-  const menu =document.querySelector(".mobile-menu-close");
-  if (menu) {
-    menu.click(); // Or manipulate the menu to close it however you need
-  }
-
-  document.querySelector(`.${data}`)?.scrollIntoView({ behavior: "smooth" });
-};
-
-const closeModal = () => {
-  const modalEl = document.getElementById("signin-modal");
-  if (modalEl) {
-    const modal = Modal.getInstance(modalEl);
-    if (modal) {
-      modal.hide();
+  const handleCategoryClick = async (data) => {
+    const menu = document.querySelector(".mobile-menu-close");
+    if (menu) {
+      menu.click(); // Or manipulate the menu to close it however you need
     }
-  }
-};
 
+    document.querySelector(`.${data}`)?.scrollIntoView({ behavior: "smooth" });
+  };
 
+  const closeModal = () => {
+    const modalEl = document.getElementById("signin-modal");
+    if (modalEl) {
+      const modal = Modal.getInstance(modalEl);
+      if (modal) {
+        modal.hide();
+      }
+    }
+  };
 
   return (
     <>
@@ -324,11 +319,13 @@ const closeModal = () => {
                 <nav className="mobile-nav">
                   <ul className="mobile-menu">
                     <li className="active">
-                      <a >Categories</a>
+                      <a>Categories</a>
                       <ul>
                         {category?.map((data) => (
                           <li>
-                            <a onClick={() => handleCategoryClick(data?.name)} >{data?.name}</a>
+                            <a onClick={() => handleCategoryClick(data?.name)}>
+                              {data?.name}
+                            </a>
                           </li>
                         ))}
                       </ul>
@@ -352,20 +349,19 @@ const closeModal = () => {
             </div>
             {/* End .tab-content */}
             {auth?.name && (
+              <div className="dropdown cart-dropdown">
+                <Link
+                  to="/profile"
+                  onClick={onHandleLogout}
+                  className="dropdown-toggle"
+                  role="button"
+                >
+                  <FiLogOut style={{ fontSize: "18px", marginRight: "5px" }} />
+                  <p>Logout</p>
 
-            <div className="dropdown cart-dropdown">
-              <Link
-                to="/profile"
-                onClick={onHandleLogout}
-                className="dropdown-toggle"
-                role="button"
-              >
-                <FiLogOut style={{ fontSize: "18px", marginRight: "5px" }} />
-                <p>Logout</p>
-
-                {/* </a> */}
-              </Link>
-            </div>
+                  {/* </a> */}
+                </Link>
+              </div>
             )}
 
             <div className="social-icons mt-4">
@@ -538,15 +534,15 @@ const closeModal = () => {
                           </div>
 
                           <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
-      <GoogleLogin
-        onSuccess={credentialResponse => {
-          // Send credentialResponse.credential (JWT) to your backend for verification
-        }}
-        onError={() => {
-          console.log('Login Failed');
-        }}
-      />
-    </GoogleOAuthProvider>
+                            <GoogleLogin
+                              onSuccess={(credentialResponse) => {
+                                // Send credentialResponse.credential (JWT) to your backend for verification
+                              }}
+                              onError={() => {
+                                console.log("Login Failed");
+                              }}
+                            />
+                          </GoogleOAuthProvider>
                           {/* End .form-footer */}
                         </form>
                         <div className="form-choice"></div>
@@ -638,7 +634,12 @@ const closeModal = () => {
                                 className="custom-control-label"
                                 htmlFor="register-policy"
                               >
-                                I agree to the privacy policy *
+                                <Link
+                                  to="/privacy-policy"
+                                  style={{ textDecoration: "none" }}
+                                >
+                                  I agree to the privacy policy *
+                                </Link>
                               </label>
                             </div>
                             {/* End .custom-checkbox */}

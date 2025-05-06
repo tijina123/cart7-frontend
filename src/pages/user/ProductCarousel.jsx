@@ -5,6 +5,8 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import UserService from "../../services/user-api-services/UserService";
 import toast, { Toaster } from "react-hot-toast";
+import { Link } from "react-router-dom";
+
 
 const ProductCarousel = ({ products }) => {
   const { addToCart, addToWihlist } = UserService();
@@ -87,62 +89,73 @@ const ProductCarousel = ({ products }) => {
         {carouselProducts &&
           carouselProducts.length &&
           carouselProducts.map((data) => (
-            <div className="product" key={data._id}>
-              <figure className="product-media">
-                <span className="product-label label-sale">Sale</span>
-                {/* <a href="product.html"> */}
-                <img
-                  src={data?.images?.[0]}
-                  alt="Product image"
-                  className="product-image"
-                  style={{ height: "200px", objectFit: "contain",mixBlendMode: 'multiply', }}
-                />
 
-                <div className="product-action-vertical">
-                  <button
-                    onClick={() =>
-                      handleAddToWishlist(
+<div className="product" key={data._id}>
+  <figure className="product-media">
+    <span className="product-label label-sale">Sale</span>
 
-                        data._id,
-                        1
-                      )
-                    }
-                    className="btn-product-icon btn-wishlist btn-expandable"
-                  >
-                    <span>add to wishlist</span>
-                  </button>
-                </div>
-                <div className="product-action">
-                  <button
-                    className="btn-product btn-cart"
-                    title="Add to cart"
-                    onClick={() =>
-                      handleAddToCart(data._id, 1)
-                    }
-                  >
-                    <span>add to cart</span>
-                  </button>
-                </div>
-              </figure>
-              <div className="product-body">
-                <div className="product-cat">
-                  {/* <a href="#">Furniture</a> */}
-                </div>
-                <h3 className="product-title">
-                  <a >{data.name}</a>
-                </h3>
-                <div className="product-price">
-                  <span className="new-price">₹ {data?.sale_price}</span>
-                  <span className="old-price">₹ {data?.product_price}</span>
-                </div>
-                <div className="ratings-container">
-                  <div className="ratings">
-                    <div className="ratings-val" style={{ width: "100%" }} />
-                  </div>
-                  <span className="ratings-text">( 2 Reviews )</span>
-                </div>
-              </div>
-            </div>
+    {/* Make image clickable */}
+    <Link to={`/product/${data._id}`}>
+      <img
+        src={data?.images?.[0]}
+        alt="Product"
+        className="product-image"
+        style={{
+          height: "200px",
+          objectFit: "contain",
+          mixBlendMode: "multiply",
+        }}
+      />
+    </Link>
+
+    <div className="product-action-vertical">
+      <button
+        onClick={(e) => {
+          e.stopPropagation(); // prevent navigating
+          handleAddToWishlist(data._id, 1);
+        }}
+        className="btn-product-icon btn-wishlist btn-expandable"
+      >
+        <span>add to wishlist</span>
+      </button>
+    </div>
+
+    <div className="product-action">
+      <button
+        className="btn-product btn-cart"
+        title="Add to cart"
+        onClick={(e) => {
+          e.stopPropagation(); // prevent navigating
+          handleAddToCart(data._id, 1);
+        }}
+      >
+        <span>add to cart</span>
+      </button>
+    </div>
+  </figure>
+
+  <div className="product-body">
+    <div className="product-cat">{/* optional category */}</div>
+
+    {/* Make title clickable */}
+    <h3 className="product-title">
+      <Link to={`/product/${data._id}`}>{data.name}</Link>
+    </h3>
+
+    <div className="product-price">
+      <span className="new-price">₹ {data?.sale_price}</span>
+      <span className="old-price">₹ {data?.product_price}</span>
+    </div>
+
+    <div className="ratings-container">
+      <div className="ratings">
+        <div className="ratings-val" style={{ width: "100%" }} />
+      </div>
+      <span className="ratings-text">( 2 Reviews )</span>
+    </div>
+  </div>
+</div>
+
           ))}
       </OwlCarousel>
     </>
