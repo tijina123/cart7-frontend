@@ -5,12 +5,9 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import UserService from "../../services/user-api-services/UserService";
 import toast, { Toaster } from "react-hot-toast";
-<<<<<<< HEAD
 import { Link } from "react-router-dom";
 
-=======
 import useAuth from "../../hooks/useAuth";
->>>>>>> tijina
 
 const ProductCarousel = ({ products }) => {
   const { auth } = useAuth();
