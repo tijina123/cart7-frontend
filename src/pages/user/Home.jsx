@@ -166,6 +166,9 @@ const Home = () => {
                   <h3 className="cat-block-title">Furniture</h3>{/* End .cat-block-title */}
                   </Link>
               </div>{/* End .col-sm-4 col-lg-2 */}
+
+
+              
             </div>{/* End .row */}
           </div>{/* End .cat-blocks-container */}
         </div>{/* End .container */}

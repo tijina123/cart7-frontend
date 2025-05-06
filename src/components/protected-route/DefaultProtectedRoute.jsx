@@ -2,25 +2,13 @@ import React, { useEffect } from "react";
 import UserLayout from "../layout/user-layout/UserLayout";
 import { Navigate, Outlet, useLocation  } from "react-router-dom";
 
-const UserProtectedRoute = () => {
+const DefaultProtectedRoute = () => {
     const location = useLocation(); // 🔹 Add this to track URL changes
 
 
     const token = localStorage.getItem("accessToken");
 
-     useEffect(() => {
-
-    }, [location]); // 🔹 Ensure location is tracked properly
-
-    
-    if ( location.pathname == "/category-page") {
-        return <Navigate to="/category-page"  />;
-    }
-
-    if (!token && location.pathname !== "/") {
-        return <Navigate to="/" replace />;
-    }
-
+   
 
     return (
         <UserLayout>
@@ -29,4 +17,4 @@ const UserProtectedRoute = () => {
     );
 };
 
-export default UserProtectedRoute;
+export default DefaultProtectedRoute;

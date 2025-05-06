@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-hook/window-size": "^3.1.1",
+    "@react-oauth/google": "^0.12.1",
     "axios": "^1.7.8",
     "bootstrap": "^5.3.5",
     "formik": "^2.4.6",

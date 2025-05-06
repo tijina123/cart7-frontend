@@ -125,11 +125,20 @@ const updateStatus = async (orderId,data) => {
   return response.data;
 };
 
+<<<<<<< HEAD
+const getProductByCategoryId = async (categoryId) => {
+  const response = await axiosPrivate.get(`/product/filter/${categoryId}`);
+  return response.data;
+};
+
+
+=======
 const getSingleProduct = async (productId) => {
   const response = await axiosPrivate.get(`/product/${productId}`);
   return response.data;
 };
 
+>>>>>>> origin/ashiii
   return {
     getHomeProductsByCategory,
     getHomeProducts,
@@ -151,7 +160,11 @@ const getSingleProduct = async (productId) => {
     putFilterProducts,
     getOrder,
     updateStatus,
+<<<<<<< HEAD
+    getProductByCategoryId
+=======
     getSingleProduct,
+>>>>>>> origin/ashiii
   };
 };
 
