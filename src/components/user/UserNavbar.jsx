@@ -273,7 +273,7 @@ const UserNavbar = () => {
                     <ul className="menu-vertical sf-arrows">
                       <li>
                         <a>
-                          <Link to={`/category-page`}
+                          <Link to={`/category`}
                             // onClick={() =>
                             //   document
                             //     .querySelector(".filter-products")
@@ -287,7 +287,7 @@ const UserNavbar = () => {
                       {category?.map((data) => (
                         <li>
                           <a>
-                            <Link to={`/category-page/${data?._id}`}
+                            <Link to={`/category/${data?.name}/${data?._id}`}
                               // onClick={() => handleCategoryClick(data?.name)}
                             >
                               {data?.name}
