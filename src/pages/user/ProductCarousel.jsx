@@ -25,58 +25,51 @@ const ProductCarousel = ({ products }) => {
   const handleAddToCart = async (productId, quantity) => {
     try {
       if (auth?.name) {
-        
-      const data = { productId, quantity };
-      const response = await addToCart(data);
-      if (response?.success) {
-        toast.success(response?.message);
-      }else { 
-        console.log(response, "response from add to cart");
-        toast.error(response?.message);
+        const data = { productId, quantity };
+        const response = await addToCart(data);
+        if (response?.success) {
+          toast.success(response?.message);
+        } else {
+          console.log(response, "response from add to cart");
+          toast.error(response?.message);
+        }
+      } else {
+        // Show Bootstrap modal programmatically
+        const modalEl = document.getElementById("signin-modal");
+        if (modalEl) {
+          const modal = new Modal(modalEl);
+          modal.show();
+        }
       }
-    } else {    
-      // Show Bootstrap modal programmatically
-      const modalEl = document.getElementById("signin-modal");
-      if (modalEl) {
-        const modal = new Modal(modalEl);
-        modal.show();
-      }
-    }
     } catch (error) {
-
       toast.error(error?.response?.data?.message);
       // toast.error("Please login to add product to cart");
-
-   
- 
     }
   };
 
   const handleAddToWishlist = async (productId, quantity) => {
     try {
       if (auth?.name) {
-      const data = { productId, quantity };
-      const response = await addToWihlist(data);
+        const data = { productId, quantity };
+        const response = await addToWihlist(data);
 
-      if (response?.success) {
-        toast.success(response?.message);
-      } else {  
-        console.log(response, "response from add to wishlist");
-        toast.error(response?.message);
+        if (response?.success) {
+          toast.success(response?.message);
+        } else {
+          console.log(response, "response from add to wishlist");
+          toast.error(response?.message);
+        }
+      } else {
+        // Show Bootstrap modal programmatically
+        const modalEl = document.getElementById("signin-modal");
+        if (modalEl) {
+          const modal = new Modal(modalEl);
+          modal.show();
+        }
       }
-    } else {
-      // Show Bootstrap modal programmatically
-      const modalEl = document.getElementById("signin-modal");
-      if (modalEl) {
-        const modal = new Modal(modalEl);
-        modal.show();
-      }
-    }
     } catch (error) {
       toast.error(error?.response?.data?.message);
       // toast.error("Please login to add product to wishlist");
-
-      
     }
   };
 
@@ -114,18 +107,16 @@ const ProductCarousel = ({ products }) => {
                   src={data?.images?.[0]}
                   alt="Product image"
                   className="product-image"
-                  style={{ height: "200px", objectFit: "contain",mixBlendMode: 'multiply', }}
+                  style={{
+                    height: "200px",
+                    objectFit: "contain",
+                    mixBlendMode: "multiply",
+                  }}
                 />
 
                 <div className="product-action-vertical">
                   <button
-                    onClick={() =>
-                      handleAddToWishlist(
-
-                        data._id,
-                        1
-                      )
-                    }
+                    onClick={() => handleAddToWishlist(data._id, 1)}
                     className="btn-product-icon btn-wishlist btn-expandable"
                   >
                     <span>add to wishlist</span>
@@ -135,9 +126,7 @@ const ProductCarousel = ({ products }) => {
                   <button
                     className="btn-product btn-cart"
                     title="Add to cart"
-                    onClick={() =>
-                      handleAddToCart(data._id, 1)
-                    }
+                    onClick={() => handleAddToCart(data._id, 1)}
                   >
                     <span>add to cart</span>
                   </button>
@@ -148,7 +137,7 @@ const ProductCarousel = ({ products }) => {
                   {/* <a href="#">Furniture</a> */}
                 </div>
                 <h3 className="product-title">
-                  <a >{data.name}</a>
+                  <a>{data.name}</a>
                 </h3>
                 <div className="product-price">
                   <span className="new-price">₹ {data?.sale_price}</span>

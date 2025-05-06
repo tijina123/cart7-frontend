@@ -14,7 +14,8 @@ export const CategorySinglePage = () => {
   const { id } = useParams();
   console.log(id, "id");
   const [product, setProduct] = useState([]);
-  const { getProductByCategoryId, getHomeProducts, addToWihlist, addToCart } = UserService();
+  const { getProductByCategoryId, getHomeProducts, addToWihlist, addToCart } =
+    UserService();
 
   useEffect(() => {
     getProduct();
@@ -37,81 +38,58 @@ export const CategorySinglePage = () => {
   const handleAddToCart = async (productId, quantity) => {
     try {
       if (auth?.name) {
-      const data = { productId, quantity };
-      const response = await addToCart(data);
-      if (response?.success) {
-        toast.success(response?.message);
-      }else {
-        console.log(response, "response from add to cart");
-        toast.error(response?.message);
+        const data = { productId, quantity };
+        const response = await addToCart(data);
+        if (response?.success) {
+          toast.success(response?.message);
+        } else {
+          console.log(response, "response from add to cart");
+          toast.error(response?.message);
+        }
+      } else {
+        // Show Bootstrap modal programmatically
+        const modalEl = document.getElementById("signin-modal");
+        if (modalEl) {
+          const modal = new Modal(modalEl);
+          modal.show();
+        }
       }
-    } else {
-      // Show Bootstrap modal programmatically
-      const modalEl = document.getElementById("signin-modal");
-      if (modalEl) {
-        const modal = new Modal(modalEl);
-        modal.show();
-      }
-    }
     } catch (error) {
       toast.error(error?.response?.data?.message);
       // toast.error("Please login to add product to cart");
-
     }
   };
 
   const handleAddToWishlist = async (productId, quantity) => {
     try {
       if (auth?.name) {
-      const data = { productId, quantity };
-      const response = await addToWihlist(data);
+        const data = { productId, quantity };
+        const response = await addToWihlist(data);
 
-      if (response?.success) {
-        toast.success(response?.message);
-      }else {
-        console.log(response, "response from add to wishlist");
-        toast.error(response?.message);
+        if (response?.success) {
+          toast.success(response?.message);
+        } else {
+          console.log(response, "response from add to wishlist");
+          toast.error(response?.message);
+        }
+      } else {
+        // Show Bootstrap modal programmatically
+        const modalEl = document.getElementById("signin-modal");
+        if (modalEl) {
+          const modal = new Modal(modalEl);
+          modal.show();
+        }
       }
-    } else {      
-      // Show Bootstrap modal programmatically
-      const modalEl = document.getElementById("signin-modal");
-      if (modalEl) {
-        const modal = new Modal(modalEl);
-        modal.show();
-      }
-    }
-  }
-  catch (error) {
-    toast.error(error?.response?.data?.message);
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
       // toast.error("Please login to add product to wishlist");
-
     }
   };
   return (
     <>
       <div className="page-wrapper">
-        <header className="header">
-          <div className="header-top">
-            <div className="container">{/* End .header-right */}</div>
-            {/* End .container */}
-          </div>
-
-          {/* End .header-middle */}
-        </header>
         {/* End .header */}
         <main className="main">
-          <div
-            className="page-header text-center"
-            style={{
-              backgroundImage: 'url("assets/images/page-header-bg.jpg")',
-            }}
-          >
-            {/* End .container */}
-          </div>
-          {/* End .page-header */}
-          <nav aria-label="breadcrumb" className="breadcrumb-nav mb-2">
-            {/* End .container */}
-          </nav>
           {/* End .breadcrumb-nav */}
           <div className="page-content">
             <div className="container">
@@ -140,13 +118,14 @@ export const CategorySinglePage = () => {
                             />
                           </a>
                           <div className="product-action-vertical">
-                          <button
-  className="btn-product-icon btn-wishlist btn-expandable"
-  onClick={() => handleAddToWishlist(products._id, 1)}
->
-  <span>add to wishlist</span>
-</button>
-
+                            <button
+                              className="btn-product-icon btn-wishlist btn-expandable"
+                              onClick={() =>
+                                handleAddToWishlist(products._id, 1)
+                              }
+                            >
+                              <span>add to wishlist</span>
+                            </button>
                           </div>
                           <div
                             style={{
@@ -156,9 +135,10 @@ export const CategorySinglePage = () => {
                               marginBottom: "10px",
                             }}
                           >
-                            <div style={{ width: "50%" , cursor: "pointer" }} >
-                              <a  className="btn-product btn-cart" 
-                              onClick={() => handleAddToCart(products._id, 1)}
+                            <div style={{ width: "50%", cursor: "pointer" }}>
+                              <a
+                                className="btn-product btn-cart"
+                                onClick={() => handleAddToCart(products._id, 1)}
                               >
                                 <span>add to cart</span>
                               </a>

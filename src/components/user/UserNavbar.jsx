@@ -10,12 +10,11 @@ import { FiLogOut } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
 import { Modal } from "bootstrap";
 
-
 const UserNavbar = () => {
   const { auth } = useAuth();
   const navigate = useNavigate();
   const { getHomeCategory, putFilterProducts } = UserService();
-  console.log(auth,"================auth in nav============");
+  console.log(auth, "================auth in nav============");
 
   const [category, setCategory] = useState([]);
 
@@ -30,7 +29,7 @@ const UserNavbar = () => {
       const response = await getHomeCategory();
       // response?.product?.reverse()
       setCategory(response?.categories);
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const onClose = async () => {
@@ -45,42 +44,41 @@ const UserNavbar = () => {
   };
 
   const handleCategoryClick = async (data) => {
-    console.log(data,"===handleCategoryClick");
-    
+    console.log(data, "===handleCategoryClick");
+
     document.querySelector(`.${data}`)?.scrollIntoView({ behavior: "smooth" });
-    
   };
 
   const handleCart = () => {
     if (auth?.name) {
-      navigate('/cart');
+      navigate("/cart");
     } else {
-            // toast.error("Please login to view cart");
-                  // Show Bootstrap modal programmatically
-                  const modalEl = document.getElementById("signin-modal");
-                  if (modalEl) {
-                    const modal = new Modal(modalEl);
-                    modal.show();
-                  }
+      // toast.error("Please login to view cart");
+      // Show Bootstrap modal programmatically
+      const modalEl = document.getElementById("signin-modal");
+      if (modalEl) {
+        const modal = new Modal(modalEl);
+        modal.show();
+      }
     }
   };
   const handleWishlist = () => {
     if (auth?.name) {
-      navigate('/wishlist');
+      navigate("/wishlist");
     } else {
-            // toast.error("Please login to view wishlist");
-                  // Show Bootstrap modal programmatically
-                  const modalEl = document.getElementById("signin-modal");
-                  if (modalEl) {
-                    const modal = new Modal(modalEl);
-                    modal.show();
-                  }
+      // toast.error("Please login to view wishlist");
+      // Show Bootstrap modal programmatically
+      const modalEl = document.getElementById("signin-modal");
+      if (modalEl) {
+        const modal = new Modal(modalEl);
+        modal.show();
+      }
     }
   };
 
   return (
     <>
-    <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <header className="header header-10 header-intro-clearance">
         <div className="header-top mt-1">
           <div className="container">
@@ -114,8 +112,12 @@ const UserNavbar = () => {
                     </li>
                     {!auth?.name && (
                       <li className="">
-                      {/* <li className="login"> */}
-                        <a href="#signin-modal" data-toggle="modal" id="openModalButton">
+                        {/* <li className="login"> */}
+                        <a
+                          href="#signin-modal"
+                          data-toggle="modal"
+                          id="openModalButton"
+                        >
                           Sign in/Sign up
                         </a>
                       </li>
@@ -191,8 +193,8 @@ const UserNavbar = () => {
               {/* End .header-search */}
             </div>
             <div className="header-right">
-              <div className="header-dropdown-link" >
-                <button  className="wishlist-link" onClick={handleWishlist}>
+              <div className="header-dropdown-link">
+                <button className="wishlist-link" onClick={handleWishlist}>
                   {/* <a href="wishlist.html" className="wishlist-link"> */}
                   <i className="icon-heart-o" />
                   {/* <span className="wishlist-count">3</span> */}
@@ -200,8 +202,12 @@ const UserNavbar = () => {
                   {/* </a> */}
                 </button>
 
-                <div className="dropdown cart-dropdown" >
-                  <button  className="dropdown-toggle" role="button" onClick={handleCart}>
+                <div className="dropdown cart-dropdown">
+                  <button
+                    className="dropdown-toggle"
+                    role="button"
+                    onClick={handleCart}
+                  >
                     {/* <a href="#" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"> */}
                     <i className="icon-shopping-cart" />
                     {/* <span className="cart-count">2</span> */}
@@ -273,7 +279,8 @@ const UserNavbar = () => {
                     <ul className="menu-vertical sf-arrows">
                       <li>
                         <a>
-                          <Link to={`/category`}
+                          <Link
+                            to={`/category`}
                             // onClick={() =>
                             //   document
                             //     .querySelector(".filter-products")
@@ -287,7 +294,8 @@ const UserNavbar = () => {
                       {category?.map((data) => (
                         <li>
                           <a>
-                            <Link to={`/category/${data?.name}/${data?._id}`}
+                            <Link
+                              to={`/category/${data?.name}/${data?._id}`}
                               // onClick={() => handleCategoryClick(data?.name)}
                             >
                               {data?.name}
