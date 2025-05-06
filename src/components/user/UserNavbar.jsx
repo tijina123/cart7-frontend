@@ -98,7 +98,7 @@ const UserNavbar = () => {
                   <ul>
                     <li>
                       <div className="header-dropdown">
-                        <button>Are you a seller ?</button>
+                        <button>Sell Your Product</button>
                         <div className="header-menu">
                           <ul>
                             <li>
