@@ -141,6 +141,8 @@ const Checkout = () => {
 
   const handlePayment = async (data) => {
     try {
+      console.log("==== handlePayment 1");
+      
       const isScriptLoaded = await loadRazorpayScript();
       if (!isScriptLoaded) {
         alert(
@@ -148,6 +150,9 @@ const Checkout = () => {
         );
         return;
       }
+
+      console.log("==== handlePayment 2");
+
 
       // Initialize Razorpay
       const options = {
@@ -166,10 +171,13 @@ const Checkout = () => {
           });
 
           if (verifyRes.data.success) {
+console.log("inside verifyRes.data.success");
 
-             navigate("/order-success");
+            //  navigate("/order-success");
           } else {
             alert("Payment Failed!");
+            console.log("elseeeeee");
+            
           }
 
         },
@@ -188,7 +196,7 @@ const Checkout = () => {
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
     } catch (error) {
-      console.error("Payment Error:", error);
+      console.error("Payment Error:--------------", error);
     }
   };
 
