@@ -1,16 +1,15 @@
-
-
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { Modal } from "bootstrap"; // Bootstrap 5
+import { Modal } from "bootstrap";
 import UserService from "../../services/user-api-services/UserService";
-import useAuth from "../../hooks/useAuth";  
+import useAuth from "../../hooks/useAuth";
 import { useParams } from "react-router-dom";
 
 const ProductPage = () => {
   const { getSingleProduct, addToCart } = UserService();
   const { id } = useParams();
   const { auth } = useAuth();
+
   const [singleProduct, setSingleProduct] = useState(null);
   const [singleImage, setSingleImage] = useState("");
 
@@ -32,196 +31,173 @@ const ProductPage = () => {
     }
   };
 
-  if (!singleProduct) return <div>Loading...</div>;
-
   const handleAddToCart = async (productId, quantity) => {
-    console.log("productId", productId);
-    
     try {
       if (auth?.name) {
-      const data = { productId, quantity };
-      const response = await addToCart(data);
-      if (response?.success) {
-        toast.success(response?.message);
-      }else {
-        
-        console.log(response, "response from add to cart");
-        toast.error(response?.message);
+        const data = { productId, quantity };
+        const response = await addToCart(data);
+        response?.success ? toast.success(response.message) : toast.error(response.message);
+      } else {
+        showLoginModal();
       }
-    } else {
-      console.log("Please login to add product to cart");
-      
-      // Show Bootstrap modal programmatically
-      const modalEl = document.getElementById("signin-modal");
-      if (modalEl) {
-        const modal = new Modal(modalEl);
-        modal.show();
-      }
-    }
     } catch (error) {
-      toast.error(error?.response?.data?.message);
-      // toast.error("Please login to add product to cart");
-
+      toast.error(error?.response?.data?.message || "Something went wrong.");
     }
   };
 
   const handleAddToWishlist = async (productId, quantity) => {
     try {
       if (auth?.name) {
-      const data = { productId, quantity };
-      const response = await addToWihlist(data);
-
-      if (response?.success) {
-        toast.success(response?.message);
-      }else {
-        console.log(response, "response from add to wishlist");
-        toast.error(response?.message);
+        const data = { productId, quantity };
+        const response = await addToWihlist(data);
+        response?.success ? toast.success(response.message) : toast.error(response.message);
+      } else {
+        showLoginModal();
       }
-    } else {      
-      // Show Bootstrap modal programmatically
-      const modalEl = document.getElementById("signin-modal");
-      if (modalEl) {
-        const modal = new Modal(modalEl);
-        modal.show();
-      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong.");
     }
-  }
-  catch (error) {
-    toast.error(error?.response?.data?.message);
-      // toast.error("Please login to add product to wishlist");
+  };
 
-    }}
+  const showLoginModal = () => {
+    const modalEl = document.getElementById("signin-modal");
+    if (modalEl) {
+      const modal = new Modal(modalEl);
+      modal.show();
+    }
+  };
+
+  if (!singleProduct) return <div className="text-center py-20 text-lg font-medium">Loading product...</div>;
 
   return (
     <>
-          <Toaster position="top-center" reverseOrder={false} />
-    
-      <div className="page-wrapper">
-        <main className="main" style={{ marginTop: "30px" }}>
-          <div className="page-content">
-            <div className="container">
-              <div className="product-details-top mb-2">
-                <div className="row">
-                  {/* Image Section */}
-                  <div className="col-md-6 d-flex flex-column align-items-center">
-                    <div className="product-gallery product-gallery-vertical w-100">
-                      <div className="row">
-                        {/* Main Image */}
-                        <figure className="product-main-image text-center">
-                          <img
-                            id="product-zoom"
-                            src={singleImage}
-                            className="img-fluid"
-                            style={{
-                              maxHeight: "430px",
-                              objectFit: "contain",
-                              width: "100%",
-                            }}
-                            alt="product"
-                          />
-                          <a
-                            href="#"
-                            id="btn-product-gallery"
-                            className="btn-product-gallery"
-                          >
-                            <i className="icon-arrows" />
-                          </a>
-                        </figure>
+      <Toaster position="top-center" reverseOrder={false} />
 
-                        {/* Thumbnail Gallery */}
-                        <div
-                          id="product-zoom-gallery"
-                          className="product-image-gallery d-flex justify-content-center flex-wrap gap-2"
-                        >
-                          {singleProduct.images?.map((img, index) => (
-                            <a
-                              key={index}
-                              className="product-gallery-item"
-                              href="#"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                setSingleImage(img);
-                              }}
-                              data-image={img}
-                              data-zoom-image={img}
-                            >
-                              <img
-                                src={img}
-                                alt={`product ${index}`}
-                                style={{
-                                  width: "100px",
-                                  height: "100px",
-                                  objectFit: "contain",
-                                  border: "none",
-                                  borderRadius: "4px",
-                                }}
-                              />
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+      <div className="page-wrapper bg-light">
+        <main className="main pt-5">
+          <div className="container py-4">
+            <div className="row align-items-start g-5">
+              {/* Left Image Column */}
+              <div className="col-md-6">
+                <div className="border p-3 rounded shadow-sm bg-white">
+                {/* Main Image Centered */}
+<div
+  className="d-flex align-items-center justify-content-center mb-3"
+  style={{ height: "430px", backgroundColor: "#f9f9f9", borderRadius: "6px" }}
+>
+  <img
+    src={singleImage}
+    alt="Product"
+    className="img-fluid"
+    style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }}
+  />
+</div>
 
-                  {/* Product Details Section */}
-                  <div className="col-md-6">
-                    <div className="product-details product-details-centered">
-                      <h1 className="product-title">{singleProduct?.name}</h1>
 
-                      <div className="product-price">
-                        ₹{singleProduct?.sale_price}
-                      </div>
-
-                      <div className="product-content">
-                        <p>{singleProduct?.description}</p>
-                      </div>
-
-                      <div className="product-details-action">
-                        <div className="details-action-col">
-                          <a href="#" className="btn-product btn-wishlist"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleAddToWishlist(singleProduct._id, 1);
-                          }}
-                          >
-                            
-                            <span>Add to wishlish </span>
-                          </a>
-                        </div>
-                        <div className="details-action-wrapper">
-                          <a
-                            href="#"
-                            className="btn-product btn-cart"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              handleAddToCart(singleProduct._id, 1);
-                            }}
-                          >
-                            <span>Add to Cart</span>
-                          </a>
-                        </div>
-                      </div>
-
-                      <div className="product-details-footer">
-                        <div className="product-cat">
-                          <span>Category:</span> {singleProduct?.category?.name}
-                        </div>
-                      </div>
-                    </div>
+                  {/* Thumbnail Images */}
+                  <div className="d-flex justify-content-center gap-2 flex-wrap">
+                    {singleProduct.images?.map((img, index) => (
+                      <img
+                        key={index}
+                        src={img}
+                        onClick={() => setSingleImage(img)}
+                        alt={`product-thumbnail-${index}`}
+                        className="img-thumbnail"
+                        style={{
+                          width: "90px",
+                          height: "90px",
+                          objectFit: "contain",
+                          cursor: "pointer",
+                        }}
+                      />
+                    ))}
                   </div>
                 </div>
-                {/* End row */}
               </div>
-              {/* End product-details-top */}
+
+              <div className="col-md-6">
+  <div className="bg-white p-4 rounded shadow-sm">
+
+    {/* Product Title */}
+    <h1
+      className="fw-bold text-dark mb-3"
+      style={{
+        fontSize: "3.2rem",
+        lineHeight: "1.3",
+        letterSpacing: "-0.3px",
+        textTransform: "capitalize",
+      }}
+    >
+      {singleProduct.name}
+    </h1>
+
+    {/* Price Section */}
+    <div className="d-flex align-items-center flex-wrap gap-3 mb-3">
+      <span className="fs-2 fw-bold text-success">
+        ₹{singleProduct.sale_price}
+      </span>
+      {singleProduct.original_price && singleProduct.original_price > singleProduct.sale_price && (
+        <>
+          <span className="fs-5 text-muted text-decoration-line-through">
+            ₹{singleProduct.original_price}
+          </span>
+          <span className="badge bg-danger fs-6">
+            Save ₹{singleProduct.original_price - singleProduct.sale_price}
+          </span>
+        </>
+      )}
+    </div>
+
+    {/* Category */}
+    <div className="mb-3">
+      <span className="badge  text-muted px-3 py-2">
+        Category: {singleProduct?.category?.name}
+      </span>
+    </div>
+
+    {/* Description */}
+    <p className="text-muted mb-4" style={{ lineHeight: "1.6", whiteSpace: "pre-line" }}>
+      {singleProduct.description}
+    </p>
+
+    {/* Action Buttons */}
+    <div className="d-flex flex-column flex-sm-row gap-3 mb-4">
+      <button
+        type="button"
+        className="btn btn-outline-danger w-100"
+        onClick={() => handleAddToWishlist(singleProduct._id, 1)}
+      >
+        ❤️ Add to Wishlist
+      </button>
+      <button
+        type="button"
+        className="btn btn-success w-100"
+        onClick={() => handleAddToCart(singleProduct._id, 1)}
+      >
+        🛒 Add to Cart
+      </button>
+    </div>
+
+    {/* Delivery Info */}
+    <div className="text-muted small">
+      <i className="bi bi-truck me-2" />
+      Fast delivery within 2–4 days
+    </div>
+
+  </div>
+</div>
+
             </div>
           </div>
         </main>
       </div>
 
-      <button id="scroll-top" title="Back to Top">
+      {/* Scroll to top */}
+      <button id="scroll-top" title="Back to Top" className="btn btn-light position-fixed bottom-0 end-0 m-4 shadow">
         <i className="icon-arrow-up" />
       </button>
 
+      {/* Overlay (if used) */}
       <div className="mobile-menu-overlay" />
     </>
   );
