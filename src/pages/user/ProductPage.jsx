@@ -162,20 +162,36 @@ const ProductPage = () => {
 
     {/* Action Buttons */}
     <div className="d-flex flex-column flex-sm-row gap-3 mb-4">
-      <button
-        type="button"
-        className="btn btn-outline-danger w-100"
-        onClick={() => handleAddToWishlist(singleProduct._id, 1)}
-      >
-        ❤️ Add to Wishlist
-      </button>
-      <button
-        type="button"
-        className="btn btn-success w-100"
-        onClick={() => handleAddToCart(singleProduct._id, 1)}
-      >
-        🛒 Add to Cart
-      </button>
+    <button
+  type="button"
+  className="btn btn-outline-primary w-100 shadow-sm"
+  onMouseEnter={(e) => {
+    e.currentTarget.classList.add("shadow", "border-primary");
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.classList.remove("shadow", "border-primary");
+  }}
+  onClick={() => handleAddToWishlist(singleProduct._id, 1)}
+>
+  ❤️ Add to Wishlist
+</button>
+
+<button
+  type="button"
+  className="btn btn-primary w-100 shadow-sm"
+  onMouseEnter={(e) => {
+    e.currentTarget.classList.add("shadow");
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.classList.remove("shadow");
+  }}
+  onClick={() => handleAddToCart(singleProduct._id, 1)}
+>
+  🛒 Add to Cart
+</button>
+
+
+
     </div>
 
     {/* Delivery Info */}
