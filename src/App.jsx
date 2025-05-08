@@ -20,6 +20,7 @@ import Contact from "./pages/user/Contact";
 import FAQ from "./pages/user/Faq";
 import About from "./pages/user/About";
 import CategorySinglePage from "./pages/user/CategorySinglePage";
+import ProductPage from "./pages/user/ProductPage";
 
 
 
@@ -51,10 +52,9 @@ function App() {
                 <Route path="/category/:category/:id" element={<CategorySinglePage />} />
                 <Route path="/category" element={<CategorySinglePage />} />
      
-           
-               
-           
+
                 <Route path="/about" element={<About />} /> 
+                <Route path="/product/:id" element={<ProductPage />} /> 
 
 
 
