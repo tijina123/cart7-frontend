@@ -22,9 +22,6 @@ import About from "./pages/user/About";
 import CategorySinglePage from "./pages/user/CategorySinglePage";
 
 
-import ProductPage from "./pages/user/productPage";
-
-
 
 function App() {
 
@@ -58,7 +55,6 @@ function App() {
                
            
                 <Route path="/about" element={<About />} /> 
-                <Route path="/product/:id" element={<ProductPage/>} />
 
 
 
