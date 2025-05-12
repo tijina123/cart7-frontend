@@ -21,12 +21,15 @@ const Home = () => {
   const getProductsByCategory = async () => {
     try {
       const response = await getHomeProductsByCategory();
+<<<<<<< HEAD
       console.log(response, "============response?.productsByCategory 1");
       console.log(
         response?.productsByCategory,
         "============response?.productsByCategory 2"
       );
 
+=======
+>>>>>>> main
       setAllProducts(response?.productsByCategory);
     } catch (error) {}
   };

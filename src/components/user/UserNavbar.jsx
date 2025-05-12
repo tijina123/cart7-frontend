@@ -14,7 +14,6 @@ const UserNavbar = () => {
   const { auth } = useAuth();
   const navigate = useNavigate();
   const { getHomeCategory, putFilterProducts } = UserService();
-  console.log(auth, "================auth in nav============");
 
   const [category, setCategory] = useState([]);
 
@@ -294,8 +293,7 @@ const UserNavbar = () => {
                       {category?.map((data) => (
                         <li>
                           <a>
-                            <Link
-                              to={`/category/${data?.name}/${data?._id}`}
+                            <Link to={`/category?name=${data?.name}&id=${data?._id}`}
                               // onClick={() => handleCategoryClick(data?.name)}
                             >
                               {data?.name}

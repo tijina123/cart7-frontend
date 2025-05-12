@@ -131,6 +131,11 @@ const getProductByCategoryId = async (categoryId) => {
 };
 
 
+const getSingleProduct = async (productId) => {
+  const response = await axiosPrivate.get(`/product/${productId}`);
+  return response.data;
+};
+
   return {
     getHomeProductsByCategory,
     getHomeProducts,
@@ -152,7 +157,8 @@ const getProductByCategoryId = async (categoryId) => {
     putFilterProducts,
     getOrder,
     updateStatus,
-    getProductByCategoryId
+    getProductByCategoryId,
+    getSingleProduct,
   };
 };
 

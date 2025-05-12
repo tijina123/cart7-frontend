@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import UserService from "../../services/user-api-services/UserService";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Modal } from "bootstrap";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
@@ -11,8 +11,13 @@ import useAuth from "../../hooks/useAuth";
 
 export const CategorySinglePage = () => {
   const { auth } = useAuth();
-  const { id } = useParams();
-  console.log(id, "id");
+  // const { id } = useParams();
+  // console.log(id, "id");
+    const [searchParams] = useSearchParams();
+  
+    const name = searchParams.get("name");
+    const id = searchParams.get("id");
+
   const [product, setProduct] = useState([]);
   const { getProductByCategoryId, getHomeProducts, addToWihlist, addToCart } =
     UserService();

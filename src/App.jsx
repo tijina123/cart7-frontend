@@ -20,8 +20,7 @@ import Contact from "./pages/user/Contact";
 import FAQ from "./pages/user/Faq";
 import About from "./pages/user/About";
 import CategorySinglePage from "./pages/user/CategorySinglePage";
-
-
+import ProductPage from "./pages/user/ProductPage";
 
 
 
@@ -42,19 +41,21 @@ function App() {
             </Route>
             <Route element={<DefaultProtectedRoute />}>
 
+
+
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-conditions" element={<TermsandConditions />} />
                 <Route path="/return-refund" element={<ReturnPolicy />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/category/:category/:id" element={<CategorySinglePage />} />
+                {/* <Route path="/category/:category/:id" element={<CategorySinglePage />} /> */}
                 <Route path="/category" element={<CategorySinglePage />} />
      
-           
-               
-           
+
                 <Route path="/about" element={<About />} /> 
+                <Route path="/product" element={<ProductPage />} /> 
+
 
 
             <Route path="*" element={<NotFound />} />

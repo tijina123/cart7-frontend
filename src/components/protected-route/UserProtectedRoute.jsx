@@ -13,8 +13,8 @@ const UserProtectedRoute = () => {
     }, [location]); // 🔹 Ensure location is tracked properly
 
     
-    if ( location.pathname == "/category-page") {
-        return <Navigate to="/category-page"  />;
+    if ( location.pathname == "/category") {
+        return <Navigate to="/category"  />;
     }
 
     if (!token && location.pathname !== "/") {

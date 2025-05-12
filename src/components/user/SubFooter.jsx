@@ -5,11 +5,13 @@ import useAuth from "../../hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
 import { FiLogOut } from "react-icons/fi";
 import { Modal } from "bootstrap";
-
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
 
 const SubFooter = () => {
   const { postLogin, postRegister, getHomeCategory } = UserService();
-  const { setAuth,auth } = useAuth();
+  const { setAuth, auth } = useAuth();
 
   const [singinFormData, setSinginFormData] = useState({
     email: "",
@@ -20,7 +22,7 @@ const SubFooter = () => {
   const [registerFormData, setRegisterFormData] = useState({
     name: "",
     email: "",
-    phone:"",
+    phone: "",
     password: "",
     role: "user",
   });
@@ -43,7 +45,7 @@ const SubFooter = () => {
       const response = await getHomeCategory();
       // response?.product?.reverse()
       setCategory(response?.categories);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleForgotChange = (e) =>
@@ -66,7 +68,7 @@ const SubFooter = () => {
     }
 
     // update password logic...
-    console.log("New password:", resetPasswordForm.newPassword);
+    // console.log("New password:", resetPasswordForm.newPassword);
     $("#reset-password-modal").modal("hide");
   };
 
@@ -113,13 +115,12 @@ const SubFooter = () => {
         localStorage.setItem("phone", phone);
 
         setAuth({ accessToken, role, image, name, email, phone });
-        
+
         toast.success(response?.data?.message);
 
         setTimeout(() => {
           window.location.reload();
         }, 1000);
-
       } else {
         toast.error("Login failed! Please check your credentials.");
       }
@@ -166,29 +167,70 @@ const SubFooter = () => {
 
     // Optional: redirect to login page or homepage
     window.location.href = "/"; // Change the path based on your route
-};
+  };
 
-const handleCategoryClick = async (data) => {
-
-  const menu =document.querySelector(".mobile-menu-close");
-  if (menu) {
-    menu.click(); // Or manipulate the menu to close it however you need
-  }
-
-  document.querySelector(`.${data}`)?.scrollIntoView({ behavior: "smooth" });
-};
-
-const closeModal = () => {
-  const modalEl = document.getElementById("signin-modal");
-  if (modalEl) {
-    const modal = Modal.getInstance(modalEl);
-    if (modal) {
-      modal.hide();
+  const handleCategoryClick = async (data) => {
+    const menu = document.querySelector(".mobile-menu-close");
+    if (menu) {
+      menu.click(); // Or manipulate the menu to close it however you need
     }
-  }
-};
 
+    document.querySelector(`.${data}`)?.scrollIntoView({ behavior: "smooth" });
+  };
 
+  const closeModal = () => {
+    const modalEl = document.getElementById("signin-modal");
+    if (modalEl) {
+      const modal = Modal.getInstance(modalEl);
+      if (modal) {
+        modal.hide();
+      }
+    }
+  };
+
+  const handleSuccess = async (credentialResponse) => {
+    const { credential } = credentialResponse;
+    const decoded = jwtDecode(credential);
+    console.log("handleSuccess====");
+    
+
+    // Send token to backend
+    try {
+      const response = await axios.post('http://localhost:3000/google-login', {
+        token: credential,
+      });
+
+            if (response?.data?.success) {
+        const accessToken = response?.data?.accessToken;
+        const role = response?.data?.userData?.role;
+        const image = response?.data?.userData?.image || "";
+        const name = response?.data?.userData?.name || "";
+        const email = response?.data?.userData?.email || "";
+        const phone = response?.data?.userData?.phone || "";
+
+        //localStorage.setItem("password", password)
+
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("role", role);
+        localStorage.setItem("profileImage", image);
+        localStorage.setItem("name", name);
+        localStorage.setItem("email", email);
+        localStorage.setItem("phone", phone);
+
+        setAuth({ accessToken, role, image, name, email, phone });
+
+        toast.success(response?.data?.message);
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } else {
+        toast.error("Login failed! Please check your credentials.");
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
+  };
 
   return (
     <>
@@ -323,11 +365,13 @@ const closeModal = () => {
                 <nav className="mobile-nav">
                   <ul className="mobile-menu">
                     <li className="active">
-                      <a >Categories</a>
+                      <a>Categories</a>
                       <ul>
                         {category?.map((data) => (
                           <li>
-                            <a onClick={() => handleCategoryClick(data?.name)} >{data?.name}</a>
+                            <a onClick={() => handleCategoryClick(data?.name)}>
+                              {data?.name}
+                            </a>
                           </li>
                         ))}
                       </ul>
@@ -351,20 +395,19 @@ const closeModal = () => {
             </div>
             {/* End .tab-content */}
             {auth?.name && (
+              <div className="dropdown cart-dropdown">
+                <Link
+                  to="/profile"
+                  onClick={onHandleLogout}
+                  className="dropdown-toggle"
+                  role="button"
+                >
+                  <FiLogOut style={{ fontSize: "18px", marginRight: "5px" }} />
+                  <p>Logout</p>
 
-            <div className="dropdown cart-dropdown">
-              <Link
-                to="/profile"
-                onClick={onHandleLogout}
-                className="dropdown-toggle"
-                role="button"
-              >
-                <FiLogOut style={{ fontSize: "18px", marginRight: "5px" }} />
-                <p>Logout</p>
-
-                {/* </a> */}
-              </Link>
-            </div>
+                  {/* </a> */}
+                </Link>
+              </div>
             )}
 
             <div className="social-icons mt-4">
@@ -507,7 +550,7 @@ const closeModal = () => {
                               <span>LOG IN</span>
                               <i className="icon-long-arrow-right" />
                             </button>
-                            <div className="custom-control custom-checkbox">
+                            {/* <div className="custom-control custom-checkbox">
                               <input
                                 type="checkbox"
                                 className="custom-control-input"
@@ -519,7 +562,7 @@ const closeModal = () => {
                               >
                                 Remember Me
                               </label>
-                            </div>
+                            </div> */}
                             {/* End .custom-checkbox */}
                             {/* <a href="#" className="forgot-link">
                               Forgot Your Password?
@@ -535,6 +578,15 @@ const closeModal = () => {
                               Forgot Your Password?
                             </a>
                           </div>
+
+                          <GoogleOAuthProvider clientId="519989584168-jv82errmuc8179mtlesm71gad3b4tgtv.apps.googleusercontent.com">
+                            <GoogleLogin
+                              onSuccess={handleSuccess}
+                              onError={() => {
+                                console.log('Login Failed');
+                              }}
+                            />
+                          </GoogleOAuthProvider>
                           {/* End .form-footer */}
                         </form>
                         <div className="form-choice"></div>
@@ -626,7 +678,12 @@ const closeModal = () => {
                                 className="custom-control-label"
                                 htmlFor="register-policy"
                               >
-                                I agree to the privacy policy *
+                                <Link
+                                  to="/privacy-policy"
+                                  style={{ textDecoration: "none" }}
+                                >
+                                  I agree to the privacy policy *
+                                </Link>
                               </label>
                             </div>
                             {/* End .custom-checkbox */}

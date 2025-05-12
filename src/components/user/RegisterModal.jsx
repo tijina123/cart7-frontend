@@ -56,12 +56,18 @@ const RegisterModal = ({ onClose }) => {
   });
 
   const handleSubmit = async (values) => {
+
+    // Handle form submission logic here
     const response = await postRegister(values);
+    console.log("Response from API:", response);
+    
     if (response?.data?.success) {
+
       toast.success(response?.data?.message);
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 1500);
+
     } else {
       toast.error(response?.data?.message);
     }
