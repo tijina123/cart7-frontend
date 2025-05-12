@@ -317,9 +317,32 @@ const UserNavbar = () => {
               <nav className="main-nav">
                 <ul className="menu sf-arrows">
                   <li className="megamenu-container active">
-                    {/* <Link to="/" className="sf-with-ul">Home</Link> */}
-                    <Link to="/">Home</Link>
+                    <Link
+                      to="/"
+                      className="text-white hover:text-blue-500 no-underline transition-colors duration-300"
+                    >
+                      Home
+                    </Link>
                   </li>
+
+                  <li className="megamenu-container active">
+                    <Link
+                      to="/category"
+                      className="text-white hover:text-blue-500 no-underline transition-colors duration-300"
+                    >
+                      All Products
+                    </Link>
+                  </li>
+                  {auth?.name && (
+                  <li className="megamenu-container active">
+                    <Link
+                      to="/profile"
+                      className="text-white hover:text-blue-500 no-underline transition-colors duration-300"
+                    >
+                      Account
+                    </Link>
+                  </li>
+                  )}
                 </ul>
                 {/* End .menu */}
               </nav>
@@ -342,3 +365,4 @@ const UserNavbar = () => {
 };
 
 export default UserNavbar;
+
