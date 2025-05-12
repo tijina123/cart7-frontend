@@ -49,12 +49,12 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/category/:category/:id" element={<CategorySinglePage />} />
+                {/* <Route path="/category/:category/:id" element={<CategorySinglePage />} /> */}
                 <Route path="/category" element={<CategorySinglePage />} />
      
 
                 <Route path="/about" element={<About />} /> 
-                <Route path="/product/:id" element={<ProductPage />} /> 
+                <Route path="/product" element={<ProductPage />} /> 
 
 
 

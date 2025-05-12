@@ -17,7 +17,6 @@ const ProductCarousel = ({ products }) => {
   const [carouselKey, setCarouselKey] = useState(0);
 
   useEffect(() => {
-    console.log("Received products:", products);
     if (products.length > 0) {
       setCarouselProducts(products);
       setCarouselKey((prevKey) => prevKey + 1); // Force re-render
@@ -114,7 +113,7 @@ const ProductCarousel = ({ products }) => {
     <span className="product-label label-sale">Sale</span>
 
     {/* Make image clickable */}
-    <Link to={`/product/${data._id}`}>
+    <Link to={`/product?id=${data._id}`}>
       <img
         src={data?.images?.[0]}
         alt="Product"
@@ -158,7 +157,7 @@ const ProductCarousel = ({ products }) => {
 
     {/* Make title clickable */}
     <h3 className="product-title">
-      <Link to={`/product/${data._id}`}>{data.name}</Link>
+      <Link to={`/product?id=${data._id}`}>{data.name}</Link>
     </h3>
 
     <div className="product-price">

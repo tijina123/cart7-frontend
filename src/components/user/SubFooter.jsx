@@ -6,6 +6,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { FiLogOut } from "react-icons/fi";
 import { Modal } from "bootstrap";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
 
 const SubFooter = () => {
   const { postLogin, postRegister, getHomeCategory } = UserService();
@@ -43,7 +45,7 @@ const SubFooter = () => {
       const response = await getHomeCategory();
       // response?.product?.reverse()
       setCategory(response?.categories);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleForgotChange = (e) =>
@@ -66,7 +68,7 @@ const SubFooter = () => {
     }
 
     // update password logic...
-    console.log("New password:", resetPasswordForm.newPassword);
+    // console.log("New password:", resetPasswordForm.newPassword);
     $("#reset-password-modal").modal("hide");
   };
 
@@ -183,6 +185,50 @@ const SubFooter = () => {
       if (modal) {
         modal.hide();
       }
+    }
+  };
+
+  const handleSuccess = async (credentialResponse) => {
+    const { credential } = credentialResponse;
+    const decoded = jwtDecode(credential);
+    console.log("handleSuccess====");
+    
+
+    // Send token to backend
+    try {
+      const response = await axios.post('http://localhost:3000/google-login', {
+        token: credential,
+      });
+
+            if (response?.data?.success) {
+        const accessToken = response?.data?.accessToken;
+        const role = response?.data?.userData?.role;
+        const image = response?.data?.userData?.image || "";
+        const name = response?.data?.userData?.name || "";
+        const email = response?.data?.userData?.email || "";
+        const phone = response?.data?.userData?.phone || "";
+
+        //localStorage.setItem("password", password)
+
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("role", role);
+        localStorage.setItem("profileImage", image);
+        localStorage.setItem("name", name);
+        localStorage.setItem("email", email);
+        localStorage.setItem("phone", phone);
+
+        setAuth({ accessToken, role, image, name, email, phone });
+
+        toast.success(response?.data?.message);
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } else {
+        toast.error("Login failed! Please check your credentials.");
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
     }
   };
 
@@ -533,13 +579,11 @@ const SubFooter = () => {
                             </a>
                           </div>
 
-                          <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
+                          <GoogleOAuthProvider clientId="519989584168-jv82errmuc8179mtlesm71gad3b4tgtv.apps.googleusercontent.com">
                             <GoogleLogin
-                              onSuccess={(credentialResponse) => {
-                                // Send credentialResponse.credential (JWT) to your backend for verification
-                              }}
+                              onSuccess={handleSuccess}
                               onError={() => {
-                                console.log("Login Failed");
+                                console.log('Login Failed');
                               }}
                             />
                           </GoogleOAuthProvider>

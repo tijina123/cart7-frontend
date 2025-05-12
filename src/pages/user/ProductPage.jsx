@@ -3,11 +3,13 @@ import toast, { Toaster } from "react-hot-toast";
 import { Modal } from "bootstrap";
 import UserService from "../../services/user-api-services/UserService";
 import useAuth from "../../hooks/useAuth";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 const ProductPage = () => {
   const { getSingleProduct, addToCart } = UserService();
-  const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  // const { id } = useParams();
+const id = searchParams.get('id');
   const { auth } = useAuth();
 
   const [singleProduct, setSingleProduct] = useState(null);
