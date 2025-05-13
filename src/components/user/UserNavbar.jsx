@@ -322,15 +322,18 @@ const UserNavbar = () => {
                       Home
                     </Link>
                   </li>
-
+                  {category?.map((data) => (
                   <li className="megamenu-container active">
                     <Link
-                      to="/category"
+                      to={`/category?name=${data?.name}&id=${data?._id}`}
                       className="text-white hover:text-blue-500 no-underline transition-colors duration-300"
                     >
-                      All Products
+                     {data?.name}
                     </Link>
                   </li>
+                  ))} 
+                  
+                   
                   {auth?.name && (
                   <li className="megamenu-container active">
                     <Link

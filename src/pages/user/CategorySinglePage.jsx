@@ -100,7 +100,7 @@ export const CategorySinglePage = () => {
             <div className="container">
               {/* End .toolbox */}
               <div className="products">
-                <div className="row">
+                <div className="row" style={{ marginTop: "20px" }}>
                   {product?.map((products, index) => (
                     <div
                       className="col-6 col-md-4 col-lg-4 col-xl-3"
