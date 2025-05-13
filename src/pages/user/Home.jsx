@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import $ from "jquery";  // Import jQuery
 import "owl.carousel/dist/assets/owl.carousel.css";  // Owl Carousel CSS
 import "owl.carousel";  // Owl Carousel JS
 import ProductCarousel from './ProductCarousel';
 import UserService from "../../services/user-api-services/UserService";
 import { Link } from 'react-router-dom';
+import 'bootstrap-icons/font/bootstrap-icons.css'; 
 
 
 
@@ -19,6 +20,10 @@ const Home = () => {
   useEffect(() => {
     getProductsByCategory();
     getProducts();
+    const ref = scrollRef.current;
+    ref.addEventListener('scroll', checkScroll);
+    checkScroll();
+    return () => ref.removeEventListener('scroll', checkScroll);
   }, []);
 
   const getProductsByCategory = async () => {
@@ -43,10 +48,44 @@ const Home = () => {
     } catch (error) {
 
     }
-
   }
 
+    const scrollRef = useRef(null);
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(true);
+  
+    const scrollLeft = () => {
+      scrollRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+    };
+  
+    const scrollRight = () => {
+      scrollRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+    };
 
+    const checkScroll = () => {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth);
+    };
+  
+  
+    const categories = [
+      { name: 'Computer & Laptop', icon: 'bi-laptop', image: 'laptop.jpg' },
+      { name: 'Lighting', icon: 'bi-lightbulb', image: 'lighting.jpg' },
+      { name: 'Smart Phones', icon: 'bi-phone', image: 'smartphone.jpg' },
+      { name: 'Televisions', icon: 'bi-tv', image: 'television.jpg' },
+      { name: 'Cooking', icon: 'bi-egg-fried', image: 'cooking.jpg' },
+      { name: 'Furniture', icon: 'bi-house', image: 'furniture.jpg' },
+      { name: 'Speakers', icon: 'bi-speaker', image: 'speakers.jpg' },
+      { name: 'Watches', icon: 'bi-watch', image: 'watch.jpg' },
+      { name: 'Accessories', icon: 'bi-gem', image: 'accessories.jpg' },
+      { name: 'Gaming', icon: 'bi-controller', image: 'gaming.jpg' },
+      { name: 'Cameras', icon: 'bi-camera', image: 'camera.jpg' },
+      { name: 'Home Appliances', icon: 'bi-house-gear', image: 'appliances.jpg' },
+      { name: 'Fitness', icon: 'bi-heart-pulse', image: 'fitness.jpg' },
+      { name: 'Printers', icon: 'bi-printer', image: 'printer.jpg' },
+      { name: 'Drones', icon: 'bi-airplane', image: 'drone.jpg' },
+    ];
 
 
   return (
@@ -104,73 +143,108 @@ const Home = () => {
         <div className="mb-4" />{/* End .mb-2 */}
         <div className="container">
           <h2 className="title text-center mb-2">Explore Popular Categories</h2>{/* End .title */}
-          <div className="cat-blocks-container">
-            <div className="row">
-              <div className="col-6 col-sm-4 col-lg-2">
-                <Link to="/" className="cat-block">
-                  <figure>
-                    <span>
-                      <img src="assets/images/demos/demo-13/cats/1.jpg" alt="Category image" />
-                    </span>
-                  </figure>
-                  <h3 className="cat-block-title">Computer &amp; Laptop</h3>{/* End .cat-block-title */}
-               </Link>
-              </div>{/* End .col-sm-4 col-lg-2 */}
-              <div className="col-6 col-sm-4 col-lg-2">
-                <Link t0="/"className="cat-block">
-                  <figure>
-                    <span>
-                      <img src="assets/images/demos/demo-13/cats/2.jpg" alt="Category image" />
-                    </span>
-                  </figure>
-                  <h3 className="cat-block-title">Lighting</h3>{/* End .cat-block-title */}
-                </Link>
-              </div>{/* End .col-sm-4 col-lg-2 */}
-              <div className="col-6 col-sm-4 col-lg-2">
-                <Link to="/" className="cat-block">
-                  <figure>
-                    <span>
-                      <img src="assets/images/demos/demo-13/cats/3.jpg" alt="Category image" />
-                    </span>
-                  </figure>
-                  <h3 className="cat-block-title">Smart Phones</h3>{/* End .cat-block-title */}
-               </Link>
-              </div>{/* End .col-sm-4 col-lg-2 */}
-              <div className="col-6 col-sm-4 col-lg-2">
-              <Link to="/"  className="cat-block">
-                  <figure>
-                    <span>
-                      <img src="assets/images/demos/demo-13/cats/4.jpg" alt="Category image" />
-                    </span>
-                  </figure>
-                  <h3 className="cat-block-title">Televisions</h3>{/* End .cat-block-title */}
-                  </Link>
-              </div>{/* End .col-sm-4 col-lg-2 */}
-              <div className="col-6 col-sm-4 col-lg-2">
-              <Link to="/" className="cat-block">
-                  <figure>
-                    <span>
-                      <img src="assets/images/demos/demo-13/cats/5.jpg" alt="Category image" />
-                    </span>
-                  </figure>
-                  <h3 className="cat-block-title">Cooking</h3>{/* End .cat-block-title */}
-                  </Link>
-              </div>{/* End .col-sm-4 col-lg-2 */}
-              <div className="col-6 col-sm-4 col-lg-2">
-              <Link to="/" className="cat-block">
-                  <figure>
-                    <span>
-                      <img src="assets/images/demos/demo-13/cats/6.jpg" alt="Category image" />
-                    </span>
-                  </figure>
-                  <h3 className="cat-block-title">Furniture</h3>{/* End .cat-block-title */}
-                  </Link>
-              </div>{/* End .col-sm-4 col-lg-2 */}
+          <div className="container-fluid py-3 position-relative">
+      {/* Left Arrow */}
+      <button
+        onClick={scrollLeft}
+        onKeyDown={(e) => e.key === 'Enter' && scrollLeft()}
+        tabIndex="0"
+        aria-label="Scroll left"
+        disabled={!canScrollLeft}
+        style={{
+          position: 'absolute',
+          left: '8px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: '30px',
+          height: '30px',
+          borderRadius: '50%',
+          border: 'none',
+          backgroundColor: '#007bff',
+          color: '#ffffff',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 2px 6px rgba(0, 0, 0, 0.2)',
+          cursor: canScrollLeft ? 'pointer' : 'not-allowed',
+          opacity: canScrollLeft ? 1 : 0.5,
+          transition: 'all 0.3s ease',
+          zIndex: 9999,
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#0056b3')}
+        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#007bff')}
+      >
+        <i className="bi bi-chevron-left" style={{ fontSize: '18px' }}></i>
+      </button>
+
+      {/* Right Arrow */}
+      <button
+        onClick={scrollRight}
+        onKeyDown={(e) => e.key === 'Enter' && scrollRight()}
+        tabIndex="0"
+        aria-label="Scroll right"
+        disabled={!canScrollRight}
+        style={{
+          position: 'absolute',
+          right: '8px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: '30px',
+          height: '30px',
+          borderRadius: '50%',
+          border: 'none',
+          backgroundColor: '#007bff',
+          color: '#ffffff',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 2px 6px rgba(0, 0, 0, 0.2)',
+          cursor: canScrollRight ? 'pointer' : 'not-allowed',
+          opacity: canScrollRight ? 1 : 0.5,
+          transition: 'all 0.3s ease',
+          zIndex: 9999,
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#0056b3')}
+        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#007bff')}
+      >
+        <i className="bi bi-chevron-right" style={{ fontSize: '18px' }}></i>
+      </button>
+
+      {/* Scrollable Category Row */}
+      <div
+        className="d-flex overflow-auto"
+        ref={scrollRef}
+        style={{
+          scrollBehavior: 'smooth',
+          scrollbarWidth: 'none',
+        }}
+      >
+        {categories.map((category, index) => (
+          <div
+            className="flex-shrink-0 text-center px-2"
+            style={{ width: '180px' }}
+            key={index}
+          >
+            <Link to="/" className="d-block text-decoration-none text-dark">
+              {/* <figure className="mb-2">
+                <img
+                  src={`assets/images/demos/demo-13/cats/${category.image}`}
+                  alt={category.name}
+                  className="img-fluid rounded"
+                />
+              </figure> */}
+              <h6 className="mb-0 d-flex align-items-center justify-content-center" style={{ fontSize: '14px' }}>
+        <i className={`bi ${category.icon} me-1`} style={{ fontSize: '24px' }}></i> 
+        {category.name}
+      </h6>
+            </Link>
+          </div>
+        ))}
+      </div>
+    </div>
 
 
-              
-            </div>{/* End .row */}
-          </div>{/* End .cat-blocks-container */}
+          {/* End .cat-blocks-container */}
         </div>{/* End .container */}
         <div className="mb-2" />{/* End .mb-2 */}
         <div className="container">
