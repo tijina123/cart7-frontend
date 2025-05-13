@@ -8,6 +8,8 @@ import { Modal } from "bootstrap";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
+const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+const URL = import.meta.env.VITE_URL;
 
 const SubFooter = () => {
   const { postLogin, postRegister, getHomeCategory } = UserService();
@@ -191,16 +193,15 @@ const SubFooter = () => {
   const handleSuccess = async (credentialResponse) => {
     const { credential } = credentialResponse;
     const decoded = jwtDecode(credential);
-    console.log("handleSuccess====");
-    
+  
 
     // Send token to backend
     try {
-      const response = await axios.post('http://localhost:3000/google-login', {
+      const response = await axios.post(`${URL}/google-login`, {
         token: credential,
       });
 
-            if (response?.data?.success) {
+      if (response?.data?.success) {
         const accessToken = response?.data?.accessToken;
         const role = response?.data?.userData?.role;
         const image = response?.data?.userData?.image || "";
@@ -579,7 +580,7 @@ const SubFooter = () => {
                             </a>
                           </div>
 
-                          <GoogleOAuthProvider clientId="519989584168-jv82errmuc8179mtlesm71gad3b4tgtv.apps.googleusercontent.com">
+                          <GoogleOAuthProvider clientId={clientId}>
                             <GoogleLogin
                               onSuccess={handleSuccess}
                               onError={() => {
