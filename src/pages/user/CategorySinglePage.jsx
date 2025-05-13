@@ -16,15 +16,20 @@ export const CategorySinglePage = () => {
     const [searchParams] = useSearchParams();
   
     const name = searchParams.get("name");
+    const query = searchParams.get("query");
     const id = searchParams.get("id");
 
   const [product, setProduct] = useState([]);
-  const { getProductByCategoryId, getHomeProducts, addToWihlist, addToCart } =
+  const { getProductByCategoryId, getHomeProducts, addToWihlist, addToCart, getProductBySearch } =
     UserService();
 
   useEffect(() => {
+    if (query) {
+      productBySearch();
+    }else {     
     getProduct();
-  }, [id]);
+  }
+  }, [id,query]);
 
   const getProduct = async () => {
     try {
@@ -37,6 +42,16 @@ export const CategorySinglePage = () => {
 
         setProduct(response?.products);
       }
+    } catch (error) {}
+  };
+
+    const productBySearch = async () => {
+    try {
+      
+        const response = await getProductBySearch(query);
+
+        setProduct(response?.products);
+
     } catch (error) {}
   };
 

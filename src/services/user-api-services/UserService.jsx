@@ -136,6 +136,11 @@ const getSingleProduct = async (productId) => {
   return response.data;
 };
 
+const getProductBySearch = async (name) => {
+  const response = await axiosPrivate.get(`/product/search?name=${name}`);
+  return response.data;
+};
+
   return {
     getHomeProductsByCategory,
     getHomeProducts,
@@ -159,6 +164,7 @@ const getSingleProduct = async (productId) => {
     updateStatus,
     getProductByCategoryId,
     getSingleProduct,
+    getProductBySearch,
   };
 };
 
