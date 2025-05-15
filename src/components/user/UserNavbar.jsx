@@ -10,14 +10,18 @@ import { FiLogOut } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
 import { Modal } from "bootstrap";
 
+
 const UserNavbar = () => {
   const { auth } = useAuth();
   const navigate = useNavigate();
-  const { getHomeCategory, putFilterProducts } = UserService();
+  const { getHomeCategory, putFilterProducts,  } = UserService();
 
   const [category, setCategory] = useState([]);
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const [query, setQuery] = useState(""); 
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     getCategory();
@@ -73,6 +77,20 @@ const UserNavbar = () => {
         modal.show();
       }
     }
+  };
+
+   const handleSearch = (e) => {
+    e.preventDefault();
+  
+    // Replace with your actual search logic
+    console.log("input value",inputValue);
+    // navigate(`/search?name=${inputValue}`);
+    navigate(`/category?query=${inputValue}`);
+
+
+    
+    // Example: navigate to a results page or call API
+    // fetch(`/api/products?search=${query}&category=${category}`)
   };
 
   return (
@@ -162,7 +180,7 @@ const UserNavbar = () => {
                 <a href="#" className="search-toggle" role="button">
                   <i className="icon-search" />
                 </a>
-                <form action="#" method="get">
+                <form onSubmit={handleSearch} method="get">
                   <div className="header-search-wrapper search-wrapper-wide">
                     <div className="select-custom">
                       <select id="cat" name="cat">
@@ -174,7 +192,7 @@ const UserNavbar = () => {
                     <label htmlFor="q" className="sr-only">
                       Search
                     </label>
-                    <input
+                    <input onChange={(e) => setInputValue(e.target.value)}
                       type="search"
                       className="form-control"
                       name="q"
@@ -322,25 +340,19 @@ const UserNavbar = () => {
                       Home
                     </Link>
                   </li>
-
+                  {category?.map((data) => (
                   <li className="megamenu-container active">
                     <Link
-                      to="/category"
+                      to={`/category?name=${data?.name}&id=${data?._id}`}
                       className="text-white hover:text-blue-500 no-underline transition-colors duration-300"
                     >
-                      All Products
+                     {data?.name}
                     </Link>
                   </li>
-                  {auth?.name && (
-                  <li className="megamenu-container active">
-                    <Link
-                      to="/profile"
-                      className="text-white hover:text-blue-500 no-underline transition-colors duration-300"
-                    >
-                      Account
-                    </Link>
-                  </li>
-                  )}
+                  ))} 
+                  
+                   
+               
                 </ul>
                 {/* End .menu */}
               </nav>

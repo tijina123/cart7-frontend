@@ -16,15 +16,20 @@ export const CategorySinglePage = () => {
     const [searchParams] = useSearchParams();
   
     const name = searchParams.get("name");
+    const query = searchParams.get("query");
     const id = searchParams.get("id");
 
   const [product, setProduct] = useState([]);
-  const { getProductByCategoryId, getHomeProducts, addToWihlist, addToCart } =
+  const { getProductByCategoryId, getHomeProducts, addToWihlist, addToCart, getProductBySearch } =
     UserService();
 
   useEffect(() => {
+    if (query) {
+      productBySearch();
+    }else {     
     getProduct();
-  }, [id]);
+  }
+  }, [id,query]);
 
   const getProduct = async () => {
     try {
@@ -37,6 +42,16 @@ export const CategorySinglePage = () => {
 
         setProduct(response?.products);
       }
+    } catch (error) {}
+  };
+
+    const productBySearch = async () => {
+    try {
+      
+        const response = await getProductBySearch(query);
+
+        setProduct(response?.products);
+
     } catch (error) {}
   };
 
@@ -100,7 +115,7 @@ export const CategorySinglePage = () => {
             <div className="container">
               {/* End .toolbox */}
               <div className="products">
-                <div className="row">
+                <div className="row" style={{ marginTop: "20px" }}>
                   {product?.map((products, index) => (
                     <div
                       className="col-6 col-md-4 col-lg-4 col-xl-3"
