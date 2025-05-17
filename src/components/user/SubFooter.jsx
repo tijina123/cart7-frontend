@@ -29,7 +29,7 @@ const SubFooter = () => {
     email: "",
     phone: "",
     password: "",
-    confirmpassword: "",  
+    confirmpassword: "",
     role: "user",
   });
 
@@ -42,9 +42,9 @@ const SubFooter = () => {
 
   const [category, setCategory] = useState([]);
 
-const [showPassword, setShowPassword] = useState(false);
-const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-const [showSigninPassword, setShowSigninPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showSigninPassword, setShowSigninPassword] = useState(false);
 
 
   useEffect(() => {
@@ -101,7 +101,7 @@ const [showSigninPassword, setShowSigninPassword] = useState(false);
   const handleSubmitSingin = async (e) => {
     e.preventDefault();
 
-    
+
 
     console.log("Form Data handleSubmitSingin:");
 
@@ -146,9 +146,9 @@ const [showSigninPassword, setShowSigninPassword] = useState(false);
     e.preventDefault();
 
     if (registerFormData.password !== registerFormData.confirmpassword) {
-    toast.error("Passwords do not match!");
-    return;
-  }
+      toast.error("Passwords do not match!");
+      return;
+    }
     console.log("Form Data Submitted:", registerFormData);
     try {
       const response = await postRegister(registerFormData);
@@ -209,13 +209,18 @@ const [showSigninPassword, setShowSigninPassword] = useState(false);
   const handleSuccess = async (credentialResponse) => {
     const { credential } = credentialResponse;
     const decoded = jwtDecode(credential);
-  
+
 
     // Send token to backend
     try {
+      // const response = await axios.post(`${VITE_URL}/google-login`, {
+      //   token: credential,
+      // });
       const response = await axios.post(`${VITE_URL}/google-login`, {
         token: credential,
-      });
+      }, {
+        withCredentials: true
+      })
 
       if (response?.data?.success) {
         const accessToken = response?.data?.accessToken;
@@ -559,7 +564,7 @@ const [showSigninPassword, setShowSigninPassword] = useState(false);
                             />
                           </div>
 
-                          
+
                           {/* End .form-group */}
                           <div className="form-footer">
                             <button
@@ -677,7 +682,7 @@ const [showSigninPassword, setShowSigninPassword] = useState(false);
                             />
                           </div>
 
-                           <div className="form-group">
+                          <div className="form-group">
                             <label htmlFor="register-password">
                               Confirm Password *
                             </label>
