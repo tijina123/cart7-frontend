@@ -85,7 +85,7 @@ const Home = () => {
     <div className="page-wrapper">
       <main className="main">
     <a
-      href="https://wa.me/+91 7034 133 111" // Replace with your WhatsApp number
+      href="https://wa.me/7034133111" // Replace with your WhatsApp number
       target="_blank"
       rel="noopener noreferrer"
       style={{
