@@ -7,6 +7,7 @@ import UserService from "../../services/user-api-services/UserService";
 import { Link } from "react-router-dom";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useRef } from "react";
+import { FaWhatsapp } from 'react-icons/fa';
 
 const Home = () => {
   const { getHomeProductsByCategory, getHomeProducts } = UserService();
@@ -83,6 +84,25 @@ const Home = () => {
   return (
     <div className="page-wrapper">
       <main className="main">
+    <a
+      href="https://wa.me/+91 7034 133 111" // Replace with your WhatsApp number
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        position: 'fixed',
+        top: '500px',
+        right: '20px',
+        color: '#25D366',
+        fontSize: '2.5rem',
+        zIndex: 1000,
+        backgroundColor: 'white',
+        borderRadius: '50%',
+        padding: '10px',
+        boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+      }}
+    >
+      <FaWhatsapp />
+    </a>
         <div className="intro-slider-container">
           <div
             className="intro-slider owl-carousel owl-simple owl-nav-inside"
