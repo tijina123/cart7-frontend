@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import UserService from "../../services/user-api-services/UserService";
-import { useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Modal } from "bootstrap";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
@@ -124,7 +124,7 @@ export const CategorySinglePage = () => {
                       <div className="product">
                         <figure className="product-media">
                           <span className="product-label label-new">New</span>
-                          <a href="product.html">
+                          <Link to={`/product?id=${products._id}`}>
                             <img
                               src={products?.images[0]}
                               alt="Product"
@@ -136,7 +136,7 @@ export const CategorySinglePage = () => {
                                 mixBlendMode: "multiply",
                               }}
                             />
-                          </a>
+                          </Link>
                           <div className="product-action-vertical">
                             <button
                               className="btn-product-icon btn-wishlist btn-expandable"
@@ -168,7 +168,7 @@ export const CategorySinglePage = () => {
 
                         <div className="product-body">
                           <h3 className="product-title">
-                            <a href="product.html">{products.name}</a>
+                            <Link to={`/product?id=${products._id}`}>{products.name}</Link>
                           </h3>
                           <div className="product-price">
                             ₹{products.product_price}

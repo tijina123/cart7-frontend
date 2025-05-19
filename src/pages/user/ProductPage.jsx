@@ -91,7 +91,7 @@ const id = searchParams.get('id');
     src={singleImage}
     alt="Product"
     className="img-fluid"
-    style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }}
+    style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain",mixBlendMode: "multiply", }}
   />
 </div>
 
@@ -110,6 +110,7 @@ const id = searchParams.get('id');
                           height: "90px",
                           objectFit: "contain",
                           cursor: "pointer",
+                          mixBlendMode: "multiply",
                         }}
                       />
                     ))}
@@ -128,6 +129,7 @@ const id = searchParams.get('id');
         lineHeight: "1.3",
         letterSpacing: "-0.3px",
         textTransform: "capitalize",
+        
       }}
     >
       {singleProduct.name}
